@@ -13,7 +13,6 @@
     :root {
       --blue-violet: #6c7bff;
       --bright-violet: #db63db;
-      --cotton-cloud: #fef3ff;
       --deep-purple: #13071e;
     }
 
@@ -33,139 +32,110 @@
     body {
       position: relative;
       isolation: isolate;
-      /* Основной фон */
       background:
-        radial-gradient(1200px 720px at 30% -10%, rgba(124, 148, 255, 0.62), transparent 60%),
-        radial-gradient(760px 520px at 102% 0%, rgba(219, 99, 219, 0.46), transparent 70%),
-        linear-gradient(180deg, #2d2f86 0%, #1e0f44 42%, #13071e 100%);
+        radial-gradient(1200px 760px at 34% -8%, rgba(142, 164, 255, 0.60), transparent 62%),
+        radial-gradient(760px 520px at 102% 0%, rgba(219, 99, 219, 0.40), transparent 70%),
+        linear-gradient(180deg, #2f3796 0%, #211050 38%, #140726 70%, #0d0419 100%);
       font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
     }
 
-    /* Сетка как в референсе */
+    /* Сетка (крупная + мелкая), как на референсе */
     body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-
-  /* крупная сетка */
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.085) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.085) 1px, transparent 1px),
-
-    /* мелкая под-сетка для глубины */
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-
-  background-size:
-    48px 48px,
-    48px 48px,
-    12px 12px,
-    12px 12px;
-
-  background-position:
-    0 0,
-    0 0,
-    0 0,
-    0 0;
-
-  opacity: 0.6;
-  mix-blend-mode: screen;
-}
-
-    /* Легкая виньетка для глубины */
-    body::after {
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(100% 65% at 50% -10%, transparent 42%, rgba(8, 2, 16, 0.35) 75%, rgba(5, 1, 11, 0.7) 100%),
-        linear-gradient(180deg, rgba(0,0,0,0) 58%, rgba(12, 3, 24, 0.75) 100%);
-      z-index: 2;
+      z-index: 1;
       pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.075) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.075) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+      background-size:
+        46px 46px,
+        46px 46px,
+        11px 11px,
+        11px 11px;
+      opacity: 0.58;
+      mix-blend-mode: screen;
     }
 
     .scene {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 50% -10%, rgba(255,255,255,0.06), transparent 45%);
-}
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
 
-    /* Большой призрак на фоне */
+    /* Главное мягкое верхнее свечение */
+    .top-glow {
+      position: absolute;
+      top: -130px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(78vw, 1060px);
+      height: min(62vw, 710px);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 52%, rgba(255,255,255,0.34), rgba(176,187,255,0.18) 38%, rgba(136,115,239,0.11) 58%, transparent 72%);
+      filter: blur(13px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Фоновый призрак */
     .ghost-bg {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: min(86vw, 980px);
+      width: min(90vw, 1020px);
       transform: translate(-50%, -52%);
-      opacity: 0.13;
-      filter: blur(0.2px) saturate(1.05);
+      opacity: 0.12;
+      filter: saturate(1.06) contrast(1.03);
       user-select: none;
       -webkit-user-drag: none;
       pointer-events: none;
-      z-index: 1;
+      z-index: 2;
     }
 
-    /* Мягкое световое пятно сверху */
-    .top-glow {
+    /* Нижние фиолетовые оттенки как в референсе */
+    .bottom-violet {
       position: absolute;
-      top: -120px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(74vw, 980px);
-      height: min(55vw, 620px);
-      border-radius: 50%;
+      inset: auto 0 0 0;
+      height: 30%;
+      z-index: 3;
+      pointer-events: none;
       background:
-        radial-gradient(circle at 50% 48%, rgba(236, 240, 255, 0.33), rgba(173, 176, 255, 0.16) 36%, rgba(137, 110, 237, 0.08) 57%, transparent 72%);
-      filter: blur(14px);
-      pointer-events: none;
-      z-index: 0;
+        radial-gradient(120% 130% at 50% 120%, rgba(192, 22, 196, 0.33) 0%, rgba(145, 24, 176, 0.16) 35%, rgba(84, 18, 132, 0.08) 58%, transparent 80%),
+        linear-gradient(180deg, transparent 0%, rgba(105, 22, 134, 0.22) 65%, rgba(99, 18, 128, 0.34) 100%);
+      filter: blur(0.2px);
     }
 
-    /* Тёмные "глаза" внизу как на рефе */
-    .eye {
+    /* Глубина по краям */
+    .vignette {
       position: absolute;
-      width: 23vw;
-      max-width: 360px;
-      aspect-ratio: 1.35 / 1;
-      background: radial-gradient(ellipse at 45% 45%, rgba(8, 3, 18, 0.7), rgba(5, 1, 12, 0.9));
-      filter: blur(1px);
-      opacity: 0.42;
-      border-radius: 48% 52% 40% 60% / 60% 55% 45% 40%;
-      z-index: 1;
+      inset: 0;
+      z-index: 4;
       pointer-events: none;
+      background:
+        radial-gradient(95% 70% at 50% -12%, transparent 38%, rgba(9,2,19,0.34) 73%, rgba(7,2,14,0.64) 100%),
+        linear-gradient(180deg, transparent 58%, rgba(9, 2, 17, 0.46) 100%);
     }
 
-    .eye.left {
-      left: 8%;
-      top: 42%;
-      transform: rotate(-10deg);
-    }
-
-    .eye.right {
-      right: 8%;
-      top: 42%;
-      transform: scaleX(-1) rotate(-10deg);
-    }
-
-    /* Пустой контейнер под будущий контент */
+    /* Пустое место под будущий контент */
     .content-placeholder {
       position: absolute;
       inset: 0;
-      z-index: 3;
+      z-index: 5;
     }
 
     @media (max-width: 900px) {
       .ghost-bg {
-        width: 120vw;
-        opacity: 0.16;
+        width: 125vw;
+        opacity: 0.14;
       }
 
-      .eye {
-        width: 34vw;
-        top: 47%;
+      .bottom-violet {
+        height: 34%;
       }
     }
   </style>
@@ -181,8 +151,8 @@
       aria-hidden="true"
     />
 
-    <div class="eye left"></div>
-    <div class="eye right"></div>
+    <div class="bottom-violet"></div>
+    <div class="vignette"></div>
 
     <div class="content-placeholder"></div>
   </div>

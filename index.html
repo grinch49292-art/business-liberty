@@ -3,17 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Liberty — продукт, который помогает расти быстрее, продавать больше и работать системно." />
-  <title>Liberty — Ваш рост в цифрах</title>
+  <title>Liberty</title>
 
-  <!-- Favicon -->
+  <!-- favicon -->
   <link rel="icon" type="image/svg+xml" href="./pages/symbol_dark.svg" />
   <link rel="apple-touch-icon" href="./pages/symbol_dark.svg" />
-
-  <!-- Google font fallback for body text -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -21,35 +15,7 @@
       --bright-violet: #db63db;
       --cotton-cloud: #fef3ff;
       --deep-purple: #13071e;
-      --bg: #0e0618;
-      --bg-2: #1a0a2b;
-      --text: #f7efff;
-      --muted: #b8a8c7;
-      --line: rgba(255, 255, 255, 0.08);
-      --card: rgba(255, 255, 255, 0.03);
-      --success: #8df0c2;
-      --radius-xl: 24px;
-      --radius-lg: 18px;
-      --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
     }
-
-    /* Если позже подключишь локальные файлы шрифтов Nohemi/Suisse Intl, раскомментируй:
-    @font-face {
-      font-family: "Nohemi";
-      src: url("./fonts/Nohemi-SemiBold.woff2") format("woff2");
-      font-weight: 600;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "Suisse Intl";
-      src: url("./fonts/SuisseIntl-Regular.woff2") format("woff2");
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-    */
 
     * {
       box-sizing: border-box;
@@ -57,596 +23,148 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--deep-purple);
     }
 
     body {
-      min-height: 100vh;
-      font-family: "Suisse Intl", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text);
+      position: relative;
+      isolation: isolate;
+      /* Основной фон */
       background:
-        radial-gradient(circle at 15% 18%, rgba(108, 123, 255, 0.35), transparent 35%),
-        radial-gradient(circle at 85% 8%, rgba(219, 99, 219, 0.3), transparent 30%),
-        linear-gradient(180deg, #1a0a2b 0%, var(--deep-purple) 55%, #0b0414 100%);
-      overflow-x: hidden;
+        radial-gradient(1200px 720px at 30% -10%, rgba(124, 148, 255, 0.62), transparent 60%),
+        radial-gradient(760px 520px at 102% 0%, rgba(219, 99, 219, 0.46), transparent 70%),
+        linear-gradient(180deg, #2d2f86 0%, #1e0f44 42%, #13071e 100%);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
     }
 
+    /* Сетка как в референсе */
     body::before {
       content: "";
-      position: fixed;
+      position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.065) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.065) 1px, transparent 1px);
       background-size: 44px 44px;
-      pointer-events: none;
+      opacity: 0.34;
       z-index: -1;
+      pointer-events: none;
     }
 
-    .container {
-      width: min(1160px, 92%);
-      margin: 0 auto;
-    }
-
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(12px);
-      background: rgba(11, 4, 20, 0.5);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 78px;
-      gap: 16px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: var(--text);
-    }
-
-    .brand img {
-      width: 34px;
-      height: 34px;
-      object-fit: contain;
-      filter: drop-shadow(0 0 14px rgba(108, 123, 255, 0.45));
-    }
-
-    .brand span {
-      font-family: "Nohemi", "Inter", sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      font-size: 1.2rem;
-      background: linear-gradient(90deg, var(--blue-violet), #9f84ff 45%, var(--bright-violet));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .nav a {
-      color: var(--muted);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color .2s ease;
-    }
-
-    .nav a:hover {
-      color: var(--text);
-    }
-
-    .btn {
-      border: 0;
-      cursor: pointer;
-      border-radius: 12px;
-      padding: 12px 18px;
-      font-weight: 700;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      color: #140a1f;
-      background: linear-gradient(120deg, #8ea0ff 0%, #a985ff 45%, #e684ff 100%);
-      box-shadow: 0 10px 28px rgba(160, 120, 255, 0.35);
-    }
-
-    .btn-secondary {
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .hero {
-      padding: 92px 0 62px;
-      position: relative;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      align-items: center;
-      gap: 38px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      padding: 7px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 999px;
-      color: #d7c9e4;
-      font-size: 0.9rem;
-      margin-bottom: 18px;
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    h1 {
-      font-family: "Nohemi", "Inter", sans-serif;
-      font-size: clamp(2rem, 4.8vw, 4.3rem);
-      line-height: 1.03;
-      letter-spacing: -0.02em;
-      margin-bottom: 20px;
-      max-width: 14ch;
-    }
-
-    .gradient-text {
-      background: linear-gradient(100deg, var(--blue-violet) 5%, #a08bff 42%, var(--bright-violet) 90%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero p {
-      color: #d2c4df;
-      font-size: clamp(1rem, 1.8vw, 1.18rem);
-      line-height: 1.6;
-      max-width: 54ch;
-      margin-bottom: 28px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .hero-card {
-      position: relative;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: var(--radius-xl);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-      padding: 24px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .hero-card::before {
+    /* Легкая виньетка для глубины */
+    body::after {
       content: "";
       position: absolute;
-      inset: -40% 10% auto auto;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(219, 99, 219, 0.4), transparent 65%);
-      filter: blur(8px);
+      inset: 0;
+      background:
+        radial-gradient(100% 65% at 50% -10%, transparent 42%, rgba(8, 2, 16, 0.35) 75%, rgba(5, 1, 11, 0.7) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0) 58%, rgba(12, 3, 24, 0.75) 100%);
+      z-index: 2;
       pointer-events: none;
     }
 
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 16px;
-    }
-
-    .stat {
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 14px;
-      padding: 14px;
-      background: rgba(19, 7, 30, 0.62);
-    }
-
-    .stat b {
-      display: block;
-      font-size: 1.42rem;
-      margin-bottom: 4px;
-      color: var(--cotton-cloud);
-    }
-
-    .stat span {
-      color: #c5b5d4;
-      font-size: 0.92rem;
-    }
-
-    .section {
-      padding: 52px 0;
-    }
-
-    .section h2 {
-      font-family: "Nohemi", "Inter", sans-serif;
-      font-size: clamp(1.5rem, 3vw, 2.25rem);
-      margin-bottom: 14px;
-    }
-
-    .section-lead {
-      color: var(--muted);
-      max-width: 62ch;
-      line-height: 1.65;
-      margin-bottom: 28px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      padding: 22px;
-      transition: transform .2s ease, border-color .2s ease, background .2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(170, 140, 255, 0.55);
-      background: rgba(255, 255, 255, 0.055);
-    }
-
-    .card .num {
-      display: inline-block;
-      margin-bottom: 10px;
-      color: #cab6da;
-      font-weight: 700;
-      font-size: 0.9rem;
-      letter-spacing: .06em;
-    }
-
-    .card h3 {
-      font-size: 1.12rem;
-      margin-bottom: 9px;
-    }
-
-    .card p {
-      color: #c8bad4;
-      line-height: 1.55;
-      font-size: 0.96rem;
-    }
-
-    .offer {
-      margin-top: 10px;
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 16px;
-    }
-
-    .offer-main, .offer-side {
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      padding: 26px;
-    }
-
-    .offer-main ul {
-      list-style: none;
-      display: grid;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .offer-main li {
-      color: #d4c7e2;
+    .scene {
       position: relative;
-      padding-left: 24px;
-      line-height: 1.5;
+      width: 100%;
+      height: 100%;
     }
 
-    .offer-main li::before {
-      content: "✓";
+    /* Большой призрак на фоне */
+    .ghost-bg {
       position: absolute;
-      left: 0;
-      top: -1px;
-      color: var(--success);
-      font-weight: 700;
+      left: 50%;
+      top: 50%;
+      width: min(86vw, 980px);
+      transform: translate(-50%, -52%);
+      opacity: 0.13;
+      filter: blur(0.2px) saturate(1.05);
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    .price {
-      font-family: "Nohemi", "Inter", sans-serif;
-      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-      line-height: 1;
-      margin: 10px 0 8px;
-      color: var(--cotton-cloud);
-    }
-
-    .note {
-      color: #c5b5d4;
-      font-size: .93rem;
-      margin-bottom: 18px;
-      line-height: 1.55;
-    }
-
-    .testimonials {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 18px;
-    }
-
-    .quote {
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 14px;
-      padding: 18px;
-    }
-
-    .quote p {
-      color: #e5d8f0;
-      line-height: 1.6;
-      margin-bottom: 12px;
-      font-size: 0.98rem;
-    }
-
-    .quote small {
-      color: #bdaed0;
-      font-size: 0.86rem;
-    }
-
-    .cta {
-      margin: 58px 0 40px;
-      padding: 34px;
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+    /* Мягкое световое пятно сверху */
+    .top-glow {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(74vw, 980px);
+      height: min(55vw, 620px);
+      border-radius: 50%;
       background:
-        radial-gradient(circle at 0% 0%, rgba(108, 123, 255, 0.28), transparent 38%),
-        radial-gradient(circle at 100% 100%, rgba(219, 99, 219, 0.22), transparent 40%),
-        rgba(255, 255, 255, 0.03);
-      text-align: center;
+        radial-gradient(circle at 50% 48%, rgba(236, 240, 255, 0.33), rgba(173, 176, 255, 0.16) 36%, rgba(137, 110, 237, 0.08) 57%, transparent 72%);
+      filter: blur(14px);
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .cta h3 {
-      font-family: "Nohemi", "Inter", sans-serif;
-      font-size: clamp(1.5rem, 2.8vw, 2.3rem);
-      margin-bottom: 12px;
+    /* Тёмные "глаза" внизу как на рефе */
+    .eye {
+      position: absolute;
+      width: 23vw;
+      max-width: 360px;
+      aspect-ratio: 1.35 / 1;
+      background: radial-gradient(ellipse at 45% 45%, rgba(8, 3, 18, 0.7), rgba(5, 1, 12, 0.9));
+      filter: blur(1px);
+      opacity: 0.42;
+      border-radius: 48% 52% 40% 60% / 60% 55% 45% 40%;
+      z-index: 1;
+      pointer-events: none;
     }
 
-    .cta p {
-      color: #cfbfdd;
-      margin-bottom: 20px;
-      line-height: 1.6;
+    .eye.left {
+      left: 8%;
+      top: 42%;
+      transform: rotate(-10deg);
     }
 
-    .footer {
-      border-top: 1px solid var(--line);
-      padding: 26px 0 34px;
-      color: #a895be;
-      font-size: 0.92rem;
+    .eye.right {
+      right: 8%;
+      top: 42%;
+      transform: scaleX(-1) rotate(-10deg);
     }
 
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+    /* Пустой контейнер под будущий контент */
+    .content-placeholder {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
     }
 
-    @media (max-width: 980px) {
-      .hero-grid,
-      .cards,
-      .offer,
-      .testimonials {
-        grid-template-columns: 1fr;
+    @media (max-width: 900px) {
+      .ghost-bg {
+        width: 120vw;
+        opacity: 0.16;
       }
 
-      .hero {
-        padding-top: 70px;
-      }
-
-      .nav a {
-        display: none;
-      }
-    }
-
-    @media (max-width: 620px) {
-      .header-inner {
-        min-height: 70px;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .hero-actions {
-        flex-direction: column;
+      .eye {
+        width: 34vw;
+        top: 47%;
       }
     }
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="container header-inner">
-      <a class="brand" href="#">
-        <img src="./pages/symbol_dark.svg" alt="Liberty logo" />
-        <span>LIBERTY</span>
-      </a>
+  <div class="scene">
+    <div class="top-glow"></div>
 
-      <nav class="nav">
-        <a href="#features">Преимущества</a>
-        <a href="#offer">Предложение</a>
-        <a href="#reviews">Отзывы</a>
-        <a class="btn btn-primary" href="#cta">Получить консультацию</a>
-      </nav>
-    </div>
-  </header>
+    <img
+      class="ghost-bg"
+      src="./pages/symbol_gradient.png"
+      alt=""
+      aria-hidden="true"
+    />
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <div class="eyebrow">Для тех, кто хочет больше продаж</div>
-          <h1>
-            Преврати продукт в
-            <span class="gradient-text">системный поток клиентов</span>
-          </h1>
-          <p>
-            Liberty — это современный продукт для роста бизнеса: ты получаешь не просто инструмент,
-            а рабочую модель, которая усиливает маркетинг, поднимает конверсию и помогает продавать дороже.
-          </p>
-          <div class="hero-actions">
-            <a href="#cta" class="btn btn-primary">Хочу увеличить продажи</a>
-            <a href="#offer" class="btn btn-secondary">Смотреть предложение</a>
-          </div>
-        </div>
+    <div class="eye left"></div>
+    <div class="eye right"></div>
 
-        <aside class="hero-card">
-          <h3 style="font-size:1.15rem; margin-bottom: 8px;">Почему клиенты выбирают Liberty</h3>
-          <p style="color:#ccbcd9; line-height:1.6;">
-            Мы упаковываем твой продукт так, чтобы он выглядел дороже и продавался легче.
-            Сильный дизайн + ясный оффер + понятная структура = больше заявок.
-          </p>
-          <div class="stat-grid">
-            <div class="stat">
-              <b>+37%</b>
-              <span>рост конверсии в среднем</span>
-            </div>
-            <div class="stat">
-              <b>7–14 дней</b>
-              <span>до запуска и первых лидов</span>
-            </div>
-            <div class="stat">
-              <b>24/7</b>
-              <span>сайт продает без выходных</span>
-            </div>
-            <div class="stat">
-              <b>Premium</b>
-              <span>визуал, который вызывает доверие</span>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <section class="section" id="features">
-      <div class="container">
-        <h2>Что делает этот сайт продающим</h2>
-        <p class="section-lead">
-          Сильная посадочная строится не на “красиво”, а на комбинации психологии, доверия и четкой логики.
-          Здесь каждый блок ведет клиента к действию.
-        </p>
-
-        <div class="cards">
-          <article class="card">
-            <span class="num">01 / Внимание</span>
-            <h3>Премиальная визуальная подача</h3>
-            <p>Глубокие цвета, контрастные акценты и аккуратная типографика формируют ощущение дорогого продукта.</p>
-          </article>
-          <article class="card">
-            <span class="num">02 / Доверие</span>
-            <h3>Четкая структура смысла</h3>
-            <p>Клиент за 20–30 секунд понимает выгоду, ценность и почему купить нужно именно у тебя.</p>
-          </article>
-          <article class="card">
-            <span class="num">03 / Действие</span>
-            <h3>Сильные CTA и оффер</h3>
-            <p>Каждый раздел подводит к заявке: меньше сомнений, больше кликов и обращений.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="offer">
-      <div class="container">
-        <h2>Твое предложение в формате “беру”</h2>
-        <p class="section-lead">
-          Используй этот блок как ядро оффера. Можно поменять текст под твой продукт за 10 минут.
-        </p>
-
-        <div class="offer">
-          <div class="offer-main">
-            <h3 style="font-size:1.32rem;">Что получает клиент</h3>
-            <ul>
-              <li>Готовую систему привлечения клиентов через сильный одностраничник</li>
-              <li>Позиционирование продукта в премиум-сегменте</li>
-              <li>Понятный путь пользователя до заявки или оплаты</li>
-              <li>Визуал, который выделяет тебя среди конкурентов</li>
-            </ul>
-          </div>
-
-          <aside class="offer-side">
-            <h3 style="font-size:1.05rem; color:#cdbede;">Стартовая цена</h3>
-            <div class="price">от 49 000 ₽</div>
-            <p class="note">Индивидуально под бизнес: смысловой прототип, дизайн, верстка, запуск.</p>
-            <a class="btn btn-primary" href="#cta" style="width:100%;">Оставить заявку</a>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="reviews">
-      <div class="container">
-        <h2>Что говорят клиенты</h2>
-        <p class="section-lead">
-          Здесь позже поставишь реальные отзывы. Пока это дизайнерская заготовка, чтобы страница выглядела законченно.
-        </p>
-
-        <div class="testimonials">
-          <article class="quote">
-            <p>“После запуска лендинга начали получать в 2 раза больше заявок с того же рекламного бюджета.”</p>
-            <small>Никита, e-commerce</small>
-          </article>
-          <article class="quote">
-            <p>“Наконец-то сайт выглядит так, как должен выглядеть дорогой продукт. Клиенты стали меньше торговаться.”</p>
-            <small>Алина, консалтинг</small>
-          </article>
-          <article class="quote">
-            <p>“Понравилось, что структура продает сама: человек заходит и сразу понимает, что ему предлагают.”</p>
-            <small>Михаил, услуги B2B</small>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="container">
-      <div class="cta" id="cta">
-        <h3>Готов усилить свой продукт и продажи?</h3>
-        <p>
-          Нажми кнопку ниже и получи разбор твоей текущей упаковки + план, как сделать сайт,
-          который действительно продает.
-        </p>
-        <a href="https://t.me/your_username" class="btn btn-primary">Получить разбор в Telegram</a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <span>© 2026 Liberty. Все права защищены.</span>
-      <span>Дизайн с акцентом на конверсию и премиум-подачу.</span>
-    </div>
-  </footer>
+    <div class="content-placeholder"></div>
+  </div>
 </body>
 </html>

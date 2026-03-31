@@ -43,17 +43,36 @@
 
     /* Сетка как в референсе */
     body::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.065) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.065) 1px, transparent 1px);
-      background-size: 44px 44px;
-      opacity: 0.34;
-      z-index: -1;
-      pointer-events: none;
-    }
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  /* крупная сетка */
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.085) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.085) 1px, transparent 1px),
+
+    /* мелкая под-сетка для глубины */
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+
+  background-size:
+    48px 48px,
+    48px 48px,
+    12px 12px,
+    12px 12px;
+
+  background-position:
+    0 0,
+    0 0,
+    0 0,
+    0 0;
+
+  opacity: 0.6;
+  mix-blend-mode: screen;
+}
 
     /* Легкая виньетка для глубины */
     body::after {
@@ -68,10 +87,11 @@
     }
 
     .scene {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% -10%, rgba(255,255,255,0.06), transparent 45%);
+}
 
     /* Большой призрак на фоне */
     .ghost-bg {

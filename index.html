@@ -13,16 +13,13 @@
     :root {
       --blue-violet: #6c7bff;
       --bright-violet: #db63db;
-      --deep-purple: #13071e;
       --text: #f5f1ff;
       --muted: #cbbfda;
-      --line: rgba(255, 255, 255, 0.12);
       --line-soft: rgba(255, 255, 255, 0.07);
       --container: min(1180px, 92vw);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -36,7 +33,7 @@
         linear-gradient(180deg, #2f3796 0%, #211050 38%, #140726 70%, #0d0419 100%);
     }
 
-    /* Твоя сетка */
+    /* Фирменная сетка */
     body::before {
       content: "";
       position: fixed;
@@ -81,7 +78,7 @@
     .nav-wrap {
       position: sticky;
       top: 12px;
-      z-index: 30;
+      z-index: 20;
       width: var(--container);
       margin: 12px auto 24px;
     }
@@ -216,30 +213,14 @@
       pointer-events: none;
     }
 
-    .phone {
-      width: min(600px, 92%);
-      animation: phoneFloat 7s ease-in-out infinite;
-      filter: drop-shadow(0 26px 54px rgba(0,0,0,.42));
-    }
-
     .card-single {
-      width: min(450px, 78%);
-      transform: translate(-18%, 16%) rotate(-9deg);
-      animation: cardFloat 6.3s ease-in-out infinite;
-      filter: drop-shadow(0 24px 45px rgba(112, 40, 195, .35));
+      width: min(560px, 88%);
+      transform: rotate(-10deg);
+      animation: cardFloatSolo 5.6s ease-in-out infinite;
+      filter:
+        drop-shadow(0 28px 54px rgba(0, 0, 0, 0.42))
+        drop-shadow(0 10px 30px rgba(219, 99, 219, 0.24));
     }
-
-    .spline-wrap {
-      position: absolute;
-      right: -4%;
-      top: -5%;
-      width: min(250px, 34%);
-      aspect-ratio: 1/1;
-      opacity: .9;
-      pointer-events: none;
-    }
-
-    spline-viewer { width: 100%; height: 100%; background: transparent; }
 
     .title {
       font-size: clamp(1.5rem, 3.4vw, 2.8rem);
@@ -394,16 +375,10 @@
       flex-wrap: wrap;
     }
 
-    @keyframes phoneFloat {
-      0% { transform: translateY(0) rotate(-1.2deg) rotateX(2deg) rotateY(-3deg); }
-      50% { transform: translateY(-18px) rotate(1deg) rotateX(1deg) rotateY(4deg); }
-      100% { transform: translateY(0) rotate(-1.2deg) rotateX(2deg) rotateY(-3deg); }
-    }
-
-    @keyframes cardFloat {
-      0% { transform: translate(-18%, 16%) rotate(-9deg) translateY(0); }
-      50% { transform: translate(-18%, 16%) rotate(-5deg) translateY(-12px); }
-      100% { transform: translate(-18%, 16%) rotate(-9deg) translateY(0); }
+    @keyframes cardFloatSolo {
+      0% { transform: rotate(-10deg) translateY(0px); }
+      50% { transform: rotate(-7deg) translateY(-14px); }
+      100% { transform: rotate(-10deg) translateY(0px); }
     }
 
     @keyframes laptopOpen {
@@ -434,7 +409,6 @@
       .hero-grid, .facts-grid { grid-template-columns: 1fr; }
       .hero-visual { min-height: 420px; }
       .feature-grid { grid-template-columns: 1fr 1fr; }
-      .spline-wrap { right: 0; top: 0; }
     }
 
     @media (max-width: 760px) {
@@ -485,10 +459,8 @@
         </div>
 
         <div class="hero-visual">
-          <div class="layer"><img src="./pages/phone1.png" alt="Liberty phones" class="phone" /></div>
-          <div class="layer"><img src="./pages/card1.png" alt="Liberty card" class="card-single" /></div>
-          <div class="spline-wrap">
-            <spline-viewer url="https://prod.spline.design/S8fovIAmgI2CQHy2/scene.splinecode"></spline-viewer>
+          <div class="layer">
+            <img src="./pages/card1.png" alt="Liberty card" class="card-single" />
           </div>
         </div>
       </div>
@@ -566,7 +538,5 @@
       <span>Политика конфиденциальности</span>
     </footer>
   </main>
-
-  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.73/build/spline-viewer.js"></script>
 </body>
 </html>

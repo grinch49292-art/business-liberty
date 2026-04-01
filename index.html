@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Liberty</title>
+  <meta name="description" content="Liberty — надежные и инновационные платежные решения." />
 
-  <!-- favicon -->
   <link rel="icon" type="image/svg+xml" href="./pages/symbol_dark.svg" />
   <link rel="apple-touch-icon" href="./pages/symbol_dark.svg" />
 
@@ -13,148 +13,608 @@
     :root {
       --blue-violet: #6c7bff;
       --bright-violet: #db63db;
+      --cotton-cloud: #fef3ff;
       --deep-purple: #13071e;
+
+      --bg-panel: rgba(11, 7, 20, 0.84);
+      --stroke: rgba(255, 255, 255, 0.12);
+      --stroke-soft: rgba(255, 255, 255, 0.08);
+      --text: #f5f0ff;
+      --muted: #cbbfda;
+      --container: min(1180px, 92vw);
+      --radius-xl: 24px;
+      --radius-lg: 16px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: var(--deep-purple);
-    }
+    html { scroll-behavior: smooth; }
 
     body {
-      position: relative;
-      isolation: isolate;
+      color: var(--text);
       background:
         radial-gradient(1200px 760px at 34% -8%, rgba(142, 164, 255, 0.60), transparent 62%),
         radial-gradient(760px 520px at 102% 0%, rgba(219, 99, 219, 0.40), transparent 70%),
         linear-gradient(180deg, #2f3796 0%, #211050 38%, #140726 70%, #0d0419 100%);
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
     }
 
-    /* Сетка (крупная + мелкая), как на референсе */
     body::before {
       content: "";
-      position: absolute;
+      position: fixed;
       inset: 0;
-      z-index: 1;
+      z-index: -2;
       pointer-events: none;
       background-image:
         linear-gradient(rgba(255, 255, 255, 0.075) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.075) 1px, transparent 1px),
         linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
-      background-size:
-        46px 46px,
-        46px 46px,
-        11px 11px,
-        11px 11px;
+      background-size: 46px 46px, 46px 46px, 11px 11px, 11px 11px;
       opacity: 0.58;
       mix-blend-mode: screen;
     }
 
-    .scene {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Главное мягкое верхнее свечение */
-    .top-glow {
-      position: absolute;
-      top: -130px;
+    .bg-ghost {
+      position: fixed;
       left: 50%;
-      transform: translateX(-50%);
-      width: min(78vw, 1060px);
-      height: min(62vw, 710px);
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 50% 52%, rgba(255,255,255,0.34), rgba(176,187,255,0.18) 38%, rgba(136,115,239,0.11) 58%, transparent 72%);
-      filter: blur(13px);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* Фоновый призрак */
-    .ghost-bg {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: min(90vw, 1020px);
-      transform: translate(-50%, -52%);
+      top: 45%;
+      width: min(92vw, 1040px);
+      transform: translate(-50%, -50%);
       opacity: 0.12;
-      filter: saturate(1.06) contrast(1.03);
-      user-select: none;
-      -webkit-user-drag: none;
       pointer-events: none;
-      z-index: 2;
+      z-index: -1;
+      filter: saturate(1.06);
     }
 
-    /* Нижние фиолетовые оттенки как в референсе */
-    .bottom-violet {
-      position: absolute;
+    .violet-bottom {
+      position: fixed;
       inset: auto 0 0 0;
-      height: 30%;
-      z-index: 3;
+      height: 30vh;
       pointer-events: none;
+      z-index: -1;
       background:
         radial-gradient(120% 130% at 50% 120%, rgba(192, 22, 196, 0.33) 0%, rgba(145, 24, 176, 0.16) 35%, rgba(84, 18, 132, 0.08) 58%, transparent 80%),
         linear-gradient(180deg, transparent 0%, rgba(105, 22, 134, 0.22) 65%, rgba(99, 18, 128, 0.34) 100%);
-      filter: blur(0.2px);
     }
 
-    /* Глубина по краям */
-    .vignette {
+    .container { width: var(--container); margin-inline: auto; }
+
+    .nav-wrap {
+      position: sticky;
+      top: 14px;
+      z-index: 30;
+      margin: 14px auto 20px;
+      width: var(--container);
+    }
+
+    .nav {
+      border: 1px solid var(--stroke-soft);
+      border-radius: 14px;
+      background: rgba(8, 5, 16, 0.74);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      gap: 14px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.65rem;
+      letter-spacing: -0.03em;
+    }
+
+    .brand img { width: 30px; height: 30px; }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #e7ddf4;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 8px 11px;
+      border-radius: 9px;
+      font-size: 0.78rem;
+      transition: .2s ease;
+    }
+
+    .menu a:hover { border-color: rgba(142, 164, 255, 0.8); color: #fff; }
+
+    .section {
+      margin-bottom: 22px;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(8, 5, 16, 0.82), rgba(5, 3, 12, 0.9));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; top: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #6277ff 24%, #a770ff 58%, transparent 100%);
+      opacity: .85;
+    }
+
+    .hero {
+      padding: clamp(24px, 4vw, 44px);
+      min-height: min(86vh, 880px);
+      display: grid;
+      grid-template-columns: 1.04fr .96fr;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5.7vw, 4.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      max-width: 12ch;
+    }
+
+    .grad {
+      background: linear-gradient(95deg, var(--blue-violet), #9d8bff 46%, var(--bright-violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 56ch;
+      margin-bottom: 18px;
+    }
+
+    .btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      border-radius: 11px;
+      padding: 12px 18px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: .2s ease;
+    }
+
+    .btn-main {
+      color: #140a23;
+      background: linear-gradient(100deg, #8ca1ff, #a57dff 55%, #d86be6);
+      box-shadow: 0 12px 35px rgba(140, 125, 255, 0.34);
+    }
+
+    .btn-alt {
+      color: #f2eaff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+      perspective: 1200px;
+    }
+
+    .float-layer {
       position: absolute;
       inset: 0;
-      z-index: 4;
+      display: grid;
+      place-items: center;
       pointer-events: none;
-      background:
-        radial-gradient(95% 70% at 50% -12%, transparent 38%, rgba(9,2,19,0.34) 73%, rgba(7,2,14,0.64) 100%),
-        linear-gradient(180deg, transparent 58%, rgba(9, 2, 17, 0.46) 100%);
     }
 
-    /* Пустое место под будущий контент */
-    .content-placeholder {
+    .phone {
+      width: min(610px, 92%);
+      animation: phoneFloat 7s ease-in-out infinite;
+      filter: drop-shadow(0 28px 54px rgba(0,0,0,0.45));
+    }
+
+    .single-card {
+      width: min(470px, 78%);
+      transform: translate(-20%, 18%) rotate(-10deg);
+      animation: cardFloat 6.3s ease-in-out infinite;
+      filter: drop-shadow(0 24px 45px rgba(112, 40, 195, 0.35));
+    }
+
+    .spline-wrap {
+      position: absolute;
+      right: -8%;
+      top: -6%;
+      width: min(340px, 46%);
+      aspect-ratio: 1/1;
+      opacity: 0.82;
+      pointer-events: none;
+    }
+
+    spline-viewer { width: 100%; height: 100%; background: transparent; }
+
+    .two-col {
+      padding: clamp(20px, 3vw, 36px);
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .two-col h2,
+    .gallery h2,
+    .features h2,
+    .geo h2 {
+      font-size: clamp(1.45rem, 3.6vw, 2.8rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .lead {
+      color: #d8cbe8;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .stat {
+      border: 1px solid var(--stroke-soft);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .stat strong { display: block; font-size: 1.5rem; margin-bottom: 4px; }
+    .stat span { color: #c5b6d8; font-size: 0.92rem; }
+
+    .laptop-scene {
+      position: relative;
+      width: min(620px, 100%);
+      aspect-ratio: 1 / 1;
+      margin-inline: auto;
+      perspective: 1300px;
+    }
+
+    .laptop {
       position: absolute;
       inset: 0;
-      z-index: 5;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      will-change: transform, opacity;
+      pointer-events: none;
     }
 
-    @media (max-width: 900px) {
-      .ghost-bg {
-        width: 125vw;
-        opacity: 0.14;
-      }
+    .laptop-closed {
+      opacity: 1;
+      transform: scale(0.93) translateY(18px);
+      animation: laptopClosedCycle 7.2s ease-in-out infinite;
+    }
 
-      .bottom-violet {
-        height: 34%;
-      }
+    .laptop-open {
+      opacity: 0;
+      transform: scale(0.98) translateY(8px);
+      animation: laptopOpenCycle 7.2s ease-in-out infinite;
+      filter: drop-shadow(0 30px 54px rgba(0,0,0,0.34));
+    }
+
+    .gallery { padding: clamp(20px, 3vw, 36px); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .card-box {
+      border: 1px solid var(--stroke-soft);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      min-height: 330px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .cards-stack {
+      width: min(540px, 88%);
+      animation: floatCards 7s ease-in-out infinite;
+      filter: drop-shadow(0 34px 70px rgba(0, 0, 0, 0.48));
+    }
+
+    .balance {
+      width: min(360px, 78%);
+      animation: balancePulse 6.2s ease-in-out infinite;
+      filter: drop-shadow(0 34px 80px rgba(91, 44, 255, 0.26));
+    }
+
+    .features { padding: clamp(20px, 3vw, 36px); }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .feature {
+      border: 1px solid var(--stroke-soft);
+      border-radius: 16px;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+      min-height: 150px;
+    }
+
+    .feature h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: .01em;
+    }
+
+    .feature p { color: #c5b6d8; line-height: 1.6; font-size: 0.92rem; }
+
+    .geo { padding: clamp(20px, 3vw, 36px); }
+
+    .geo-tags {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .geo-tags span {
+      border: 1px solid var(--stroke-soft);
+      background: rgba(255,255,255,0.04);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 0.9rem;
+      color: #e9dff6;
+    }
+
+    .cta {
+      padding: clamp(20px, 3vw, 36px);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .cta p { color: #ccbddd; margin-top: 8px; line-height: 1.6; }
+
+    .ring-spline { width: clamp(170px, 18vw, 270px); aspect-ratio: 1/1; opacity: 0.9; pointer-events: none; }
+
+    .footer {
+      margin: 10px auto 28px;
+      width: var(--container);
+      border: 1px solid var(--stroke-soft);
+      border-radius: 16px;
+      background: rgba(6,4,12,.72);
+      padding: 18px;
+      color: #b9a8ce;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 0.92rem;
+    }
+
+    @keyframes phoneFloat {
+      0% { transform: translateY(0px) rotate(-1.5deg) rotateX(2deg) rotateY(-3deg); }
+      50% { transform: translateY(-18px) rotate(1.2deg) rotateX(1deg) rotateY(4deg); }
+      100% { transform: translateY(0px) rotate(-1.5deg) rotateX(2deg) rotateY(-3deg); }
+    }
+
+    @keyframes cardFloat {
+      0% { transform: translate(-20%, 18%) rotate(-10deg) translateY(0); }
+      50% { transform: translate(-20%, 18%) rotate(-6deg) translateY(-14px); }
+      100% { transform: translate(-20%, 18%) rotate(-10deg) translateY(0); }
+    }
+
+    @keyframes laptopClosedCycle {
+      0% { opacity: 1; transform: scale(0.93) translateY(18px); }
+      20% { opacity: 1; transform: scale(0.95) translateY(12px); }
+      34% { opacity: 0; transform: scale(0.97) translateY(6px); }
+      82% { opacity: 0; transform: scale(0.97) translateY(6px); }
+      100% { opacity: 1; transform: scale(0.93) translateY(18px); }
+    }
+
+    @keyframes laptopOpenCycle {
+      0% { opacity: 0; transform: scale(0.97) translateY(8px); }
+      22% { opacity: 0; transform: scale(0.99) translateY(2px); }
+      36% { opacity: 1; transform: scale(1) translateY(0); }
+      72% { opacity: 1; transform: scale(1.01) translateY(-4px); }
+      86% { opacity: 0; transform: scale(0.98) translateY(4px); }
+      100% { opacity: 0; transform: scale(0.97) translateY(8px); }
+    }
+
+    @keyframes floatCards {
+      0% { transform: translateY(0px) rotate(-2deg); }
+      50% { transform: translateY(-18px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(-2deg); }
+    }
+
+    @keyframes balancePulse {
+      0% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.02); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 1024px) {
+      .hero, .two-col, .cta { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 420px; }
+      .feature-grid { grid-template-columns: 1fr 1fr; }
+      .spline-wrap { right: 0; top: 0; }
+    }
+
+    @media (max-width: 760px) {
+      .menu { display: none; }
+      .gallery-grid, .feature-grid { grid-template-columns: 1fr; }
+      .stat strong { font-size: 1.3rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
-  <div class="scene">
-    <div class="top-glow"></div>
+  <img class="bg-ghost" src="./pages/symbol_gradient.png" alt="" aria-hidden="true" />
+  <div class="violet-bottom"></div>
 
-    <img
-      class="ghost-bg"
-      src="./pages/symbol_gradient.png"
-      alt=""
-      aria-hidden="true"
-    />
-
-    <div class="bottom-violet"></div>
-    <div class="vignette"></div>
-
-    <div class="content-placeholder"></div>
+  <div class="nav-wrap">
+    <nav class="nav">
+      <a href="#" class="brand">
+        <img src="./pages/symbol_dark.svg" alt="Liberty logo" />
+        <span>Liberty</span>
+      </a>
+      <div class="menu">
+        <a href="#hero">Кто мы</a>
+        <a href="#systems">Платежные системы</a>
+        <a href="#features">Преимущества</a>
+        <a href="#geo">С кем работаем</a>
+        <a href="#cta">Контакты</a>
+      </div>
+    </nav>
   </div>
+
+  <main class="container">
+    <section class="section hero" id="hero">
+      <div>
+        <h1><span class="grad">WELCOME TO LIBERTY</span><br />PRIVATE LIMITED COMPANY</h1>
+        <p>
+          Наша компания — это надежные и инновационные платежные решения.
+          Наша миссия — увеличивать доходы компаний и частных клиентов путем внедрения эффективных инструментов.
+          Наша цель — предоставить максимально простой способ оплат и расчетов.
+        </p>
+        <div class="btns">
+          <a class="btn btn-main" href="#cta">Свяжитесь с нами</a>
+          <a class="btn btn-alt" href="#features">Подробнее</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="float-layer">
+          <img src="./pages/phone.png" alt="Liberty phones" class="phone" />
+        </div>
+        <div class="float-layer">
+          <img src="./pages/card.png" alt="Liberty card" class="single-card" />
+        </div>
+        <div class="spline-wrap">
+          <spline-viewer url="https://prod.spline.design/S8fovIAmgI2CQHy2/scene.splinecode"></spline-viewer>
+        </div>
+      </div>
+    </section>
+
+    <section class="section two-col">
+      <div>
+        <h2>LIBERTY ЯВЛЯЕТСЯ ВАШИМ <span class="grad">НАДЕЖНЫМ ПАРТНЕРОМ</span> В СФЕРЕ ФИНАНСОВЫХ РЕШЕНИЙ</h2>
+        <p class="lead">
+          Обеспечиваем уверенность и безопасность на каждом этапе вашего финансового пути.
+          Предлагаем решения, которые открывают новые возможности для бизнеса и личных финансов.
+        </p>
+        <div class="stats">
+          <div class="stat"><strong>24/7</strong><span>Работаем без остановок</span></div>
+          <div class="stat"><strong>с 2019</strong><span>Года на рынке</span></div>
+          <div class="stat"><strong>20+</strong><span>Экспертов в команде</span></div>
+          <div class="stat"><strong>178+</strong><span>Проектов и клиентов</span></div>
+        </div>
+      </div>
+
+      <div class="laptop-scene">
+        <img src="./pages/computer.png" alt="Liberty laptop closed" class="laptop laptop-closed" />
+        <img src="./pages/computer.png" alt="Liberty laptop open" class="laptop laptop-open" />
+      </div>
+    </section>
+
+    <section class="section gallery" id="systems">
+      <h2>ПРЕДОСТАВЛЯЕМ РАБОТУ ЧЕРЕЗ ПЛАТЕЖНЫЕ СИСТЕМЫ</h2>
+      <div class="gallery-grid">
+        <article class="card-box">
+          <img src="./pages/cards.png" alt="Cards stack" class="cards-stack" />
+        </article>
+        <article class="card-box">
+          <img src="./pages/balance.png" alt="Balance app ui" class="balance" />
+        </article>
+      </div>
+    </section>
+
+    <section class="section features" id="features">
+      <h2>LIBERTY — УНИВЕРСАЛЬНЫЙ ПЛАТЕЖНЫЙ СЕРВИС</h2>
+      <div class="feature-grid">
+        <article class="feature">
+          <h3>НА ОСТРИЕ ТЕХНОЛОГИЙ</h3>
+          <p>Используем современные платежные подходы и адаптируем решения под ваш бизнес.</p>
+        </article>
+        <article class="feature">
+          <h3>МЕЖДУНАРОДНАЯ КОМПАНИЯ</h3>
+          <p>Охватываем широкий спектр рынков и работаем с клиентами по всему миру.</p>
+        </article>
+        <article class="feature">
+          <h3>ВЫСОКИЙ УРОВЕНЬ БЕЗОПАСНОСТИ</h3>
+          <p>Фокус на стабильности, надежности и защите платежных операций.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section geo" id="geo">
+      <h2>МЫ ОБЪЕДИНЯЕМ МИР</h2>
+      <p class="lead">Делаем онлайн-платежи простыми, независимо от того, где вы находитесь.</p>
+      <div class="geo-tags">
+        <span>USA</span><span>Canada</span><span>EU</span><span>UAE</span><span>India</span>
+        <span>China</span><span>Japan</span><span>Korea</span><span>Australia</span><span>LatAm</span>
+      </div>
+    </section>
+
+    <section class="section cta" id="cta">
+      <div>
+        <h2>ЕСТЬ ВОПРОСЫ? ОСТАВЬТЕ ЗАЯВКУ</h2>
+        <p>Заполните форму, мы свяжемся с вами в течение 15 минут. Получите доступ к закрытым предложениям и консультации.</p>
+        <div class="btns" style="margin-top: 14px;">
+          <a class="btn btn-main" href="#">Оставить заявку</a>
+          <a class="btn btn-alt" href="#">Telegram</a>
+        </div>
+      </div>
+      <div class="ring-spline">
+        <spline-viewer url="https://prod.spline.design/S8fovIAmgI2CQHy2/scene.splinecode"></spline-viewer>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© Liberty, 2019–2026</span>
+    <span>Политика конфиденциальности</span>
+  </footer>
+
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.73/build/spline-viewer.js"></script>
 </body>
 </html>

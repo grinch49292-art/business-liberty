@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Liberty</title>
-  <meta name="description" content="Liberty — premium landing" />
+  <title>Liberty Payment Solutions</title>
+  <meta name="description" content="Liberty Payment Solutions — B2B решения для процессинга платежей." />
 
   <link rel="icon" type="image/svg+xml" href="./pages/symbol_dark.svg" />
   <link rel="apple-touch-icon" href="./pages/symbol_dark.svg" />
@@ -15,7 +15,8 @@
       --bright-violet: #db63db;
       --text: #f5f1ff;
       --muted: #cbbfda;
-      --line-soft: rgba(255, 255, 255, 0.07);
+      --line-soft: rgba(255, 255, 255, 0.11);
+      --glass: rgba(255, 255, 255, 0.04);
       --container: min(1180px, 92vw);
     }
 
@@ -31,9 +32,9 @@
         radial-gradient(1200px 760px at 34% -8%, rgba(142, 164, 255, 0.60), transparent 62%),
         radial-gradient(760px 520px at 102% 0%, rgba(219, 99, 219, 0.40), transparent 70%),
         linear-gradient(180deg, #2f3796 0%, #211050 38%, #140726 70%, #0d0419 100%);
+      line-height: 1.55;
     }
 
-    /* Фирменная сетка */
     body::before {
       content: "";
       position: fixed;
@@ -41,10 +42,10 @@
       z-index: -2;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.075) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.075) 1px, transparent 1px),
-        linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
       background-size: 46px 46px, 46px 46px, 11px 11px, 11px 11px;
       opacity: 0.58;
       mix-blend-mode: screen;
@@ -56,10 +57,10 @@
       top: 45%;
       width: min(92vw, 1040px);
       transform: translate(-50%, -50%);
-      opacity: 0.11;
+      opacity: 0.10;
       pointer-events: none;
       z-index: -1;
-      filter: saturate(1.06);
+      filter: saturate(1.04);
     }
 
     .violet-bottom {
@@ -81,6 +82,7 @@
       z-index: 20;
       width: var(--container);
       margin: 12px auto 24px;
+      backdrop-filter: blur(4px);
     }
 
     .nav {
@@ -90,7 +92,6 @@
       gap: 14px;
       padding: 10px 0;
       border-bottom: 1px solid var(--line-soft);
-      backdrop-filter: blur(4px);
     }
 
     .brand {
@@ -144,7 +145,7 @@
       min-height: min(82vh, 860px);
     }
 
-    .hero h1 {
+    h1 {
       font-size: clamp(2rem, 5.9vw, 4.5rem);
       line-height: 0.98;
       letter-spacing: -0.03em;
@@ -165,6 +166,7 @@
       max-width: 56ch;
       line-height: 1.62;
       margin-bottom: 18px;
+      font-size: 1.06rem;
     }
 
     .btns {
@@ -181,6 +183,9 @@
       border-radius: 11px;
       font-weight: 700;
       transition: .2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .btn-main {
@@ -198,19 +203,9 @@
     .btn:hover { transform: translateY(-1px); }
 
     .hero-visual {
-      position: relative;
       min-height: 500px;
       display: grid;
       place-items: center;
-      perspective: 1200px;
-    }
-
-    .layer {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      pointer-events: none;
     }
 
     .card-single {
@@ -223,137 +218,108 @@
     }
 
     .title {
-      font-size: clamp(1.5rem, 3.4vw, 2.8rem);
+      font-size: clamp(1.45rem, 3.3vw, 2.6rem);
       text-transform: uppercase;
-      line-height: 1.06;
+      line-height: 1.08;
       letter-spacing: -0.02em;
       margin-bottom: 12px;
     }
 
     .sub {
       color: #d4c6e4;
-      line-height: 1.6;
-      max-width: 70ch;
+      line-height: 1.7;
+      max-width: 80ch;
       margin-bottom: 18px;
+      font-size: 1.02rem;
     }
 
-    .facts-grid {
+    .long-text {
       display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 24px;
-      align-items: center;
+      gap: 14px;
+      margin-top: 12px;
+      max-width: 95ch;
     }
 
-    .facts {
+    .long-text p { color: #dacde8; line-height: 1.72; }
+
+    .stars {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin: 8px 0 10px;
+    }
+
+    .stars li {
+      color: #efe6ff;
+      padding-left: 26px;
+      position: relative;
+      line-height: 1.65;
+    }
+
+    .stars li::before {
+      content: "🌟";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .cards-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .fact {
-      border: 1px solid var(--line-soft);
-      border-radius: 14px;
-      padding: 14px;
-      background: rgba(255,255,255,.02);
-      backdrop-filter: blur(2px);
-    }
-
-    .fact b {
-      display: block;
-      font-size: 1.5rem;
-      margin-bottom: 4px;
-    }
-
-    .fact span {
-      color: #c7b8d9;
-      font-size: .92rem;
-    }
-
-    .laptop-scene {
-      position: relative;
-      width: min(620px, 100%);
-      aspect-ratio: 1 / 1;
-      margin-inline: auto;
-      perspective: 1200px;
-    }
-
-    .laptop {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      pointer-events: none;
-      will-change: transform, opacity;
-    }
-
-    .laptop-open {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-      animation: laptopOpen 5.8s ease-in-out infinite;
-      filter: drop-shadow(0 24px 56px rgba(0,0,0,.35));
-    }
-
-    .laptop-closed {
-      opacity: 0;
-      transform: scale(.96) translateY(10px);
-      animation: laptopClosed 5.8s ease-in-out infinite;
-      filter: drop-shadow(0 14px 28px rgba(0,0,0,.24));
-    }
-
-    .systems-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 14px;
-      margin-top: 10px;
+      margin-top: 18px;
+    }
+
+    .pack {
+      border: 1px solid var(--line-soft);
+      border-radius: 16px;
+      padding: 16px;
+      background: var(--glass);
+      backdrop-filter: blur(4px);
+    }
+
+    .pack h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .pack .price {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255,255,255,.22);
+      color: #efe6ff;
+      display: grid;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    .media-row {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
     }
 
     .media {
-      min-height: 320px;
+      min-height: 260px;
       display: grid;
       place-items: center;
       border: 1px solid var(--line-soft);
-      border-radius: 16px;
-      background: rgba(255,255,255,.015);
-    }
-
-    .cards-stack {
-      width: min(520px, 88%);
-      animation: cardsFloat 7s ease-in-out infinite;
-      filter: drop-shadow(0 34px 70px rgba(0, 0, 0, .46));
-    }
-
-    .balance {
-      width: min(360px, 78%);
-      animation: balanceFloat 6.4s ease-in-out infinite;
-      filter: drop-shadow(0 30px 66px rgba(91, 44, 255, .26));
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 10px;
-    }
-
-    .feature {
-      border: 1px solid var(--line-soft);
       border-radius: 14px;
-      padding: 14px;
       background: rgba(255,255,255,.015);
+      overflow: hidden;
     }
 
-    .feature h3 {
-      font-size: .98rem;
-      margin-bottom: 8px;
-      text-transform: uppercase;
+    .media img {
+      max-width: 88%;
+      height: auto;
+      display: block;
     }
 
-    .feature p {
-      color: #c5b6d8;
-      line-height: 1.58;
-      font-size: .92rem;
-    }
+    .img-cards { animation: cardsFloat 7s ease-in-out infinite; }
+    .img-balance { animation: balanceFloat 6.4s ease-in-out infinite; max-width: 72% !important; }
+    .img-phone { animation: phoneFloat 6.8s ease-in-out infinite; max-width: 70% !important; }
 
     .cta-row {
       display: flex;
@@ -361,6 +327,7 @@
       align-items: center;
       gap: 16px;
       flex-wrap: wrap;
+      margin-top: 10px;
     }
 
     .footer {
@@ -381,18 +348,6 @@
       100% { transform: rotate(-10deg) translateY(0px); }
     }
 
-    @keyframes laptopOpen {
-      0%, 18% { opacity: 1; transform: scale(1) translateY(0); }
-      34%, 52% { opacity: .35; transform: scale(.985) translateY(6px); }
-      68%, 100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    @keyframes laptopClosed {
-      0%, 22% { opacity: 0; transform: scale(.96) translateY(10px); }
-      36%, 56% { opacity: 1; transform: scale(1) translateY(0); }
-      72%, 100% { opacity: 0; transform: scale(.96) translateY(10px); }
-    }
-
     @keyframes cardsFloat {
       0% { transform: translateY(0) rotate(-2deg); }
       50% { transform: translateY(-16px) rotate(2deg); }
@@ -405,16 +360,20 @@
       100% { transform: translateY(0) scale(1); }
     }
 
+    @keyframes phoneFloat {
+      0% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-12px) rotate(1deg); }
+      100% { transform: translateY(0) rotate(-2deg); }
+    }
+
     @media (max-width: 1024px) {
-      .hero-grid, .facts-grid { grid-template-columns: 1fr; }
-      .hero-visual { min-height: 420px; }
-      .feature-grid { grid-template-columns: 1fr 1fr; }
+      .hero-grid, .cards-grid, .media-row { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 360px; }
+      .media { min-height: 220px; }
     }
 
     @media (max-width: 760px) {
       .menu { display: none; }
-      .systems-grid, .feature-grid { grid-template-columns: 1fr; }
-      .facts { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -433,16 +392,17 @@
         <span>Liberty</span>
       </a>
       <div class="menu">
-        <a href="#hero">Кто мы</a>
-        <a href="#facts">Факты</a>
-        <a href="#systems">Системы</a>
-        <a href="#features">Преимущества</a>
+        <a href="#hero">Главная</a>
+        <a href="#problem">Проблематика</a>
+        <a href="#solution">Решение</a>
+        <a href="#packages">Пакеты</a>
         <a href="#cta">Контакты</a>
       </div>
     </nav>
   </div>
 
   <main class="container">
+    <!-- Экран 1 -->
     <section class="section hero" id="hero">
       <div class="hero-grid">
         <div>
@@ -453,89 +413,173 @@
             Наша цель — предоставить максимально простой способ оплат и расчетов.
           </p>
           <div class="btns">
-            <a class="btn btn-main" href="#cta">Свяжитесь с нами</a>
-            <a class="btn btn-ghost" href="#features">Подробнее</a>
+            <a class="btn btn-main" href="#packages">Смотреть пакеты</a>
+            <a class="btn btn-ghost" href="#problem">Подробнее</a>
           </div>
         </div>
-
         <div class="hero-visual">
-          <div class="layer">
-            <img src="./pages/card1.png" alt="Liberty card" class="card-single" />
+          <img src="./pages/card1.png" alt="Liberty card" class="card-single" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Контент после скрина 1 -->
+    <section class="section" id="problem">
+      <h2 class="title">Текущие реалии рынка процессинга</h2>
+      <div class="long-text">
+        <p>В текущих реалиях сфера процессинговой обработки переживает все более и более кризисные времена.</p>
+        <p>Закрываются не только старейшие офисы обработки платежей, но и молодые и средние гембл проекты, а также множество обменников.</p>
+        <p>В чем же настоящие причины происходящего?</p>
+        <p>На самом деле причины достаточно просты, решаемы и понятны. Это не “закончилась емкость рынка”, “все гайки пережаты” или “рынок перегрет”. Причина в том, что каждому бизнесу, прямо или косвенно связанному с процессингом платежей, не хватает ни на старте, ни через год и более базовых опор:</p>
+      </div>
+      <ul class="stars">
+        <li>Стабильность</li>
+        <li>Прогнозируемость</li>
+        <li>Надежный фундамент</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2 class="title">Давайте разберем на примере</h2>
+      <p class="sub">
+        Трейдерский офис / инхаус и партнерские офисы РФ и СНГ подразумевают, что бизнес понимает,
+        какие условия ему нужны для большой обработки и хорошей маржи.
+      </p>
+      <p class="sub">Что нужно такому бизнесу, чтобы показывать отличный финансовый результат?</p>
+      <ul class="stars">
+        <li>Наличие выплат в любом объеме</li>
+        <li>Хороший объем понятного трафика без сюрпризов</li>
+        <li>Работа с прямыми мерчантами для поддержания высоких ставок</li>
+        <li>Максимально гибкое управление техническими и организационными аспектами</li>
+        <li>Проверенное, боевое, надежное техническое решение</li>
+        <li>Оперативное решение возникающих нюансов без лишних затрат времени и ресурсов</li>
+        <li>Уложить все выше перечисленное в понятный бюджет и быстро реализовать</li>
+      </ul>
+      <div class="long-text">
+        <p>
+          Для олдов все перечисленное понятно и кажется базовой необходимостью для выстраивания плодотворной работы.
+          Однако, несмотря на понятные критерии, весь этот пласт задач остается крайне тяжелым.
+        </p>
+        <p>
+          Сколько проектов реально работают с прямыми мерчантами? У скольких кассовые разрывы из-за некачественного кода?
+          А про количество проектов, у которых на борту есть необходимые сегодня выплаты в любом объеме, и вовсе можно сказать:
+          их единицы.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="solution">
+      <h2 class="title">B2B решение от Liberty Payment Solutions</h2>
+      <p class="sub">
+        На решение этих проблем у проектов уходит не один год. Но по прошествии времени и большого объема практики
+        команда Liberty Payment Solutions готова представить B2B решение как минимум для 5 видов бизнеса,
+        основанных на процессинге платежей. Решение закрывает потребности, не относящиеся к основной специализации бизнеса.
+      </p>
+      <ul class="stars">
+        <li>Офисы не должны искать трафик и выплаты 🤝</li>
+        <li>Казино и обменники не должны искать обработку 🤝</li>
+        <li>Остальные сервисы не должны заниматься задачами вне своей специализации 🤝</li>
+      </ul>
+
+      <div class="media-row">
+        <article class="media"><img src="./pages/cards1.png" alt="Cards" class="img-cards" /></article>
+        <article class="media"><img src="./pages/balance1.png" alt="Balance app" class="img-balance" /></article>
+        <article class="media"><img src="./pages/phone1.png" alt="Phone" class="img-phone" /></article>
+      </div>
+    </section>
+
+    <section class="section" id="packages">
+      <h2 class="title">Пакеты Liberty</h2>
+      <div class="cards-grid">
+        <article class="pack">
+          <h3>LB | Office Classic 🔥</h3>
+          <p class="sub">Классический пакет для инхаус офисов и массовых трейдерских решений:</p>
+          <ul class="stars">
+            <li>Тир 1 техническое решение</li>
+            <li>Полное обеспечение любым РФ и СНГ трафиком</li>
+            <li>Создание бренда клиента и выстраивание его позиционирования</li>
+            <li>Круглосуточная техническая поддержка</li>
+            <li>Функционал маркета внутри площадки</li>
+            <li>Каскадное решение</li>
+            <li>Гибкое дробление типов трафика</li>
+            <li>Все существующие методы с гибкими настройками (QR НСПК, КА, БТ, Неттинг, Мультитрансфер, Quasi Ecom и тд)</li>
+          </ul>
+          <div class="price">
+            <div>Цена White Label решения: 9500$</div>
+            <div>Ежемесячное техническое обслуживание и сервера: 500$</div>
+            <div>Срез: 0,4%, при обороте от 100к$ суточного — 0,2%</div>
+            <div>Время установки WL: до 3 дней с момента оплаты</div>
           </div>
-        </div>
-      </div>
-    </section>
+        </article>
 
-    <section class="section" id="facts">
-      <div class="facts-grid">
-        <div>
-          <h2 class="title">LIBERTY ЯВЛЯЕТСЯ ВАШИМ <span class="grad">НАДЕЖНЫМ ПАРТНЕРОМ</span></h2>
-          <p class="sub">
-            Обеспечиваем уверенность и безопасность на каждом этапе вашего финансового пути.
-            Предлагаем решения, которые открывают новые возможности для бизнеса и личных финансов.
-          </p>
-          <div class="facts">
-            <div class="fact"><b>24/7</b><span>работаем без остановок</span></div>
-            <div class="fact"><b>с 2019</b><span>года на рынке</span></div>
-            <div class="fact"><b>20+</b><span>экспертов в команде</span></div>
-            <div class="fact"><b>178+</b><span>реализованных проектов</span></div>
+        <article class="pack">
+          <h3>LB | Office Plus + 🔥</h3>
+          <p class="sub">Пакет с продвинутой поддержкой по направлению Выплаты РФ и Маркетингу:</p>
+          <ul class="stars">
+            <li>Полный состав содержимого пакета Office Classic</li>
+            <li>Сопровождение и гарантированное открытие легальной фирмы для обеспечения любого объема выплат</li>
+            <li>Надежные маркетинговые инструменты и стратегии по привлечению трейдеров и агентов</li>
+          </ul>
+          <div class="price">
+            <div>Цена White Label решения: 14500$</div>
+            <div>Ежемесячное техническое обслуживание и сервера: 500$</div>
+            <div>Срез: 0,4%, при обороте от 100к$ суточного — 0,2%</div>
+            <div>Время установки WL: до 3 дней с момента оплаты</div>
           </div>
-        </div>
+        </article>
 
-        <div class="laptop-scene">
-          <img src="./pages/computer-mid-1.png" alt="Laptop open" class="laptop laptop-open" />
-          <img src="./pages/computer-mid-2.png" alt="Laptop closed" class="laptop laptop-closed" />
-        </div>
-      </div>
-    </section>
+        <article class="pack">
+          <h3>LB | Shop Plus + 🔥</h3>
+          <p class="sub">Пакет (полное готовое платежное решение) для продажи товаров в Telegram и не только:</p>
+          <ul class="stars">
+            <li>Гарантированная обработка СНГ и Трансгран платежей</li>
+            <li>Установка и настройка клиентского Telegram-бота</li>
+            <li>Интегрированная оплата криптой и фиатом</li>
+            <li>Внедрение методов приема в зависимости от ЦА и среднего чека</li>
+            <li>Помощь в развитии и размещении на спец-ресурсах</li>
+            <li>Полный доступ к функционалу, обслуживание и мониторинг входят в пакет</li>
+          </ul>
+          <div class="price">
+            <div>Цена White Label решения: 9500$</div>
+            <div>Ежемесячное техническое обслуживание и сервера: 500$</div>
+            <div>Срез: 0,4%, при обороте от 100к$ суточного — 0,2%</div>
+            <div>Время установки WL: до 3 дней с момента оплаты</div>
+          </div>
+        </article>
 
-    <section class="section" id="systems">
-      <h2 class="title">ПРЕДОСТАВЛЯЕМ РАБОТУ ЧЕРЕЗ ПЛАТЕЖНЫЕ СИСТЕМЫ</h2>
-      <div class="systems-grid">
-        <article class="media">
-          <img src="./pages/cards1.png" alt="Cards stack" class="cards-stack" />
-        </article>
-        <article class="media">
-          <img src="./pages/balance1.png" alt="Balance app" class="balance" />
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="features">
-      <h2 class="title">LIBERTY — УНИВЕРСАЛЬНЫЙ ПЛАТЕЖНЫЙ СЕРВИС</h2>
-      <p class="sub">Надежное и простое решение, которое отвечает потребностям онлайн-бизнеса.</p>
-      <div class="feature-grid">
-        <article class="feature">
-          <h3>На острие технологий</h3>
-          <p>Используем современные инструменты и постоянно улучшаем продукт.</p>
-        </article>
-        <article class="feature">
-          <h3>Международная компания</h3>
-          <p>Охватываем разные рынки и работаем с клиентами по всему миру.</p>
-        </article>
-        <article class="feature">
-          <h3>Безопасность и стабильность</h3>
-          <p>Фокус на надежной работе и защите платежных операций клиентов.</p>
+        <article class="pack">
+          <h3>LB | Exchange 🔥</h3>
+          <p class="sub">Полное техническое сопровождение Exchange бизнеса:</p>
+          <ul class="stars">
+            <li>Создание полного функционала и оформления онлайн-обменника под ключ</li>
+            <li>Гарантия обработки СНГ и Трансгран платежей</li>
+            <li>Технический функционал платежного решения на базе Liberty Payments</li>
+            <li>Помощь в легальном оформлении юрлица для стабильных расчетов и приема платежей</li>
+          </ul>
+          <div class="price">
+            <div>Цена White Label решения: 30.000$</div>
+            <div>Ежемесячное техническое обслуживание и сервера: 500$</div>
+          </div>
         </article>
       </div>
     </section>
 
     <section class="section" id="cta">
+      <h2 class="title">Готовы обсудить запуск?</h2>
+      <p class="sub">
+        Оставьте заявку — подберем пакет под ваш формат бизнеса и соберем дорожную карту внедрения.
+      </p>
       <div class="cta-row">
-        <div>
-          <h2 class="title">ЕСТЬ ВОПРОСЫ? ОСТАВЬТЕ ЗАЯВКУ</h2>
-          <p class="sub">Заполните форму, и мы свяжемся с вами в течение 15 минут.</p>
-        </div>
         <div class="btns">
           <a class="btn btn-main" href="#">Оставить заявку</a>
-          <a class="btn btn-ghost" href="#">Telegram</a>
+          <a class="btn btn-ghost" href="#">Написать в Telegram</a>
         </div>
       </div>
     </section>
 
     <footer class="footer">
-      <span>© Liberty, 2019–2026</span>
-      <span>Политика конфиденциальности</span>
+      <span>© Liberty Payment Solutions</span>
+      <span>Все права защищены</span>
     </footer>
   </main>
 </body>

@@ -635,10 +635,11 @@
 
     .contact-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1fr;
       gap: 18px;
       align-items: stretch;
       margin-top: 8px;
+      max-width: min(640px, 100%);
     }
 
     .form-box {
@@ -700,64 +701,6 @@
       line-height: 1.5;
     }
 
-    .contact-aside {
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: linear-gradient(165deg, rgba(12, 6, 26, 0.65), rgba(8, 4, 18, 0.82));
-      padding: 22px 22px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .contact-aside-title {
-      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      text-transform: none;
-      color: #fff;
-      margin: 0;
-    }
-    .contact-aside-lead {
-      margin: 0;
-      font-size: 0.95rem;
-      font-weight: 650;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-    .contact-checklist {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 10px;
-    }
-    .contact-checklist li {
-      padding-left: 26px;
-      position: relative;
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: #efe8fa;
-      line-height: 1.45;
-    }
-    .contact-checklist li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: #9dffb3;
-      font-weight: 900;
-      font-size: 0.95rem;
-    }
-    .contact-aside .btn-main {
-      margin-top: 4px;
-    }
-    .contact-aside-meta {
-      margin: 0;
-      font-size: 0.88rem;
-      font-weight: 800;
-      color: #c8d0ff;
-    }
-
     .site-footer {
       padding: 28px 0 40px;
       margin-top: 8px;
@@ -791,18 +734,6 @@
       gap: 10px;
       align-items: center;
     }
-    .soc {
-      width: 46px;
-      height: 46px;
-      border-radius: 11px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: grid;
-      place-items: center;
-      color: white;
-      text-decoration: none;
-      font-weight: 900;
-    }
     .btn-cta-telegram--compact {
       padding: 10px 16px;
       font-size: 0.88rem;
@@ -827,15 +758,9 @@
       gap: 10px;
       padding-top: 8px;
     }
-    .mail {
-      color: white;
-      font-size: 1.05rem;
-      font-weight: 800;
-      text-decoration: none;
-    }
     .copyright {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       gap: 14px;
       flex-wrap: wrap;
       margin-top: 22px;
@@ -1298,7 +1223,7 @@
             </div>
             <div class="field full">
               <label for="email">E-mail</label>
-              <input id="email" type="email" placeholder="info@liberty.tech" autocomplete="email" />
+              <input id="email" type="email" placeholder="name@company.com" autocomplete="email" />
             </div>
             <div class="field full">
               <label for="msg">Комментарий</label>
@@ -1315,19 +1240,6 @@
           </div>
         </div>
 
-        <aside class="contact-aside" aria-label="Быстрая связь">
-          <h3 class="contact-aside-title">Напрямую, как на рабочих B2B‑лендингах</h3>
-          <p class="contact-aside-lead">
-            Форма слева — или сразу Telegram: коротко опишите продукт и гео, предложим пакет и следующий шаг.
-          </p>
-          <ul class="contact-checklist">
-            <li>Без предоплаты за «кота в мешке» — логика из блока «О продукте»</li>
-            <li>Подбор Office / Shop / Exchange WL под ваш сценарий</li>
-            <li>Оперативный диалог по сути — без лишней бюрократики</li>
-          </ul>
-          <a class="btn btn-main" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
-          <p class="contact-aside-meta">@liberty_Che_LB</p>
-        </aside>
       </div>
     </section>
 
@@ -1343,9 +1255,7 @@
           </a>
           <div class="socials">
             <a class="btn btn-cta-telegram btn-cta-telegram--compact" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
-            <a class="soc" href="#contact" aria-label="Форма заявки">@</a>
           </div>
-          <div style="color: #d7ccea; font-weight: 700; font-size: 0.88rem;">TERMS & CONDITIONS</div>
         </div>
 
         <nav class="footer-links" aria-label="Навигация в подвале">
@@ -1358,14 +1268,12 @@
         </nav>
 
         <div class="footer-right">
-          <a class="mail" href="mailto:info@liberty.tech">info@liberty.tech</a>
           <a class="btn btn-main" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
         </div>
       </div>
 
       <div class="copyright">
         <span>© Liberty. Все права защищены.</span>
-        <span>Сделано в вашей фирменной палитре + призрак на фоне</span>
       </div>
     </footer>
   </main>

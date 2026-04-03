@@ -633,72 +633,72 @@
       margin-top: 8px;
     }
 
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-      align-items: stretch;
-      margin-top: 8px;
-      max-width: min(640px, 100%);
+    .contact-wrap {
+      max-width: min(520px, 100%);
+      margin-inline: auto;
+      margin-top: 4px;
     }
 
-    .form-box {
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .contact-aside {
       border-radius: 18px;
-      background: rgba(255, 255, 255, 0.04);
-      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(165deg, rgba(12, 6, 26, 0.72), rgba(8, 4, 18, 0.9));
+      padding: 26px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.35);
     }
-    .form-box h2 {
-      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    .contact-aside-title {
+      font-size: clamp(1.12rem, 2.4vw, 1.42rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
       text-transform: none;
-      max-width: 14ch;
-      margin-bottom: 10px;
+      color: #fff;
+      margin: 0;
+      line-height: 1.2;
     }
-    .subtext {
-      color: #efe8f9;
-      font-weight: 700;
-      margin-bottom: 18px;
-      line-height: 1.5;
-      max-width: 44ch;
-      font-size: 0.98rem;
+    .contact-aside-lead {
+      margin: 0;
+      font-size: 0.96rem;
+      font-weight: 650;
+      color: #dacde8;
+      line-height: 1.55;
     }
-    .subtext a { color: #c8d0ff; text-underline-offset: 3px; }
-
-    .form-grid {
+    .contact-checklist {
+      list-style: none;
+      margin: 0;
+      padding: 0;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 12px;
+      gap: 10px;
     }
-    .field { display: flex; flex-direction: column; gap: 8px; }
-    .field label {
-      color: #e8e1f5;
+    .contact-checklist li {
+      padding-left: 26px;
+      position: relative;
       font-size: 0.92rem;
-      font-weight: 800;
+      font-weight: 700;
+      color: #efe8fa;
+      line-height: 1.45;
     }
-    .field input,
-    .field textarea {
+    .contact-checklist li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #9dffb3;
+      font-weight: 900;
+      font-size: 0.95rem;
+    }
+    .contact-aside .btn-main {
+      margin-top: 2px;
       width: 100%;
-      min-height: 52px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      background: rgba(9, 9, 16, 0.55);
-      color: white;
-      padding: 0 14px;
-      font-size: 1rem;
-      outline: none;
+      justify-content: center;
     }
-    .field textarea {
-      min-height: 120px;
-      padding: 14px;
-      resize: vertical;
-    }
-    .full { grid-column: 1 / -1; }
-    .privacy {
-      color: #a998c4;
-      font-size: 0.85rem;
-      margin-top: 10px;
-      line-height: 1.5;
+    .contact-aside-meta {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #c8d0ff;
     }
 
     .site-footer {
@@ -788,6 +788,18 @@
       backdrop-filter: blur(8px);
     }
 
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .eyebrow {
       color: #ece4fa;
       font-size: 0.98rem;
@@ -799,7 +811,6 @@
       .hero-grid,
       .content-grid,
       .packages-grid,
-      .contact-grid,
       .footer-box,
       .service-row,
       .feat-grid,
@@ -810,7 +821,6 @@
       .fact-grid { grid-template-columns: 1fr; }
       .fact-tile--wide { grid-column: 1; }
       .menu { gap: 10px; }
-      .form-grid { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1199,47 +1209,21 @@
     </section>
 
     <section class="section" id="contact">
-      <div class="section-head">
-        <div class="kicker-line"></div>
-        <h2 class="soft">Есть вопросы? Оставьте заявку!</h2>
-        <p class="lead">Коротко опишите продукт и гео — предложим пакет и следующий шаг.</p>
-      </div>
-
-      <div class="contact-grid">
-        <div class="form-box">
-          <p class="subtext">
-            Заполните форму — или напишите напрямую в Telegram:
-            <a href="https://t.me/liberty_Che_LB">@liberty_Che_LB</a>
+      <h2 class="visually-hidden">Контакты</h2>
+      <div class="contact-wrap">
+        <aside class="contact-aside" aria-label="Связь в Telegram">
+          <h3 class="contact-aside-title">Напрямую, как на рабочих B2B‑лендингах</h3>
+          <p class="contact-aside-lead">
+            Напишите в Telegram — коротко опишите продукт и гео, предложим пакет и следующий шаг.
           </p>
-
-          <div class="form-grid">
-            <div class="field">
-              <label for="name">Ваше имя</label>
-              <input id="name" type="text" placeholder="Михаил" autocomplete="name" />
-            </div>
-            <div class="field">
-              <label for="tg">Ник в Telegram</label>
-              <input id="tg" type="text" placeholder="@liberty_Che_LB" autocomplete="username" />
-            </div>
-            <div class="field full">
-              <label for="email">E-mail</label>
-              <input id="email" type="email" placeholder="name@company.com" autocomplete="email" />
-            </div>
-            <div class="field full">
-              <label for="msg">Комментарий</label>
-              <textarea id="msg" placeholder="Кратко опишите ваш продукт, гео и что именно хотите подключить."></textarea>
-            </div>
-          </div>
-
-          <div class="btns" style="margin-top: 6px;">
-            <a class="btn btn-cta-telegram" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
-          </div>
-
-          <div class="privacy">
-            Нажимая на кнопку, вы даёте согласие на обработку персональных данных.
-          </div>
-        </div>
-
+          <ul class="contact-checklist">
+            <li>Без предоплаты за «кота в мешке» — логика из блока «О продукте»</li>
+            <li>Подбор Office / Shop / Exchange WL под ваш сценарий</li>
+            <li>Оперативный диалог по сути — без лишней бюрократики</li>
+          </ul>
+          <a class="btn btn-main" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+          <p class="contact-aside-meta">@liberty_Che_LB</p>
+        </aside>
       </div>
     </section>
 

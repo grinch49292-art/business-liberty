@@ -59,13 +59,13 @@
     .bg-ghost {
       position: fixed;
       left: 50%;
-      top: 45%;
-      width: min(92vw, 1040px);
+      top: 42%;
+      width: min(88vw, 920px);
       transform: translate(-50%, -50%);
-      opacity: 0.10;
+      opacity: 0.055;
       pointer-events: none;
       z-index: -1;
-      filter: saturate(1.06);
+      filter: saturate(1.02);
     }
 
     .violet-bottom {
@@ -89,7 +89,7 @@
       top: 10px;
       z-index: 20;
       width: var(--container);
-      margin: 12px auto 24px;
+      margin: 10px auto 14px;
       backdrop-filter: blur(4px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       padding-bottom: 10px;
@@ -134,7 +134,7 @@
     }
 
     .section {
-      padding: clamp(28px, 4.2vw, 56px) 0;
+      padding: clamp(18px, 2.8vw, 36px) 0;
       position: relative;
     }
 
@@ -142,8 +142,13 @@
       border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
+    .section#hero {
+      padding-top: clamp(6px, 1.2vw, 16px);
+      padding-bottom: clamp(12px, 2vw, 28px);
+    }
+
     .section-head {
-      margin-bottom: 18px;
+      margin-bottom: 12px;
     }
     .kicker-line {
       width: 100%;
@@ -159,7 +164,7 @@
       letter-spacing: -0.03em;
       text-transform: uppercase;
       max-width: 18ch;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
     h2 {
       font-size: clamp(1.45rem, 3.2vw, 2.6rem);
@@ -220,9 +225,9 @@
 
     .btns {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-top: 18px;
+      margin-top: 14px;
     }
     .btn {
       display: inline-flex;
@@ -261,17 +266,19 @@
     .hero-grid {
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
-      gap: 22px;
+      gap: 18px;
       align-items: center;
-      min-height: min(86vh, 900px);
+      min-height: 0;
+      padding: clamp(8px, 2vw, 22px) 0 clamp(4px, 1vw, 16px);
     }
 
     .hero-visual {
       display: grid;
       place-items: center;
-      min-height: 520px;
+      min-height: 0;
       position: relative;
       overflow: visible;
+      padding: 12px 0;
     }
 
     .card-single {
@@ -349,7 +356,7 @@
       line-height: 1.85;
       font-size: 1.02rem;
     }
-    .prose p { margin: 10px 0; }
+    .prose p { margin: 8px 0; }
     .prose strong.em { color: #f2eaff; font-weight: 800; }
     .prose ul:not(.star-list) {
       margin: 12px 0 12px 1.2em;
@@ -390,27 +397,78 @@
       top: 0;
     }
 
-    /* Один статичный акцент справа — без наложений и «висящих» слоёв */
-    .illus-rail {
+    /* Правая колонка кризис-блока: компактные тезисы, как «факты в цифрах» на референсе */
+    .crisis-aside {
+      align-self: start;
+      position: sticky;
+      top: 88px;
       display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 12px 0 0;
+      flex-direction: column;
+      gap: 14px;
+      padding: 18px 18px 20px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(165deg, rgba(12, 6, 26, 0.72), rgba(8, 4, 18, 0.88));
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32);
     }
-    .illus-rail img {
-      width: min(268px, 78vw);
-      height: auto;
-      display: block;
-      border-radius: 28px;
-      box-shadow:
-        0 32px 64px rgba(0, 0, 0, 0.48),
-        0 0 0 1px rgba(255, 255, 255, 0.1);
+    .crisis-aside-intro {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #c8d0ff;
+      line-height: 1.35;
+    }
+    .fact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .fact-tile {
+      padding: 12px 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      min-height: 92px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .fact-tile--wide {
+      grid-column: 1 / -1;
+    }
+    .fact-tile--accent {
+      background: linear-gradient(135deg, rgba(108, 123, 255, 0.22), rgba(219, 99, 219, 0.14));
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+    .fact-num {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      background: linear-gradient(95deg, #ff5ec7, #c76bff 45%, var(--blue-violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1;
+    }
+    .fact-lbl {
+      font-size: 0.86rem;
+      font-weight: 750;
+      color: #efe8fa;
+      line-height: 1.4;
+    }
+    .crisis-cta {
+      margin-top: 2px;
+    }
+    .crisis-cta .btn {
+      width: 100%;
+      justify-content: center;
     }
 
     .ring-wrap {
       display: grid;
       place-items: center;
-      min-height: 300px;
+      min-height: 220px;
     }
     .ring {
       width: 200px;
@@ -577,10 +635,10 @@
 
     .contact-grid {
       display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 22px;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
       align-items: stretch;
-      margin-top: 12px;
+      margin-top: 8px;
     }
 
     .form-box {
@@ -642,22 +700,62 @@
       line-height: 1.5;
     }
 
-    .phones-box {
+    .contact-aside {
       border-radius: 18px;
       border: 1px solid rgba(255, 255, 255, 0.12);
-      background: linear-gradient(160deg, rgba(108, 123, 255, 0.35), rgba(219, 99, 219, 0.28));
+      background: linear-gradient(165deg, rgba(12, 6, 26, 0.65), rgba(8, 4, 18, 0.82));
+      padding: 22px 22px 24px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 280px;
-      padding: 28px 20px;
+      flex-direction: column;
+      gap: 14px;
     }
-    .contact-phone-img {
-      width: min(240px, 52vw);
-      height: auto;
-      display: block;
-      border-radius: 32px;
-      box-shadow: 0 28px 64px rgba(0, 0, 0, 0.42);
+    .contact-aside-title {
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: none;
+      color: #fff;
+      margin: 0;
+    }
+    .contact-aside-lead {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 650;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .contact-checklist {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+    .contact-checklist li {
+      padding-left: 26px;
+      position: relative;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #efe8fa;
+      line-height: 1.45;
+    }
+    .contact-checklist li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #9dffb3;
+      font-weight: 900;
+      font-size: 0.95rem;
+    }
+    .contact-aside .btn-main {
+      margin-top: 4px;
+    }
+    .contact-aside-meta {
+      margin: 0;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #c8d0ff;
     }
 
     .site-footer {
@@ -783,15 +881,15 @@
       .benefits-grid {
         grid-template-columns: 1fr;
       }
-      .illus-rail { padding-top: 28px; }
+      .crisis-aside { position: static; top: auto; }
+      .fact-grid { grid-template-columns: 1fr; }
+      .fact-tile--wide { grid-column: 1; }
       .menu { gap: 10px; }
       .form-grid { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .card-single,
-      .illus-rail img,
-      .contact-phone-img,
       .ring {
         animation: none !important;
       }
@@ -944,8 +1042,29 @@
           </p>
         </div>
 
-        <aside class="illus-rail" aria-hidden="true">
-          <img src="./pages/phone1.png" alt="" width="400" height="800" decoding="async" />
+        <aside class="crisis-aside" aria-label="Ключевые тезисы по рынку процессинга">
+          <p class="crisis-aside-intro">Что нужно бизнесу рядом с процессингом — в одном столбце, без «пустоты» справа</p>
+          <div class="fact-grid">
+            <div class="fact-tile fact-tile--accent">
+              <span class="fact-num">3</span>
+              <span class="fact-lbl">Опоры: стабильность, прогнозируемость, фундамент — без них офисы и проекты «сыпятся» первыми</span>
+            </div>
+            <div class="fact-tile">
+              <span class="fact-num">WL</span>
+              <span class="fact-lbl">White Label и каскад под РФ/СНГ — чтобы не собирать инфраструктуру годами</span>
+            </div>
+            <div class="fact-tile">
+              <span class="fact-num">24/7</span>
+              <span class="fact-lbl">Техподдержка и сопровождение — оперативно закрываем нюансы, пока вы крутите маркетинг</span>
+            </div>
+            <div class="fact-tile fact-tile--wide">
+              <span class="fact-num">LP</span>
+              <span class="fact-lbl">Liberty забирает непрофиль: выплаты, маршрутизацию, методы — вы не превращаете команду в платёжный технарник</span>
+            </div>
+          </div>
+          <div class="crisis-cta">
+            <a class="btn btn-main" href="#packages">Пакеты и цены</a>
+          </div>
         </aside>
       </div>
     </section>
@@ -1196,9 +1315,19 @@
           </div>
         </div>
 
-        <div class="phones-box" aria-hidden="true">
-          <img src="./pages/phone1.png" alt="" class="contact-phone-img" width="400" height="800" decoding="async" />
-        </div>
+        <aside class="contact-aside" aria-label="Быстрая связь">
+          <h3 class="contact-aside-title">Напрямую, как на рабочих B2B‑лендингах</h3>
+          <p class="contact-aside-lead">
+            Форма слева — или сразу Telegram: коротко опишите продукт и гео, предложим пакет и следующий шаг.
+          </p>
+          <ul class="contact-checklist">
+            <li>Без предоплаты за «кота в мешке» — логика из блока «О продукте»</li>
+            <li>Подбор Office / Shop / Exchange WL под ваш сценарий</li>
+            <li>Оперативный диалог по сути — без лишней бюрократики</li>
+          </ul>
+          <a class="btn btn-main" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+          <p class="contact-aside-meta">@liberty_Che_LB</p>
+        </aside>
       </div>
     </section>
 
@@ -1244,4 +1373,3 @@
   <a class="scroll-top" href="#top" aria-label="Наверх">↑</a>
 </body>
 </html>
-

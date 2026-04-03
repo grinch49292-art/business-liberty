@@ -411,51 +411,55 @@
       background: linear-gradient(165deg, rgba(12, 6, 26, 0.72), rgba(8, 4, 18, 0.88));
       box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32);
     }
-    .crisis-aside-intro {
-      font-size: 0.82rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #c8d0ff;
-      line-height: 1.35;
-    }
     .fact-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
     }
     .fact-tile {
-      padding: 12px 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.04);
-      min-height: 92px;
+      padding: 14px 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      background: rgba(255, 255, 255, 0.045);
+      min-height: 0;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .fact-tile:hover {
+      border-color: rgba(200, 208, 255, 0.22);
+      background: rgba(255, 255, 255, 0.06);
     }
     .fact-tile--wide {
       grid-column: 1 / -1;
     }
     .fact-tile--accent {
-      background: linear-gradient(135deg, rgba(108, 123, 255, 0.22), rgba(219, 99, 219, 0.14));
+      background: linear-gradient(135deg, rgba(108, 123, 255, 0.2), rgba(219, 99, 219, 0.12));
       border-color: rgba(255, 255, 255, 0.14);
     }
-    .fact-num {
-      font-size: 1.35rem;
+    .fact-tile--accent:hover {
+      background: linear-gradient(135deg, rgba(108, 123, 255, 0.26), rgba(219, 99, 219, 0.16));
+    }
+    .fact-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #aeb8ff;
+    }
+    .fact-title {
+      font-size: 0.98rem;
       font-weight: 900;
-      letter-spacing: -0.03em;
-      background: linear-gradient(95deg, #ff5ec7, #c76bff 45%, var(--blue-violet));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      line-height: 1;
+      letter-spacing: -0.02em;
+      color: #fff;
+      line-height: 1.2;
     }
     .fact-lbl {
-      font-size: 0.86rem;
-      font-weight: 750;
-      color: #efe8fa;
-      line-height: 1.4;
+      font-size: 0.84rem;
+      font-weight: 650;
+      color: #e4dcf5;
+      line-height: 1.45;
     }
     .crisis-cta {
       margin-top: 2px;
@@ -634,20 +638,20 @@
     }
 
     .contact-wrap {
-      max-width: min(520px, 100%);
-      margin-inline: auto;
+      max-width: min(560px, 100%);
+      margin-inline: 0;
       margin-top: 4px;
     }
 
     .contact-aside {
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: linear-gradient(165deg, rgba(12, 6, 26, 0.72), rgba(8, 4, 18, 0.9));
-      padding: 26px 24px 28px;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
       display: flex;
       flex-direction: column;
       gap: 14px;
-      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.35);
     }
     .contact-aside-title {
       font-size: clamp(1.12rem, 2.4vw, 1.42rem);
@@ -690,15 +694,11 @@
       font-size: 0.95rem;
     }
     .contact-aside .btn-main {
-      margin-top: 2px;
-      width: 100%;
+      margin-top: 4px;
+      width: auto;
+      align-self: flex-start;
       justify-content: center;
-    }
-    .contact-aside-meta {
-      margin: 0;
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: #c8d0ff;
+      min-width: min(280px, 100%);
     }
 
     .site-footer {
@@ -978,23 +978,26 @@
         </div>
 
         <aside class="crisis-aside" aria-label="Ключевые тезисы по рынку процессинга">
-          <p class="crisis-aside-intro">Что нужно бизнесу рядом с процессингом — в одном столбце, без «пустоты» справа</p>
           <div class="fact-grid">
             <div class="fact-tile fact-tile--accent">
-              <span class="fact-num">3</span>
-              <span class="fact-lbl">Опоры: стабильность, прогнозируемость, фундамент — без них офисы и проекты «сыпятся» первыми</span>
+              <span class="fact-tag">Сначала база</span>
+              <span class="fact-title">Три опоры: стабильность, прогноз, фундамент</span>
+              <span class="fact-lbl">Без этого офисы и проекты «сыпятся» первыми — не «рынок перегрет», а дырявый фундамент.</span>
             </div>
             <div class="fact-tile">
-              <span class="fact-num">WL</span>
-              <span class="fact-lbl">White Label и каскад под РФ/СНГ — чтобы не собирать инфраструктуру годами</span>
+              <span class="fact-tag">Не собирать годами</span>
+              <span class="fact-title">White Label и каскад под РФ и СНГ</span>
+              <span class="fact-lbl">Готовая связка приёма и маршрутизации вместо бесконечной внутренней разработки.</span>
             </div>
             <div class="fact-tile">
-              <span class="fact-num">24/7</span>
-              <span class="fact-lbl">Техподдержка и сопровождение — оперативно закрываем нюансы, пока вы крутите маркетинг</span>
+              <span class="fact-tag">Рядом с вами</span>
+              <span class="fact-title">Поддержка и сопровождение 24/7</span>
+              <span class="fact-lbl">Закрываем нюансы по технике и процессам, пока вы фокусируетесь на маркетинге и продукте.</span>
             </div>
             <div class="fact-tile fact-tile--wide">
-              <span class="fact-num">LP</span>
-              <span class="fact-lbl">Liberty забирает непрофиль: выплаты, маршрутизацию, методы — вы не превращаете команду в платёжный технарник</span>
+              <span class="fact-tag">Роль Liberty</span>
+              <span class="fact-title">Забираем непрофиль: выплаты, маршруты, методы</span>
+              <span class="fact-lbl">Команда не превращается в «платёжный технарник» — инфраструктура на нашей стороне.</span>
             </div>
           </div>
           <div class="crisis-cta">
@@ -1222,7 +1225,6 @@
             <li>Оперативный диалог по сути — без лишней бюрократики</li>
           </ul>
           <a class="btn btn-main" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
-          <p class="contact-aside-meta">@liberty_Che_LB</p>
         </aside>
       </div>
     </section>

@@ -9,23 +9,29 @@
   <link rel="icon" type="image/svg+xml" href="./pages/symbol_dark.svg" />
   <link rel="apple-touch-icon" href="./pages/symbol_dark.svg" />
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
   <style>
     :root {
-      --bg: #080811;
-      --bg-2: #0c0d17;
+      /* Заводские цвета Liberty */
+      --deep: #13071E;
+      --blue: #6C7BFF;
+      --blue-2: #8f9dff;
+      --violet: #DB63DB;
+      --cloud: #FEF3FF;
+
+      --bg: #07050f;
+      --bg-2: #0c0816;
       --panel: rgba(255,255,255,.04);
       --panel-2: rgba(255,255,255,.06);
       --stroke: rgba(255,255,255,.12);
       --stroke-2: rgba(255,255,255,.18);
 
       --text: #f6f2ff;
-      --muted: #c9bfdc;
-      --soft: #9f95b5;
-
-      --blue: #6f83ff;
-      --blue-2: #91a6ff;
-      --violet: #a86cff;
-      --pink: #da63db;
+      --muted: #d4cae8;
+      --soft: #a99fc4;
 
       --shadow: 0 18px 60px rgba(0,0,0,.42);
       --radius: 24px;
@@ -36,13 +42,29 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: Inter, Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(900px 500px at 18% 0%, rgba(111,131,255,.16), transparent 60%),
-        radial-gradient(900px 600px at 92% 4%, rgba(218,99,219,.12), transparent 58%),
-        radial-gradient(700px 400px at 50% 100%, rgba(111,131,255,.08), transparent 70%),
-        linear-gradient(180deg, #0b0b14 0%, #090910 30%, #07070c 100%);
       color: var(--text);
       overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      background:
+        radial-gradient(900px 500px at 18% 0%, rgba(108,123,255,.22), transparent 60%),
+        radial-gradient(900px 600px at 92% 4%, rgba(219,99,219,.14), transparent 58%),
+        radial-gradient(700px 400px at 50% 100%, rgba(108,123,255,.10), transparent 70%),
+        linear-gradient(135deg, var(--deep) 0%, #0a0612 40%, #07050f 72%, #0a0718 100%);
+    }
+
+    /* Призрак на фоне */
+    .ghost-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -6;
+      pointer-events: none;
+      background-image: url("./pages/symbol_gradient.png");
+      background-repeat: no-repeat;
+      background-position: 50% 42%;
+      background-size: min(96vw, 820px);
+      opacity: 0.20;
+      filter: blur(1px) saturate(1.12);
     }
 
     body::before {
@@ -52,10 +74,10 @@
       pointer-events: none;
       z-index: -4;
       background:
-        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
       background-size: 28px 28px;
-      opacity: .35;
+      opacity: .38;
     }
 
     body::after {
@@ -65,10 +87,10 @@
       z-index: -3;
       pointer-events: none;
       background:
-        radial-gradient(circle at 50% 15%, rgba(255,255,255,.04), transparent 25%),
-        radial-gradient(circle at 8% 74%, rgba(111,131,255,.13), transparent 18%),
-        radial-gradient(circle at 88% 44%, rgba(168,108,255,.09), transparent 14%);
-      filter: blur(12px);
+        radial-gradient(circle at 50% 12%, rgba(254,243,255,.06), transparent 28%),
+        radial-gradient(circle at 8% 74%, rgba(108,123,255,.12), transparent 20%),
+        radial-gradient(circle at 88% 44%, rgba(219,99,219,.08), transparent 16%);
+      filter: blur(14px);
     }
 
     .container {
@@ -80,7 +102,7 @@
     .top-line {
       width: 100%;
       height: 3px;
-      background: linear-gradient(90deg, transparent 0%, var(--blue) 10%, #8ea6ff 50%, transparent 100%);
+      background: linear-gradient(90deg, transparent 0%, var(--blue) 12%, var(--violet) 52%, transparent 100%);
       opacity: .9;
       margin-bottom: 18px;
       border-radius: 999px;
@@ -91,8 +113,8 @@
       top: 0;
       z-index: 50;
       padding: 18px 0 8px;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(8,8,17,.88), rgba(8,8,17,.38) 70%, transparent);
+      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(7,5,15,.92), rgba(7,5,15,.45) 72%, transparent);
     }
 
     .nav {
@@ -121,7 +143,7 @@
 
     .brand small {
       display: block;
-      color: #cfc6dc;
+      color: #ddd5ec;
       font-size: .72rem;
       font-weight: 600;
       margin-top: 2px;
@@ -140,7 +162,7 @@
     }
 
     .brand-word strong span {
-      color: #7ca2ff;
+      color: var(--blue-2);
     }
 
     .menu {
@@ -159,16 +181,16 @@
       padding: 10px 14px;
       border: 1px solid rgba(255,255,255,.10);
       border-radius: 999px;
-background: rgba(255,255,255,.03);
+      background: rgba(255,255,255,.03);
       transition: .2s ease;
       white-space: nowrap;
     }
 
     .menu a:hover {
       transform: translateY(-1px);
-      border-color: rgba(132,151,255,.5);
+      border-color: rgba(108,123,255,.45);
       background: rgba(255,255,255,.06);
-      box-shadow: 0 10px 24px rgba(111,131,255,.12);
+      box-shadow: 0 10px 24px rgba(108,123,255,.14);
     }
 
     .lang {
@@ -180,10 +202,7 @@ background: rgba(255,255,255,.03);
       margin-left: 8px;
     }
 
-    section {
-      position: relative;
-      padding: 44px 0;
-    }
+    section { position: relative; padding: 44px 0; }
 
     .hero {
       padding-top: 34px;
@@ -220,7 +239,7 @@ background: rgba(255,255,255,.03);
 
     .accent {
       color: var(--blue);
-      text-shadow: 0 0 30px rgba(111,131,255,.16);
+      text-shadow: 0 0 30px rgba(108,123,255,.22);
     }
 
     .lead {
@@ -262,8 +281,8 @@ background: rgba(255,255,255,.03);
 
     .btn-primary {
       color: #fff;
-      background: linear-gradient(90deg, #8d5cff 0%, #6f83ff 100%);
-      box-shadow: 0 12px 34px rgba(111,131,255,.3);
+      background: linear-gradient(90deg, var(--violet) 0%, var(--blue) 100%);
+      box-shadow: 0 12px 34px rgba(108,123,255,.32);
     }
 
     .btn-primary:hover { transform: translateY(-1px); }
@@ -272,9 +291,9 @@ background: rgba(255,255,255,.03);
       width: 58px;
       padding: 0;
       font-size: 1.2rem;
-      background: linear-gradient(90deg, #8d5cff 0%, #6f83ff 100%);
+      background: linear-gradient(90deg, var(--violet) 0%, var(--blue) 100%);
       color: white;
-      box-shadow: 0 12px 34px rgba(111,131,255,.3);
+      box-shadow: 0 12px 34px rgba(108,123,255,.32);
     }
 
     .hero-visual {
@@ -290,7 +309,7 @@ background: rgba(255,255,255,.03);
       width: 620px;
       height: 620px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(111,131,255,.20), transparent 58%);
+      background: radial-gradient(circle, rgba(108,123,255,.24), transparent 58%);
       filter: blur(30px);
       z-index: 0;
     }
@@ -319,19 +338,19 @@ background: rgba(255,255,255,.03);
       z-index: 1;
     }
 
+    /* Карты в цветах Liberty (как на референсе, но ваша палитра) */
     .bank-card {
       position: absolute;
       width: 330px;
       height: 210px;
       border-radius: 24px;
       padding: 22px;
-      background:
-        linear-gradient(135deg, #7a5bff 0%, #5d79ff 45%, #7f53ff 100%);
+      background: linear-gradient(135deg, #6C7BFF 0%, #7a6dff 32%, #b565e8 62%, #DB63DB 100%);
       box-shadow:
         0 24px 60px rgba(0,0,0,.48),
         0 0 0 1px rgba(255,255,255,.12) inset,
-        0 0 50px rgba(111,131,255,.18);
-overflow: hidden;
+        0 0 55px rgba(108,123,255,.26);
+      overflow: hidden;
     }
 
     .bank-card::before {
@@ -339,8 +358,8 @@ overflow: hidden;
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,.18), transparent 26%),
-        linear-gradient(180deg, rgba(255,255,255,.08), transparent 48%);
+        radial-gradient(circle at 20% 20%, rgba(254,243,255,.22), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,.09), transparent 48%);
       pointer-events: none;
     }
 
@@ -362,6 +381,8 @@ overflow: hidden;
       font-size: 2rem;
       font-weight: 900;
       letter-spacing: -.03em;
+      position: relative;
+      z-index: 1;
     }
 
     .chip {
@@ -371,13 +392,15 @@ overflow: hidden;
       background: linear-gradient(180deg, #ffd573, #f2b44e);
       margin-top: 20px;
       box-shadow: inset 0 0 0 2px rgba(0,0,0,.08);
+      position: relative;
+      z-index: 1;
     }
 
     .wave-icon {
       position: absolute;
       top: 78px;
       left: 78px;
-      color: rgba(255,255,255,.9);
+      color: rgba(255,255,255,.92);
       font-size: 1.1rem;
       font-weight: 900;
     }
@@ -417,8 +440,8 @@ overflow: hidden;
       height: 28px;
       border-radius: 999px;
       background:
-        radial-gradient(circle at 35% 50%, #ffd9a8 0 48%, transparent 50%),
-        radial-gradient(circle at 65% 50%, #fff0cd 0 48%, transparent 50%);
+        radial-gradient(circle at 35% 50%, #ffe8c8 0 48%, transparent 50%),
+        radial-gradient(circle at 65% 50%, #fff5dc 0 48%, transparent 50%);
       opacity: .95;
     }
 
@@ -426,7 +449,7 @@ overflow: hidden;
       position: relative;
       border: 1px solid rgba(255,255,255,.08);
       border-radius: 30px;
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       box-shadow: var(--shadow);
       overflow: hidden;
     }
@@ -464,18 +487,14 @@ overflow: hidden;
       height: 220px;
       border-radius: 50%;
       background:
-        conic-gradient(from 0deg, #5b74ff, #8d5cff, #cf63db, #67b3ff, #5b74ff);
-      mask:
-        radial-gradient(circle at center, transparent 38%, #000 40%);
-      -webkit-mask:
-        radial-gradient(circle at center, transparent 38%, #000 40%);
-      filter: drop-shadow(0 14px 30px rgba(111,131,255,.22));
+        conic-gradient(from 0deg, #6C7BFF, #9a7dff, #DB63DB, #6C7BFF);
+      mask: radial-gradient(circle at center, transparent 38%, #000 40%);
+      -webkit-mask: radial-gradient(circle at center, transparent 38%, #000 40%);
+      filter: drop-shadow(0 14px 30px rgba(108,123,255,.22));
       animation: spin 10s linear infinite;
     }
 
-    .facts {
-      padding-top: 30px;
-    }
+    .facts { padding-top: 30px; }
 
     .facts-top {
       display: grid;
@@ -505,7 +524,7 @@ overflow: hidden;
       background-size: 14px 14px;
       mask:
         radial-gradient(48% 34% at 38% 36%, #000 55%, transparent 58%),
-radial-gradient(42% 30% at 65% 56%, #000 55%, transparent 58%),
+        radial-gradient(42% 30% at 65% 56%, #000 55%, transparent 58%),
         radial-gradient(36% 26% at 42% 68%, #000 55%, transparent 58%);
       -webkit-mask:
         radial-gradient(48% 34% at 38% 36%, #000 55%, transparent 58%),
@@ -523,21 +542,11 @@ radial-gradient(42% 30% at 65% 56%, #000 55%, transparent 58%),
       pointer-events: none;
     }
 
-    .graph-line svg {
-      width: 100%;
-      height: 100%;
-    }
+    .graph-line svg { width: 100%; height: 100%; }
 
-    .facts-right {
-      display: grid;
-      gap: 22px;
-    }
+    .facts-right { display: grid; gap: 22px; }
 
-    .fact {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .fact { display: flex; flex-direction: column; gap: 6px; }
 
     .fact strong {
       font-size: clamp(2.5rem, 5vw, 4rem);
@@ -559,9 +568,7 @@ radial-gradient(42% 30% at 65% 56%, #000 55%, transparent 58%),
       max-width: 28ch;
     }
 
-    .pay-title {
-      margin: 10px 0 18px;
-    }
+    .pay-title { margin: 10px 0 18px; }
 
     .regions {
       display: grid;
@@ -623,9 +630,7 @@ radial-gradient(42% 30% at 65% 56%, #000 55%, transparent 58%),
       margin-top: 40px;
     }
 
-    .service-copy {
-      padding-right: 10px;
-    }
+    .service-copy { padding-right: 10px; }
 
     .feature-cards {
       display: grid;
@@ -644,7 +649,7 @@ radial-gradient(42% 30% at 65% 56%, #000 55%, transparent 58%),
     }
 
     .feature.gradient {
-      background: linear-gradient(135deg, rgba(141,92,255,.9), rgba(111,131,255,.82));
+      background: linear-gradient(135deg, rgba(108,123,255,.92), rgba(219,99,219,.86));
     }
 
     .feature h3 {
@@ -695,7 +700,7 @@ radial-gradient(42% 30% at 65% 56%, #000 55%, transparent 58%),
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.06);
-display: inline-flex;
+      display: inline-flex;
       align-items: center;
       font-weight: 800;
       color: #f6efff;
@@ -773,7 +778,7 @@ display: inline-flex;
       grid-column: span 2;
       border-radius: 26px;
       padding: 22px;
-      background: linear-gradient(135deg, rgba(141,92,255,.92), rgba(111,131,255,.88));
+      background: linear-gradient(135deg, rgba(108,123,255,.92), rgba(219,99,219,.88));
       border: 1px solid rgba(255,255,255,.14);
       display: grid;
       grid-template-columns: repeat(3, minmax(0,1fr));
@@ -815,7 +820,7 @@ display: inline-flex;
       border: 1px solid rgba(255,255,255,.10);
       border-radius: 28px;
       background:
-        radial-gradient(600px 260px at 20% 0%, rgba(111,131,255,.20), transparent 54%),
+        radial-gradient(600px 260px at 20% 0%, rgba(108,123,255,.18), transparent 54%),
         linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       padding: 28px;
       box-shadow: var(--shadow);
@@ -843,11 +848,7 @@ display: inline-flex;
       margin-bottom: 12px;
     }
 
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .field { display: flex; flex-direction: column; gap: 8px; }
 
     .field label {
       color: #e8e1f5;
@@ -885,7 +886,7 @@ display: inline-flex;
     .phones-box {
       border: 1px solid rgba(255,255,255,.10);
       border-radius: 28px;
-background: linear-gradient(135deg, rgba(141,92,255,.88), rgba(111,131,255,.8));
+      background: linear-gradient(135deg, rgba(108,123,255,.88), rgba(219,99,219,.78));
       display: grid;
       place-items: center;
       position: relative;
@@ -900,7 +901,7 @@ background: linear-gradient(135deg, rgba(141,92,255,.88), rgba(111,131,255,.8));
       width: 320px;
       height: 320px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,.18), transparent 60%);
+      background: radial-gradient(circle, rgba(254,243,255,.20), transparent 60%);
       right: -80px;
       top: -60px;
     }
@@ -942,7 +943,7 @@ background: linear-gradient(135deg, rgba(141,92,255,.88), rgba(111,131,255,.8));
       inset: 32px 12px 12px;
       border-radius: 24px;
       background:
-        radial-gradient(circle at 50% 20%, rgba(111,131,255,.16), transparent 36%),
+        radial-gradient(circle at 50% 20%, rgba(108,123,255,.16), transparent 36%),
         linear-gradient(180deg, #11131b, #0b0d13 100%);
       padding: 22px 16px;
       color: white;
@@ -966,7 +967,7 @@ background: linear-gradient(135deg, rgba(141,92,255,.88), rgba(111,131,255,.8));
       min-height: 28px;
       border-radius: 999px;
       padding: 0 10px;
-      background: rgba(144,114,255,.25);
+      background: rgba(108,123,255,.22);
       border: 1px solid rgba(255,255,255,.10);
       font-size: .8rem;
       font-weight: 800;
@@ -998,10 +999,7 @@ background: linear-gradient(135deg, rgba(141,92,255,.88), rgba(111,131,255,.8));
 
     .tg-wrap {
       margin-top: 30px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-      align-items: stretch;
+      display: block;
     }
 
     .slider-box {
@@ -1022,7 +1020,7 @@ background: linear-gradient(135deg, rgba(141,92,255,.88), rgba(111,131,255,.8));
       height: 48px;
       border-radius: 50%;
       border: 1px solid rgba(255,255,255,.14);
-      background: rgba(111,131,255,.18);
+      background: rgba(108,123,255,.18);
       color: #fff;
       display: grid;
       place-items: center;
@@ -1057,7 +1055,7 @@ background: linear-gradient(135deg, rgba(141,92,255,.88), rgba(111,131,255,.8));
     .tg-screen {
       position: absolute;
       inset: 32px 10px 10px;
-border-radius: 24px;
+      border-radius: 24px;
       background: #0e1016;
       padding: 18px 14px;
       color: #f6f1ff;
@@ -1080,15 +1078,13 @@ border-radius: 24px;
       font-weight: 700;
     }
 
-    .tg-screen .offer b {
-      color: white;
-    }
+    .tg-screen .offer b { color: white; }
 
     .promo-box {
       border: 1px solid rgba(255,255,255,.10);
       border-radius: 28px;
       background:
-        radial-gradient(500px 240px at 10% 0%, rgba(111,131,255,.15), transparent 54%),
+        radial-gradient(500px 240px at 10% 0%, rgba(108,123,255,.14), transparent 54%),
         rgba(255,255,255,.03);
       padding: 28px;
       box-shadow: var(--shadow);
@@ -1118,9 +1114,7 @@ border-radius: 24px;
       flex-wrap: wrap;
     }
 
-    footer {
-      padding: 34px 0 44px;
-    }
+    .site-footer { padding: 34px 0 44px; }
 
     .footer-box {
       border-top: 1px solid rgba(255,255,255,.10);
@@ -1131,19 +1125,11 @@ border-radius: 24px;
       align-items: start;
     }
 
-    .footer-brand {
-      display: grid;
-      gap: 12px;
-    }
+    .footer-brand { display: grid; gap: 12px; }
 
-    .footer-brand .brand {
-      font-size: 2rem;
-    }
+    .footer-brand .brand { font-size: 2rem; }
 
-    .socials {
-      display: flex;
-      gap: 10px;
-    }
+    .socials { display: flex; gap: 10px; }
 
     .soc {
       width: 48px;
@@ -1172,6 +1158,8 @@ border-radius: 24px;
       text-decoration: none;
       font-weight: 700;
     }
+
+    .footer-links a:hover { color: var(--blue-2); }
 
     .footer-right {
       display: flex;
@@ -1239,62 +1227,42 @@ border-radius: 24px;
       .facts-top,
       .service-grid,
       .contact-grid,
-      .tg-wrap,
       .footer-box {
         grid-template-columns: 1fr;
       }
 
-      .regions {
-        grid-template-columns: 1fr 1fr;
-      }
+      .regions { grid-template-columns: 1fr 1fr; }
 
-      .who-grid {
-        grid-template-columns: 1fr;
-      }
+      .who-grid { grid-template-columns: 1fr; }
 
       .also-box {
         grid-column: auto;
         grid-template-columns: 1fr;
       }
 
-      .
-slider-box {
+      .slider-box {
         grid-template-columns: 1fr;
         justify-items: center;
       }
 
-      .tg-phone {
-        width: min(240px, 100%);
-      }
+      .tg-phone { width: min(240px, 100%); }
 
-      .feature-cards {
-        grid-template-columns: 1fr;
-      }
+      .feature-cards { grid-template-columns: 1fr; }
 
-      .hero {
-        min-height: auto;
-      }
+      .hero { min-height: auto; }
     }
 
     @media (max-width: 820px) {
       .menu { display: none; }
       .lang { display: none; }
 
-      .hero-visual {
-        min-height: 420px;
-      }
+      .hero-visual { min-height: 420px; }
 
-      .bank-stack {
-        transform: scale(.88);
-      }
+      .bank-stack { transform: scale(.88); }
 
-      .regions {
-        grid-template-columns: 1fr;
-      }
+      .regions { grid-template-columns: 1fr; }
 
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
+      .form-grid { grid-template-columns: 1fr; }
 
       .section-panel,
       .form-box,
@@ -1307,9 +1275,7 @@ slider-box {
         border-radius: 22px;
       }
 
-      h1 {
-        font-size: clamp(2.4rem, 12vw, 4.2rem);
-      }
+      h1 { font-size: clamp(2.4rem, 12vw, 4.2rem); }
 
       h2.section-title,
       .promo-box h2,
@@ -1317,9 +1283,7 @@ slider-box {
         font-size: clamp(1.8rem, 8vw, 3rem);
       }
 
-      .lead {
-        font-size: 1rem;
-      }
+      .lead { font-size: 1rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1328,6 +1292,8 @@ slider-box {
   </style>
 </head>
 <body id="top">
+  <div class="ghost-bg" aria-hidden="true"></div>
+
   <div class="nav-wrap">
     <div class="container">
       <div class="top-line"></div>
@@ -1368,7 +1334,7 @@ slider-box {
 
             <div class="actions">
               <a href="#contact" class="btn btn-primary">Свяжитесь с нами</a>
-              <a href="#contact" class="btn btn-icon">👤</a>
+              <a href="https://t.me/liberty_oreon_manager" class="btn btn-icon" target="_blank" rel="noopener noreferrer" aria-label="Telegram">✈</a>
             </div>
           </div>
 
@@ -1376,7 +1342,7 @@ slider-box {
             <div class="particle-wave"></div>
 
             <div class="bank-stack">
-              <div class="bank-card top">
+              <div class="bank-card top" aria-hidden="true">
                 <div class="bank-logo">Liberty</div>
                 <div class="chip"></div>
                 <div class="wave-icon">⌁</div>
@@ -1386,7 +1352,7 @@ slider-box {
                 <div class="master"></div>
               </div>
 
-              <div class="bank-card bottom">
+              <div class="bank-card bottom" aria-hidden="true">
                 <div class="bank-logo">Liberty</div>
                 <div class="chip"></div>
                 <div class="wave-icon">⌁</div>
@@ -1405,7 +1371,7 @@ slider-box {
       <div class="container">
         <section class="partner-grid">
           <div class="partner-copy">
-<div class="eyebrow">Обеспечивая уверенность и безопасность на каждом этапе вашего финансового пути</div>
+            <div class="eyebrow">Обеспечивая уверенность и безопасность на каждом этапе вашего финансового пути</div>
             <h2 class="section-title">Liberty является вашим <span class="accent">надёжным партнёром</span> в сфере финансовых решений</h2>
             <p>
               Мы предлагаем инновационные платёжные решения, которые открывают новые возможности для вашего бизнеса и личных финансов.
@@ -1417,7 +1383,7 @@ slider-box {
           </div>
 
           <div class="ring-wrap">
-            <div class="ring"></div>
+            <div class="ring" aria-hidden="true"></div>
           </div>
         </section>
       </div>
@@ -1431,18 +1397,18 @@ slider-box {
           <div class="mesh-box">
             <div class="mesh"></div>
             <div class="graph-line">
-              <svg viewBox="0 0 1000 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg viewBox="0 0 1000 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M40 160 C180 120, 260 150, 380 145 C500 140, 560 120, 660 80 C760 40, 840 20, 960 18"
                       stroke="url(#g1)" stroke-width="6" stroke-linecap="round"/>
-                <circle cx="120" cy="148" r="14" fill="#8d5cff"/>
-                <circle cx="350" cy="145" r="14" fill="#8d5cff"/>
-                <circle cx="590" cy="120" r="14" fill="#6f83ff"/>
-                <circle cx="760" cy="60" r="14" fill="#6f83ff"/>
-                <circle cx="925" cy="18" r="14" fill="#6f83ff"/>
+                <circle cx="120" cy="148" r="14" fill="#6C7BFF"/>
+                <circle cx="350" cy="145" r="14" fill="#6C7BFF"/>
+                <circle cx="590" cy="120" r="14" fill="#DB63DB"/>
+                <circle cx="760" cy="60" r="14" fill="#6C7BFF"/>
+                <circle cx="925" cy="18" r="14" fill="#DB63DB"/>
                 <defs>
                   <linearGradient id="g1" x1="0" y1="0" x2="1000" y2="0">
-                    <stop stop-color="#a86cff"/>
-                    <stop offset="1" stop-color="#6f83ff"/>
+                    <stop stop-color="#DB63DB"/>
+                    <stop offset="1" stop-color="#6C7BFF"/>
                   </linearGradient>
                 </defs>
               </svg>
@@ -1502,7 +1468,7 @@ slider-box {
           <article class="region-card">
             <div class="region-pill">Австралия 🇦🇺</div>
             <div class="logos">
-<span class="logo-chip">BPAY</span>
+              <span class="logo-chip">BPAY</span>
               <span class="logo-chip">afterpay</span>
               <span class="logo-chip">PayPal</span>
               <span class="logo-chip">Apple Pay</span>
@@ -1598,7 +1564,7 @@ slider-box {
 
           <article class="feature">
             <h3>Независимая компания</h3>
-<p>Международная команда, специализирующаяся на high-risk платежах. Персональный подход к каждому клиенту и оперативная интеграция.</p>
+            <p>Международная команда, специализирующаяся на high-risk платежах. Персональный подход к каждому клиенту и оперативная интеграция.</p>
             <div class="feature-icon">💳</div>
           </article>
 
@@ -1656,7 +1622,7 @@ slider-box {
           <article class="who-card">
             <h3>Товары</h3>
             <p>Удобство оплаты на сайте приобретённых программ, статей, баннеров, цифровых продуктов и любых других онлайн-товаров.</p>
-            <div class="gamepad"></div>
+            <div class="gamepad" aria-hidden="true"></div>
           </article>
 
           <article class="who-card">
@@ -1704,7 +1670,7 @@ slider-box {
     </section>
 
     <section id="contact">
-<div class="container">
+      <div class="container">
         <div class="top-line"></div>
 
         <div class="contact-grid">
@@ -1716,29 +1682,29 @@ slider-box {
 
             <div class="form-grid">
               <div class="field">
-                <label>Ваше имя</label>
-                <input type="text" placeholder="Михаил" />
+                <label for="name">Ваше имя</label>
+                <input id="name" type="text" placeholder="Михаил" autocomplete="name" />
               </div>
 
               <div class="field">
-                <label>Ник в Telegram</label>
-                <input type="text" placeholder="@liberty" />
+                <label for="tg">Ник в Telegram</label>
+                <input id="tg" type="text" placeholder="@liberty" autocomplete="username" />
               </div>
 
               <div class="field full">
-                <label>E-mail</label>
-                <input type="email" placeholder="info@liberty.tech" />
+                <label for="email">E-mail</label>
+                <input id="email" type="email" placeholder="info@liberty.tech" autocomplete="email" />
               </div>
 
               <div class="field full">
-                <label>Комментарий</label>
-                <textarea placeholder="Кратко опишите ваш продукт, гео и что именно хотите подключить."></textarea>
+                <label for="msg">Комментарий</label>
+                <textarea id="msg" placeholder="Кратко опишите ваш продукт, гео и что именно хотите подключить."></textarea>
               </div>
             </div>
 
             <div class="actions" style="margin-top:4px;">
-              <a href="#" class="btn btn-primary">Свяжитесь с нами</a>
-              <a href="#" class="btn btn-icon">👤</a>
+              <a href="https://t.me/liberty_oreon_manager" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Свяжитесь с нами</a>
+              <a href="https://t.me/liberty_oreon_manager" class="btn btn-icon" target="_blank" rel="noopener noreferrer" aria-label="Telegram">✈</a>
             </div>
 
             <div class="privacy">
@@ -1769,7 +1735,7 @@ slider-box {
 
         <div class="tg-wrap">
           <div class="slider-box">
-            <div class="arrow">‹</div>
+            <div class="arrow" aria-hidden="true">‹</div>
 
             <div class="tg-phone">
               <div class="tg-screen">
@@ -1791,13 +1757,13 @@ slider-box {
               <p>Оставьте заявку на сайте и получите доступ к предложениям, рабочим связкам и операционным обновлениям.</p>
               <div class="promo-actions">
                 <a href="#contact" class="btn btn-primary">Оставить заявку</a>
-                <a href="#" class="btn btn-icon">✈</a>
+                <a href="https://t.me/liberty_oreon_manager" class="btn btn-icon" target="_blank" rel="noopener noreferrer" aria-label="Telegram">✈</a>
               </div>
             </div>
           </div>
         </div>
 
-        <footer>
+        <footer class="site-footer">
           <div class="footer-box">
             <div class="footer-brand">
               <a class="brand" href="#top">
@@ -1809,236 +1775,38 @@ slider-box {
               </a>
 
               <div class="socials">
-                <a href="#" class="soc">✈</a>
-                <a href="#" class="soc">f</a>
+                <a href="https://t.me/liberty_oreon_manager" class="soc" target="_blank" rel="noopener noreferrer" aria-label="Telegram">✈</a>
+                <a href="#contact" class="soc" aria-label="Контакты">@</a>
               </div>
 
               <div style="color:#d7ccea; font-weight:700;">TERMS & CONDITIONS</div>
             </div>
 
-            <div class="footer-links"><div class="container">
-        <div class="top-line"></div>
+            <nav class="footer-links" aria-label="Навигация в подвале">
+              <a href="#about">Кто мы</a>
+              <a href="#systems">Платёжные системы</a>
+              <a href="#benefits">Преимущества</a>
+              <a href="#clients">С кем работаем</a>
+              <a href="#contact">Контакты</a>
+              <a href="#top">Наверх</a>
+            </nav>
 
-        <div class="contact-grid">
-          <div class="form-box">
-            <h2>Есть вопросы? Оставьте заявку!</h2>
-            <p class="subtext">
-              Заполните форму, и мы свяжемся с вами в течение 15 минут.
-            </p>
-
-            <div class="form-grid">
-              <div class="field">
-                <label>Ваше имя</label>
-                <input type="text" placeholder="Михаил" />
-              </div>
-
-              <div class="field">
-                <label>Ник в Telegram</label>
-                <input type="text" placeholder="@liberty" />
-              </div>
-
-              <div class="field full">
-                <label>E-mail</label>
-                <input type="email" placeholder="info@liberty.tech" />
-              </div>
-
-              <div class="field full">
-                <label>Комментарий</label>
-                <textarea placeholder="Кратко опишите ваш продукт, гео и что именно хотите подключить."></textarea>
-              </div>
-            </div>
-
-            <div class="actions" style="margin-top:4px;">
-              <a href="#" class="btn btn-primary">Свяжитесь с нами</a>
-              <a href="#" class="btn btn-icon">👤</a>
-            </div>
-
-            <div class="privacy">
-              Нажимая на кнопку, вы даёте согласие на обработку персональных данных.
+            <div class="footer-right">
+              <a class="mail" href="mailto:info@liberty.tech">info@liberty.tech</a>
+              <a class="btn btn-primary" style="min-height:48px; font-size:.95rem;" href="https://t.me/liberty_oreon_manager" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
             </div>
           </div>
 
-          <div class="phones-box">
-            <div class="phones-wrap">
-              <div class="phone back">
-                <div class="screen">
-                  <div class="secure-badge">✔ Безопасно</div>
-                  <div class="accepted">Платёж принят</div>
-                  <div class="shield">✓</div>
-                </div>
-              </div>
-
-              <div class="phone front">
-                <div class="screen">
-                  <div class="secure-badge">✔ Безопасно</div>
-                  <div class="accepted">Платёж принят</div>
-                  <div class="shield">✓</div>
-                </div>
-              </div>
-            </div>
+          <div class="copyright">
+            <span>© Liberty. Все права защищены.</span>
+            <span>Сделано в вашей фирменной палитре + призрак на фоне</span>
           </div>
-        </div>
+        </footer>
+      </div>
+    </section>
+  </main>
 
-        <div class="tg-wrap">
-          <div class="slider-box">
-            <div class="arrow">‹</div>
+  <a class="scroll-top" href="#top" aria-label="Наверх">↑</a>
+</body>
+</html>
 
-            <div class="tg-phone">
-              <div class="tg-screen">
-                <div class="chat-head">Liberty Offers</div>
-                <div class="offer">
-                  <div><b>UNITED ARAB EMIRATES</b></div>
-                  <div>Pay in: AED</div>
-                  <div>Pay out: USDT, Bybit, T+0</div>
-                  <div>Settlement: instant</div>
-                  <div>Payment method: Emirates NBD / IBAN</div>
-                  <div>Limits: 500 – 150 000 AED</div>
-                  <div>Support: 8:00–23:00 (UTC+4)</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="promo-box">
-              <h2>Переходите в наш закрытый TG-бот, где мы ежедневно публикуем офферы в 150+ гео</h2>
-              <p>Оставьте заявку на сайте и получите доступ к предложениям, рабочим связкам и операционным обновлениям.</p>
-              <div class="promo-actions">
-                <a href="#contact" class="btn btn-primary">Оставить заявку</a>
-                <a href="#" class="btn btn-icon">✈</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <footer>
-          <div class="footer-box">
-            <div class="footer-brand">
-              <a class="brand" href="#top">
-                <img src="./pages/symbol_dark.svg" alt="Liberty logo" />
-                <span class="brand-word">
-                  <strong>Lib<span>erty</span></strong>
-                  <small>Простые решения сложных задач</small>
-                </span>
-              </a>
-
-              <div class="socials">
-                <a href="#" class="soc">✈</a>
-                <a href="#" class="soc">f</a>
-              </div>
-
-              <div style="color:#d7ccea; font-weight:700;">TERMS & CONDITIONS</div>
-            </div>
-
-            <div class="footer-links">
-<div class="container">
-        <div class="top-line"></div>
-
-        <div class="contact-grid">
-          <div class="form-box">
-            <h2>Есть вопросы? Оставьте заявку!</h2>
-            <p class="subtext">
-              Заполните форму, и мы свяжемся с вами в течение 15 минут.
-            </p>
-
-            <div class="form-grid">
-              <div class="field">
-                <label>Ваше имя</label>
-                <input type="text" placeholder="Михаил" />
-              </div>
-
-              <div class="field">
-                <label>Ник в Telegram</label>
-                <input type="text" placeholder="@liberty" />
-              </div>
-
-              <div class="field full">
-                <label>E-mail</label>
-                <input type="email" placeholder="info@liberty.tech" />
-              </div>
-
-              <div class="field full">
-                <label>Комментарий</label>
-                <textarea placeholder="Кратко опишите ваш продукт, гео и что именно хотите подключить."></textarea>
-              </div>
-            </div>
-
-            <div class="actions" style="margin-top:4px;">
-              <a href="#" class="btn btn-primary">Свяжитесь с нами</a>
-              <a href="#" class="btn btn-icon">👤</a>
-            </div>
-
-            <div class="privacy">
-              Нажимая на кнопку, вы даёте согласие на обработку персональных данных.
-            </div>
-          </div>
-
-          <div class="phones-box">
-            <div class="phones-wrap">
-              <div class="phone back">
-                <div class="screen">
-                  <div class="secure-badge">✔ Безопасно</div>
-                  <div class="accepted">Платёж принят</div>
-                  <div class="shield">✓</div>
-                </div>
-              </div>
-
-              <div class="phone front">
-                <div class="screen">
-                  <div class="secure-badge">✔ Безопасно</div>
-                  <div class="accepted">Платёж принят</div>
-                  <div class="shield">✓</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tg-wrap">
-          <div class="slider-box">
-            <div class="arrow">‹</div>
-
-            <div class="tg-phone">
-              <div class="tg-screen">
-                <div class="chat-head">Liberty Offers</div>
-                <div class="offer">
-                  <div><b>UNITED ARAB EMIRATES</b></div>
-                  <div>Pay in: AED</div>
-                  <div>Pay out: USDT, Bybit, T+0</div>
-                  <div>Settlement: instant</div>
-                  <div>Payment method: Emirates NBD / IBAN</div>
-                  <div>Limits: 500 – 150 000 AED</div>
-                  <div>Support: 8:00–23:00 (UTC+4)</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="promo-box">
-              <h2>Переходите в наш закрытый TG-бот, где мы ежедневно публикуем офферы в 150+ гео</h2>
-              <p>Оставьте заявку на сайте и получите доступ к предложениям, рабочим связкам и операционным обновлениям.</p>
-              <div class="promo-actions">
-                <a href="#contact" class="btn btn-primary">Оставить заявку</a>
-                <a href="#" class="btn btn-icon">✈</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <footer>
-          <div class="footer-box">
-            <div class="footer-brand">
-              <a class="brand" href="#top">
-                <img src="./pages/symbol_dark.svg" alt="Liberty logo" />
-                <span class="brand-word">
-                  <strong>Lib<span>erty</span></strong>
-                  <small>Простые решения сложных задач</small>
-                </span>
-              </a>
-
-              <div class="socials">
-                <a href="#" class="soc">✈</a>
-                <a href="#" class="soc">f</a>
-              </div>
-
-              <div style="color:#d7ccea; font-weight:700;">TERMS & CONDITIONS</div>
-            </div>
-
-            <div class="footer-links">

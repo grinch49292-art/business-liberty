@@ -4,583 +4,863 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Liberty Payment Solutions</title>
-  <meta name="description" content="Liberty Payment Solutions — B2B решения для процессинга платежей." />
 
   <link rel="icon" type="image/svg+xml" href="./pages/symbol_dark.svg" />
   <link rel="apple-touch-icon" href="./pages/symbol_dark.svg" />
 
   <style>
-    :root {
-      --blue-violet: #6c7bff;
-      --bright-violet: #db63db;
-      --text: #f5f1ff;
-      --muted: #cbbfda;
-      --line-soft: rgba(255, 255, 255, 0.11);
-      --glass: rgba(255, 255, 255, 0.04);
-      --container: min(1180px, 92vw);
+    :root{
+      --blue-violet:#6c7bff;
+      --bright-violet:#db63db;
+      --deep-purple:#13071e;
+
+      --text:#f5f1ff;
+      --muted:#cbbfda;
+
+      --grid: rgba(255,255,255,0.075);
+      --grid2: rgba(255,255,255,0.02);
+
+      --container: min(1200px, 92vw);
+      --radius: 18px;
+      --stroke: rgba(255,255,255,0.10);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
+    body{
+      min-height:100vh;
+      overflow-x:hidden;
       font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+
       background:
         radial-gradient(1200px 760px at 34% -8%, rgba(142, 164, 255, 0.60), transparent 62%),
         radial-gradient(760px 520px at 102% 0%, rgba(219, 99, 219, 0.40), transparent 70%),
         linear-gradient(180deg, #2f3796 0%, #211050 38%, #140726 70%, #0d0419 100%);
-      line-height: 1.55;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      pointer-events: none;
+    /* Сетка/клетки — оставляем твой стиль */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      pointer-events:none;
+
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(var(--grid2) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid2) 1px, transparent 1px);
+
       background-size: 46px 46px, 46px 46px, 11px 11px, 11px 11px;
-      opacity: 0.58;
+      opacity:0.62;
       mix-blend-mode: screen;
     }
 
-    .bg-ghost {
-      position: fixed;
-      left: 50%;
-      top: 45%;
-      width: min(92vw, 1040px);
-      transform: translate(-50%, -50%);
-      opacity: 0.10;
-      pointer-events: none;
-      z-index: -1;
-      filter: saturate(1.04);
+    .bg-ghost{
+      position:fixed;
+      left:50%;
+      top:45%;
+      width:min(92vw,1040px);
+      transform:translate(-50%,-50%);
+      opacity:0.10;
+      pointer-events:none;
+      z-index:-1;
+      filter:saturate(1.06);
     }
 
-    .violet-bottom {
-      position: fixed;
-      inset: auto 0 0 0;
-      height: 28vh;
-      pointer-events: none;
-      z-index: -1;
+    .violet-bottom{
+      position:fixed;
+      inset:auto 0 0 0;
+      height:28vh;
+      pointer-events:none;
+      z-index:-1;
+
       background:
         radial-gradient(120% 130% at 50% 120%, rgba(192, 22, 196, 0.33) 0%, rgba(145, 24, 176, 0.16) 35%, rgba(84, 18, 132, 0.08) 58%, transparent 80%),
         linear-gradient(180deg, transparent 0%, rgba(105, 22, 134, 0.22) 65%, rgba(99, 18, 128, 0.34) 100%);
     }
 
-    .container { width: var(--container); margin-inline: auto; }
+    .container{ width:var(--container); margin-inline:auto; }
 
-    .nav-wrap {
-      position: sticky;
-      top: 12px;
-      z-index: 20;
-      width: var(--container);
-      margin: 12px auto 24px;
-      backdrop-filter: blur(4px);
+    /* Навигация (без правой “LIBERTY в рамке”) */
+    .topbar{
+      position:sticky;
+      top:12px;
+      z-index:30;
+      padding:10px 0;
+    }
+    .topbar-inner{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding:10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(6px);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      color:var(--text);
+      font-weight:800;
+      letter-spacing:-0.03em;
+      font-size:1.45rem;
+      white-space:nowrap;
+    }
+    .brand img{ width:30px; height:30px; }
+
+    .menu{
+      display:flex; gap:16px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .menu a{
+      text-decoration:none;
+      color:#e8def7;
+      font-size:0.9rem;
+      padding:8px 2px;
+      border-bottom:1px solid transparent;
+      transition:.2s ease;
+    }
+    .menu a:hover{
+      color:#fff;
+      border-color: rgba(255,255,255,0.45);
     }
 
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    /* Секции */
+    section{ padding: clamp(26px, 4.2vw, 64px) 0; }
+    .section-divider{ border-top: 1px solid rgba(255,255,255,0.06); }
+
+    /* Типографика */
+    h1{
+      font-size: clamp(2.1rem, 5.9vw, 4.8rem);
+      line-height:0.98;
+      letter-spacing:-0.03em;
+      text-transform:uppercase;
+      max-width:12ch;
+      margin-bottom:16px;
+    }
+    h2{
+      font-size: clamp(1.5rem, 3.3vw, 2.8rem);
+      line-height:1.06;
+      letter-spacing:-0.02em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .grad{
+      background: linear-gradient(95deg, var(--blue-violet), #9d8bff 46%, var(--bright-violet));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .lead{
+      color: var(--muted);
+      line-height:1.75;
+      font-size:1.05rem;
+      max-width:72ch;
+    }
+
+    .btns{ display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 18px;
+      border-radius:12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      text-decoration:none;
+      font-weight:900;
+      transition:.2s ease;
+      white-space:nowrap;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn-main{
+      color:#140a23;
+      background: linear-gradient(100deg, #8ca1ff, #a57dff 55%, #d86be6);
+      box-shadow: 0 14px 36px rgba(140,125,255,0.34);
+      border-color: rgba(255,255,255,0.12);
+    }
+    .btn-ghost{
+      color:#f2eaff;
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    /* HERO (как у референса: слева текст, справа устройства) */
+    .hero{
+      min-height: min(84vh, 900px);
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 24px;
+      align-items:center;
+      padding-top: 10px;
+    }
+
+    .hero-card{
+      display:grid;
       gap: 14px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--line-soft);
     }
 
-    .brand {
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
-      text-decoration: none;
-      color: var(--text);
-      font-size: 1.55rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
+    .hero-device{
+      position:relative;
+      min-height:520px;
+      display:grid;
+      place-items:center;
+      overflow:visible;
     }
 
-    .brand img { width: 30px; height: 30px; }
-
-    .menu {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      flex-wrap: wrap;
+    .device-stage{
+      position:relative;
+      width:min(720px, 100%);
+      height: 520px;
+      pointer-events:none;
+      transform-style:preserve-3d;
     }
 
-    .menu a {
-      color: #e8def7;
-      text-decoration: none;
-      font-size: 0.88rem;
-      border-bottom: 1px solid transparent;
-      transition: .2s ease;
-      padding-bottom: 2px;
+    .img-float{
+      position:absolute;
+      will-change: transform;
+      filter:
+        drop-shadow(0 40px 80px rgba(0,0,0,0.50))
+        drop-shadow(0 14px 40px rgba(108,123,255,0.14));
     }
 
-    .menu a:hover {
-      color: #fff;
-      border-color: rgba(255,255,255,.5);
+    /* Телефон (правее) */
+    .phone{
+      right: 4%;
+      top: 22%;
+      width: min(310px, 44vw);
+      transform: rotate(6deg);
+      animation: phoneFloat 6.8s ease-in-out infinite;
+      z-index: 3;
     }
 
-    .section {
-      padding: clamp(22px, 4vw, 46px) 0;
-      position: relative;
+    /* Карта (левее/перед) */
+    .card{
+      left: -4%;
+      top: 36%;
+      width: min(420px, 64vw);
+      transform: rotate(-12deg);
+      animation: cardFloat 6.2s ease-in-out infinite;
+      z-index: 4;
+      opacity: 0.98;
     }
 
-    .section + .section {
-      border-top: 1px solid var(--line-soft);
+    /* Сцена с “декором” чтобы выглядело богаче (не ломает твой фон) */
+    .dotted-orb{
+      position:absolute;
+      right: 0;
+      top: 0;
+      width: min(520px, 72vw);
+      height: 520px;
+      background:
+        radial-gradient(circle at 50% 52%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.00) 45%),
+        radial-gradient(circle at 30% 30%, rgba(108,123,255,0.22), transparent 52%),
+        radial-gradient(circle at 70% 70%, rgba(219,99,219,0.18), transparent 55%);
+
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, black 45%, transparent 70%);
+      mask-image: radial-gradient(circle at 50% 50%, black 45%, transparent 70%);
+
+      opacity:0.55;
+      pointer-events:none;
+      z-index:1;
     }
 
-    .hero-grid {
-      display: grid;
+    @keyframes phoneFloat{
+      0%{ transform: translateY(0) rotate(6deg) }
+      50%{ transform: translateY(-14px) rotate(4deg) }
+      100%{ transform: translateY(0) rotate(6deg) }
+    }
+    @keyframes cardFloat{
+      0%{ transform: translateY(0) rotate(-12deg) }
+      50%{ transform: translateY(-22px) rotate(-7deg) }
+      100%{ transform: translateY(0) rotate(-12deg) }
+    }
+
+    /* Блок “факты” — как у референса, без чёрных рамок */
+    .facts{
+      display:grid;
       grid-template-columns: 1.05fr .95fr;
       gap: 22px;
-      align-items: center;
-      min-height: min(82vh, 860px);
+      align-items:start;
     }
-
-    h1 {
-      font-size: clamp(2rem, 5.9vw, 4.5rem);
-      line-height: 0.98;
-      letter-spacing: -0.03em;
-      text-transform: uppercase;
-      max-width: 12ch;
-      margin-bottom: 16px;
+    .facts-title{
+      margin-bottom: 14px;
     }
-
-    .grad {
-      background: linear-gradient(95deg, var(--blue-violet), #9d8bff 46%, var(--bright-violet));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    .stat-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 14px;
     }
-
-    .hero p {
-      color: var(--muted);
-      max-width: 56ch;
-      line-height: 1.62;
-      margin-bottom: 18px;
-      font-size: 1.06rem;
-    }
-
-    .btns {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      border: 0;
-      cursor: pointer;
-      text-decoration: none;
-      padding: 12px 18px;
-      border-radius: 11px;
-      font-weight: 700;
-      transition: .2s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .btn-main {
-      color: #140a23;
-      background: linear-gradient(100deg, #8ca1ff, #a57dff 55%, #d86be6);
-      box-shadow: 0 12px 34px rgba(140, 125, 255, 0.34);
-    }
-
-    .btn-ghost {
-      color: #f2eaff;
-      border: 1px solid rgba(255,255,255,.2);
-      background: rgba(255,255,255,.03);
-    }
-
-    .btn:hover { transform: translateY(-1px); }
-
-    .hero-visual {
-      min-height: 500px;
-      display: grid;
-      place-items: center;
-    }
-
-    .card-single {
-      width: min(560px, 88%);
-      transform: rotate(-10deg);
-      animation: cardFloatSolo 5.6s ease-in-out infinite;
-      filter:
-        drop-shadow(0 28px 54px rgba(0, 0, 0, 0.42))
-        drop-shadow(0 10px 30px rgba(219, 99, 219, 0.24));
-    }
-
-    .title {
-      font-size: clamp(1.45rem, 3.3vw, 2.6rem);
-      text-transform: uppercase;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      margin-bottom: 12px;
-    }
-
-    .sub {
-      color: #d4c6e4;
-      line-height: 1.7;
-      max-width: 80ch;
-      margin-bottom: 18px;
-      font-size: 1.02rem;
-    }
-
-    .long-text {
-      display: grid;
-      gap: 14px;
-      margin-top: 12px;
-      max-width: 95ch;
-    }
-
-    .long-text p { color: #dacde8; line-height: 1.72; }
-
-    .stars {
-      list-style: none;
-      display: grid;
-      gap: 10px;
-      margin: 8px 0 10px;
-    }
-
-    .stars li {
-      color: #efe6ff;
-      padding-left: 26px;
-      position: relative;
-      line-height: 1.65;
-    }
-
-    .stars li::before {
-      content: "🌟";
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .pack {
-      border: 1px solid var(--line-soft);
+    .stat{
+      padding: 14px 16px;
       border-radius: 16px;
-      padding: 16px;
-      background: var(--glass);
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.10);
       backdrop-filter: blur(4px);
     }
+    .stat b{ display:block; font-size:1.8rem; margin-bottom:6px; letter-spacing:-0.02em; }
+    .stat span{ color: #c5b6d8; line-height:1.5; font-size:0.95rem; }
 
-    .pack h3 {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      letter-spacing: -0.01em;
+    .orb{
+      position:relative;
+      min-height: 320px;
+      overflow:hidden;
+      border-radius: var(--radius);
+    }
+    .orb::before{
+      content:"";
+      position:absolute;
+      inset:-40px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(108,123,255,0.26), transparent 45%),
+        radial-gradient(circle at 30% 60%, rgba(219,99,219,0.20), transparent 55%);
+      filter: blur(2px);
+      opacity:0.9;
+    }
+    .orb::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image: radial-gradient(rgba(255,255,255,0.16) 1px, transparent 1px);
+      background-size: 7px 7px;
+      opacity:0.20;
+      transform: scale(1.35);
+      mask-image: radial-gradient(circle at 55% 45%, black 0%, black 45%, transparent 72%);
+      -webkit-mask-image: radial-gradient(circle at 55% 45%, black 0%, black 45%, transparent 72%);
     }
 
-    .pack .price {
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px dashed rgba(255,255,255,.22);
-      color: #efe6ff;
-      display: grid;
-      gap: 6px;
-      font-weight: 600;
+    .orb-center{
+      position:absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      width: min(280px, 48vw);
+      height: min(280px, 48vw);
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, rgba(108,123,255,0.55), rgba(219,99,219,0.10) 45%, transparent 68%);
+      filter: blur(0.2px);
+      opacity:0.35;
+      pointer-events:none;
     }
 
-    .media-row {
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Сетка “технологии” как на референсе */
+    .feature-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
       gap: 14px;
+      margin-top: 18px;
+    }
+    .feature{
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.16);
+      border: 1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(4px);
+      min-height: 180px;
+    }
+    .feature .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      margin-bottom:10px;
+      color: #efe6ff;
+      font-size: .95rem;
+    }
+    .feature .tag svg{ width:18px; height:18px; }
+    .feature p{
+      color:#c5b6d8;
+      line-height:1.65;
+      font-size:.95rem;
     }
 
-    .media {
-      min-height: 260px;
-      display: grid;
-      place-items: center;
-      border: 1px solid var(--line-soft);
-      border-radius: 14px;
-      background: rgba(255,255,255,.015);
-      overflow: hidden;
+    /* Плашка “платежные системы” — используй твои большие изображения */
+    .media-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .media{
+      min-height: 320px;
+      border-radius: var(--radius);
+      background: rgba(0,0,0,0.12);
+      border: 1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(4px);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      position:relative;
+    }
+    .media img{
+      width: min(560px, 92%);
+      height:auto;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 40px 90px rgba(0,0,0,0.52))
+        drop-shadow(0 18px 48px rgba(108,123,255,0.16));
+      transform: translateY(-2px);
     }
 
-    .media img {
-      max-width: 88%;
-      height: auto;
-      display: block;
-    }
-
-    .img-cards { animation: cardsFloat 7s ease-in-out infinite; }
-    .img-balance { animation: balanceFloat 6.4s ease-in-out infinite; max-width: 72% !important; }
-    .img-phone { animation: phoneFloat 6.8s ease-in-out infinite; max-width: 70% !important; }
-
-    .cta-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
+    /* Анимация ноута open/close (как ты просил ранее) */
+    .laptop-wrap{
+      position: relative;
+      width: min(720px, 100%);
+      height: 420px;
       margin-top: 10px;
+      display:grid;
+      place-items:center;
+    }
+    .laptop-wrap img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit: contain;
+      pointer-events:none;
+      user-select:none;
+      will-change: opacity, transform;
+    }
+    .laptop-mid-closed{
+      opacity: 1;
+      animation: laptopClosedCycle 6.8s ease-in-out infinite;
+    }
+    .laptop-mid-open{
+      opacity: 0;
+      animation: laptopOpenCycle 6.8s ease-in-out infinite;
     }
 
-    .footer {
-      border-top: 1px solid var(--line-soft);
-      margin-top: 12px;
-      padding: 18px 0 28px;
-      color: #b9a8ce;
-      font-size: .92rem;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
+    @keyframes laptopClosedCycle{
+      0%{ opacity:1; transform: scale(1) translateY(0px); }
+      30%{ opacity:1; transform: scale(1.01) translateY(2px); }
+      45%{ opacity:0; transform: scale(0.98) translateY(8px); }
+      70%{ opacity:0; transform: scale(0.98) translateY(8px); }
+      100%{ opacity:1; transform: scale(1) translateY(0px); }
+    }
+    @keyframes laptopOpenCycle{
+      0%{ opacity:0; transform: scale(0.98) translateY(8px); }
+      30%{ opacity:0; transform: scale(0.98) translateY(8px); }
+      46%{ opacity:1; transform: scale(1) translateY(0px); }
+      75%{ opacity:1; transform: scale(1.02) translateY(-3px); }
+      100%{ opacity:0; transform: scale(0.98) translateY(8px); }
     }
 
-    @keyframes cardFloatSolo {
-      0% { transform: rotate(-10deg) translateY(0px); }
-      50% { transform: rotate(-7deg) translateY(-14px); }
-      100% { transform: rotate(-10deg) translateY(0px); }
+    /* CTA */
+    .cta{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap: 18px;
+      align-items:center;
+    }
+    .cta .box{
+      padding: 18px 18px 22px;
+      border-radius: var(--radius);
+      background: rgba(0,0,0,0.14);
+      border: 1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(6px);
+    }
+    .cta .box p{ margin-top: 10px; color:#cbbfda; line-height:1.7; }
+    .cta .ring{
+      width:100%;
+      display:grid;
+      place-items:center;
+      opacity:0.95;
+      pointer-events:none;
+    }
+    .cta .ring img{
+      width:min(220px, 40vw);
+      filter: drop-shadow(0 30px 80px rgba(108,123,255,0.22));
+      opacity:0.95;
     }
 
-    @keyframes cardsFloat {
-      0% { transform: translateY(0) rotate(-2deg); }
-      50% { transform: translateY(-16px) rotate(2deg); }
-      100% { transform: translateY(0) rotate(-2deg); }
+    @media (max-width: 980px){
+      .hero{ grid-template-columns: 1fr; }
+      .facts{ grid-template-columns: 1fr; }
+      .feature-grid{ grid-template-columns: 1fr; }
+      .media-grid{ grid-template-columns: 1fr; }
+      .cta{ grid-template-columns: 1fr; }
+      .hero-device{ min-height: 460px; }
+      .device-stage{ height: 460px; }
+      .phone{ top: 26%; }
+      .card{ top: 38%; }
     }
 
-    @keyframes balanceFloat {
-      0% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-10px) scale(1.02); }
-      100% { transform: translateY(0) scale(1); }
-    }
-
-    @keyframes phoneFloat {
-      0% { transform: translateY(0) rotate(-2deg); }
-      50% { transform: translateY(-12px) rotate(1deg); }
-      100% { transform: translateY(0) rotate(-2deg); }
-    }
-
-    @media (max-width: 1024px) {
-      .hero-grid, .cards-grid, .media-row { grid-template-columns: 1fr; }
-      .hero-visual { min-height: 360px; }
-      .media { min-height: 220px; }
-    }
-
-    @media (max-width: 760px) {
-      .menu { display: none; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; }
+    @media (prefers-reduced-motion: reduce){
+      .phone, .card{ animation:none !important; }
+      .laptop-mid-open, .laptop-mid-closed{ animation:none !important; opacity: 1; }
     }
   </style>
 </head>
+
 <body>
   <img class="bg-ghost" src="./pages/symbol_gradient.png" alt="" aria-hidden="true" />
-  <div class="violet-bottom"></div>
+  <div class="violet-bottom" aria-hidden="true"></div>
 
-  <div class="nav-wrap">
-    <nav class="nav container">
+  <div class="topbar">
+    <div class="topbar-inner container">
       <a class="brand" href="#">
-        <img src="./pages/symbol_dark.svg" alt="Liberty logo" />
+        <img src="./pages/symbol_dark.svg" alt="Liberty logo">
         <span>Liberty</span>
       </a>
       <div class="menu">
-        <a href="#hero">Главная</a>
-        <a href="#problem">Проблематика</a>
-        <a href="#solution">Решение</a>
+        <a href="#facts">Факты</a>
+        <a href="#systems">Платежи</a>
+        <a href="#tech">Преимущества</a>
         <a href="#packages">Пакеты</a>
         <a href="#cta">Контакты</a>
       </div>
-    </nav>
+    </div>
   </div>
 
-  <main class="container">
-    <!-- Экран 1 -->
-    <section class="section hero" id="hero">
-      <div class="hero-grid">
-        <div>
-          <h1><span class="grad">WELCOME TO LIBERTY</span><br />PRIVATE LIMITED COMPANY</h1>
-          <p>
-            Наша компания — это надежные и инновационные платежные решения.
-            Наша миссия — увеличивать доходы компаний и частных клиентов путем внедрения эффективных инструментов.
-            Наша цель — предоставить максимально простой способ оплат и расчетов.
-          </p>
-          <div class="btns">
-            <a class="btn btn-main" href="#packages">Смотреть пакеты</a>
-            <a class="btn btn-ghost" href="#problem">Подробнее</a>
-          </div>
-        </div>
-        <div class="hero-visual">
-          <img src="./pages/card1.png" alt="Liberty card" class="card-single" />
-        </div>
-      </div>
-    </section>
+  <!-- HERO -->
+  <section class="container" id="top">
+    <div class="hero">
+      <div class="hero-card">
+        <h1>
+          <span class="grad">WELCOME TO LIBERTY</span><br />
+          PRIVATE LIMITED COMPANY
+        </h1>
 
-    <!-- Контент после скрина 1 -->
-    <section class="section" id="problem">
-      <h2 class="title">Текущие реалии рынка процессинга</h2>
-      <div class="long-text">
-        <p>В текущих реалиях сфера процессинговой обработки переживает все более и более кризисные времена.</p>
-        <p>Закрываются не только старейшие офисы обработки платежей, но и молодые и средние гембл проекты, а также множество обменников.</p>
-        <p>В чем же настоящие причины происходящего?</p>
-        <p>На самом деле причины достаточно просты, решаемы и понятны. Это не “закончилась емкость рынка”, “все гайки пережаты” или “рынок перегрет”. Причина в том, что каждому бизнесу, прямо или косвенно связанному с процессингом платежей, не хватает ни на старте, ни через год и более базовых опор:</p>
-      </div>
-      <ul class="stars">
-        <li>Стабильность</li>
-        <li>Прогнозируемость</li>
-        <li>Надежный фундамент</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <h2 class="title">Давайте разберем на примере</h2>
-      <p class="sub">
-        Трейдерский офис / инхаус и партнерские офисы РФ и СНГ подразумевают, что бизнес понимает,
-        какие условия ему нужны для большой обработки и хорошей маржи.
-      </p>
-      <p class="sub">Что нужно такому бизнесу, чтобы показывать отличный финансовый результат?</p>
-      <ul class="stars">
-        <li>Наличие выплат в любом объеме</li>
-        <li>Хороший объем понятного трафика без сюрпризов</li>
-        <li>Работа с прямыми мерчантами для поддержания высоких ставок</li>
-        <li>Максимально гибкое управление техническими и организационными аспектами</li>
-        <li>Проверенное, боевое, надежное техническое решение</li>
-        <li>Оперативное решение возникающих нюансов без лишних затрат времени и ресурсов</li>
-        <li>Уложить все выше перечисленное в понятный бюджет и быстро реализовать</li>
-      </ul>
-      <div class="long-text">
-        <p>
-          Для олдов все перечисленное понятно и кажется базовой необходимостью для выстраивания плодотворной работы.
-          Однако, несмотря на понятные критерии, весь этот пласт задач остается крайне тяжелым.
+        <p class="lead">
+          Мы закрываем ключевую боль B2B-сферы: стабильность, прогнозируемость и надежный фундамент для процессинга и расчетов.
+          (Тексты ниже и оффер — подставишь/отредактируешь под свой продукт.)
         </p>
-        <p>
-          Сколько проектов реально работают с прямыми мерчантами? У скольких кассовые разрывы из-за некачественного кода?
-          А про количество проектов, у которых на борту есть необходимые сегодня выплаты в любом объеме, и вовсе можно сказать:
-          их единицы.
-        </p>
-      </div>
-    </section>
 
-    <section class="section" id="solution">
-      <h2 class="title">B2B решение от Liberty Payment Solutions</h2>
-      <p class="sub">
-        На решение этих проблем у проектов уходит не один год. Но по прошествии времени и большого объема практики
-        команда Liberty Payment Solutions готова представить B2B решение как минимум для 5 видов бизнеса,
-        основанных на процессинге платежей. Решение закрывает потребности, не относящиеся к основной специализации бизнеса.
-      </p>
-      <ul class="stars">
-        <li>Офисы не должны искать трафик и выплаты 🤝</li>
-        <li>Казино и обменники не должны искать обработку 🤝</li>
-        <li>Остальные сервисы не должны заниматься задачами вне своей специализации 🤝</li>
-      </ul>
-
-      <div class="media-row">
-        <article class="media"><img src="./pages/cards1.png" alt="Cards" class="img-cards" /></article>
-        <article class="media"><img src="./pages/balance1.png" alt="Balance app" class="img-balance" /></article>
-        <article class="media"><img src="./pages/phone1.png" alt="Phone" class="img-phone" /></article>
-      </div>
-    </section>
-
-    <section class="section" id="packages">
-      <h2 class="title">Пакеты Liberty</h2>
-      <div class="cards-grid">
-        <article class="pack">
-          <h3>LB | Office Classic 🔥</h3>
-          <p class="sub">Классический пакет для инхаус офисов и массовых трейдерских решений:</p>
-          <ul class="stars">
-            <li>Тир 1 техническое решение</li>
-            <li>Полное обеспечение любым РФ и СНГ трафиком</li>
-            <li>Создание бренда клиента и выстраивание его позиционирования</li>
-            <li>Круглосуточная техническая поддержка</li>
-            <li>Функционал маркета внутри площадки</li>
-            <li>Каскадное решение</li>
-            <li>Гибкое дробление типов трафика</li>
-            <li>Все существующие методы с гибкими настройками (QR НСПК, КА, БТ, Неттинг, Мультитрансфер, Quasi Ecom и тд)</li>
-          </ul>
-          <div class="price">
-            <div>Цена White Label решения: 9500$</div>
-            <div>Ежемесячное техническое обслуживание и сервера: 500$</div>
-            <div>Срез: 0,4%, при обороте от 100к$ суточного — 0,2%</div>
-            <div>Время установки WL: до 3 дней с момента оплаты</div>
-          </div>
-        </article>
-
-        <article class="pack">
-          <h3>LB | Office Plus + 🔥</h3>
-          <p class="sub">Пакет с продвинутой поддержкой по направлению Выплаты РФ и Маркетингу:</p>
-          <ul class="stars">
-            <li>Полный состав содержимого пакета Office Classic</li>
-            <li>Сопровождение и гарантированное открытие легальной фирмы для обеспечения любого объема выплат</li>
-            <li>Надежные маркетинговые инструменты и стратегии по привлечению трейдеров и агентов</li>
-          </ul>
-          <div class="price">
-            <div>Цена White Label решения: 14500$</div>
-            <div>Ежемесячное техническое обслуживание и сервера: 500$</div>
-            <div>Срез: 0,4%, при обороте от 100к$ суточного — 0,2%</div>
-            <div>Время установки WL: до 3 дней с момента оплаты</div>
-          </div>
-        </article>
-
-        <article class="pack">
-          <h3>LB | Shop Plus + 🔥</h3>
-          <p class="sub">Пакет (полное готовое платежное решение) для продажи товаров в Telegram и не только:</p>
-          <ul class="stars">
-            <li>Гарантированная обработка СНГ и Трансгран платежей</li>
-            <li>Установка и настройка клиентского Telegram-бота</li>
-            <li>Интегрированная оплата криптой и фиатом</li>
-            <li>Внедрение методов приема в зависимости от ЦА и среднего чека</li>
-            <li>Помощь в развитии и размещении на спец-ресурсах</li>
-            <li>Полный доступ к функционалу, обслуживание и мониторинг входят в пакет</li>
-          </ul>
-          <div class="price">
-            <div>Цена White Label решения: 9500$</div>
-            <div>Ежемесячное техническое обслуживание и сервера: 500$</div>
-            <div>Срез: 0,4%, при обороте от 100к$ суточного — 0,2%</div>
-            <div>Время установки WL: до 3 дней с момента оплаты</div>
-          </div>
-        </article>
-
-        <article class="pack">
-          <h3>LB | Exchange 🔥</h3>
-          <p class="sub">Полное техническое сопровождение Exchange бизнеса:</p>
-          <ul class="stars">
-            <li>Создание полного функционала и оформления онлайн-обменника под ключ</li>
-            <li>Гарантия обработки СНГ и Трансгран платежей</li>
-            <li>Технический функционал платежного решения на базе Liberty Payments</li>
-            <li>Помощь в легальном оформлении юрлица для стабильных расчетов и приема платежей</li>
-          </ul>
-          <div class="price">
-            <div>Цена White Label решения: 30.000$</div>
-            <div>Ежемесячное техническое обслуживание и сервера: 500$</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="cta">
-      <h2 class="title">Готовы обсудить запуск?</h2>
-      <p class="sub">
-        Оставьте заявку — подберем пакет под ваш формат бизнеса и соберем дорожную карту внедрения.
-      </p>
-      <div class="cta-row">
         <div class="btns">
-          <a class="btn btn-main" href="#">Оставить заявку</a>
-          <a class="btn btn-ghost" href="#">Написать в Telegram</a>
+          <a class="btn btn-main" href="#packages">Смотреть пакеты</a>
+          <a class="btn btn-ghost" href="#problem">Подробнее</a>
         </div>
       </div>
-    </section>
 
-    <footer class="footer">
-      <span>© Liberty Payment Solutions</span>
-      <span>Все права защищены</span>
-    </footer>
-  </main>
+      <div class="hero-device">
+        <div class="device-stage" aria-hidden="true">
+          <div class="dotted-orb"></div>
+
+          <!-- ВКЛЮЧАЕМ TELEPHONE + CARD (как у референса) -->
+          <img class="img-float phone" src="./pages/phone1.png" alt="" />
+          <img class="img-float card" src="./pages/card1.png" alt="" />
+
+          <!-- Spline (как просил): -->
+          <div style="position:absolute; right: -14px; top: -10px; width: 210px; height: 120px; opacity:0.95;">
+            <spline-viewer url="https://prod.spline.design/S8fovIAmgI2CQHy2/scene.splinecode"></spline-viewer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ВСТАВКА ПОСЛЕ СКРИНА 1 -->
+  <section class="container" id="problem">
+    <div class="facts-title">
+      <h2>В чем реальные причины</h2>
+      <p class="lead" style="max-width:90ch;">
+        В текущих реалиях сфера процессинговой обработки переживает всё более и более кризисные времена.
+      </p>
+    </div>
+
+    <div class="content-grid" style="display:grid; grid-template-columns: 1.05fr .95fr; gap:22px; align-items:start;">
+      <div>
+        <p class="lead" style="font-size:1.01rem;">
+          Закрываются не только старейшие офисы обработки платежей, но и молодые и средние гембл проекты, а также множество обменников.
+        </p>
+
+        <p class="lead" style="font-size:1.01rem; margin-top:12px;">
+          На самом деле причины достаточно просты, решаемы и понятны.
+          Причина в том, что каждому бизнесу, прямо или косвенно связанному с процессингом платежей, не хватает:
+        </p>
+
+        <ul class="star-list" style="list-style:none; margin-top:14px; display:grid; gap:10px;">
+          <li style="padding-left:28px; position:relative; color:#efe6ff; font-weight:800;">🌟 Стабильность</li>
+          <li style="padding-left:28px; position:relative; color:#efe6ff; font-weight:800;">🌟 Прогнозируемость</li>
+          <li style="padding-left:28px; position:relative; color:#efe6ff; font-weight:800;">🌟 Надежный фундамент</li>
+        </ul>
+
+        <div style="margin-top:14px;">
+          <p class="lead" style="font-size:1.01rem;">
+            Давайте разберем на примере трейдерского офиса / инхаус и партнерских офисов РФ и СНГ:
+            бизнесу нужны выплаты, понятный трафик, прямые мерчанты, гибкое управление и боевое тех-решение в бюджете.
+          </p>
+          <p class="lead" style="font-size:1.01rem; margin-top:12px;">
+            И хотя критерии понятны, весь этот пласт задач — весьма тяжелый.
+          </p>
+        </div>
+      </div>
+
+      <div style="position:relative; min-height: 360px;">
+        <div class="orb" style="height:100%; min-height: 360px;">
+          <div class="orb-center" aria-hidden="true"></div>
+        </div>
+        <div style="position:absolute; left:0; bottom:10px; right:0; padding:0 8px;">
+          <p class="lead" style="margin:0; font-size:1.01rem; color:#d9cdf0;">
+            Команда Liberty Payment Solutions готова закрыть потребности бизнеса в форматах под разные виды направлений.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACTS -->
+  <section class="container section-divider" style="border-top:none; padding-top: 36px;" id="facts">
+    <h2 style="margin-bottom:6px;">Ключевые факты о нас в цифрах</h2>
+    <p class="lead" style="max-width:90ch; margin-bottom:18px;">
+      Примерная витрина (подставишь финальные цифры и фактуру). Главное — визуальная структура и премиальная подача.
+    </p>
+
+    <div class="facts">
+      <div>
+        <div class="stat-grid">
+          <div class="stat"><b>24/7</b><span>работаем без остановок</span></div>
+          <div class="stat"><b>с 2019</b><span>на рынке и в практике</span></div>
+          <div class="stat"><b>20+</b><span>экспертов в команде</span></div>
+          <div class="stat"><b>178+</b><span>проектов и решений</span></div>
+        </div>
+
+        <div style="margin-top:18px;">
+          <p class="lead" style="font-size:1.01rem;">
+            Мы строим процессинг так, чтобы клиенту не приходилось “искать выплаты и трафик” вместо своей специализации.
+          </p>
+        </div>
+      </div>
+
+      <div class="orb" style="min-height: 360px;">
+        <div class="orb-center"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYSTEMS -->
+  <section class="container" id="systems">
+    <h2>Предоставляем работу через платежные системы</h2>
+    <p class="lead" style="max-width:90ch; margin-bottom:10px;">
+      Визуальные блоки под твои прозрачные изображения. Список/логотипы добавим позже.
+    </p>
+
+    <div class="media-grid">
+      <div class="media">
+        <img src="./pages/cards1.png" alt="Cards" />
+      </div>
+      <div class="media">
+        <img src="./pages/balance1.png" alt="Balance" />
+      </div>
+    </div>
+
+    <div class="media-grid" style="margin-top:14px;">
+      <div class="media" style="grid-column: 1 / -1; min-height: 420px;">
+        <div class="laptop-wrap" aria-hidden="true">
+          <img class="laptop-mid-closed" src="./pages/computer-mid-2.png" alt="">
+          <img class="laptop-mid-open" src="./pages/computer-mid-1.png" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH / FEATURES -->
+  <section class="container section-divider" style="border-top:none; padding-top: 36px;" id="tech">
+    <h2>На острие технологий</h2>
+    <p class="lead" style="max-width:90ch; margin-bottom:0;">
+      Символы и смысловые карточки повторяют структуру референса (внутрь потом подставишь свои описания/иконки).
+    </p>
+
+    <div class="feature-grid">
+      <article class="feature">
+        <div class="tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7z"></path>
+          </svg>
+          Высокий уровень безопасности
+        </div>
+        <p>Стабильные контуры работы, мониторинг и надежный тех-уровень под B2B.</p>
+      </article>
+
+      <article class="feature">
+        <div class="tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M20 7h-7V2L4 11h7v5l9-9z"></path>
+          </svg>
+          Оперативные решения
+        </div>
+        <p>Без лишних затрат времени и ресурсов: быстро закрываем нюансы внедрения.</p>
+      </article>
+
+      <article class="feature">
+        <div class="tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M3 12h18M12 3v18"></path>
+          </svg>
+          Гибкость под бизнес
+        </div>
+        <p>Настройки под формат и тип бизнеса: от потоков до сценариев приема.</p>
+      </article>
+
+      <article class="feature">
+        <div class="tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 19c2-7 14-7 16 0"></path>
+            <path d="M7 10a5 5 0 0 1 10 0"></path>
+          </svg>
+          Прогнозируемость
+        </div>
+        <p>Процесс, который можно планировать: стабильный фундамент вместо хаоса.</p>
+      </article>
+
+      <article class="feature">
+        <div class="tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 4h16v16H4z"></path>
+            <path d="M8 8h8v8H8z"></path>
+          </svg>
+          Тех-ядро Tier 1
+        </div>
+        <p>Проверенные решения, которые держат нагрузку и не ломают бизнес.</p>
+      </article>
+
+      <article class="feature">
+        <div class="tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 5.65-7 10-7 10z"></path>
+          </svg>
+          Поддержка 24/7
+        </div>
+        <p>Сопровождение в режиме “быстро ответили — быстро решили”.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class="container" id="packages">
+    <h2>Пакеты Liberty</h2>
+    <p class="lead" style="max-width:90ch; margin-bottom: 18px;">
+      Пакеты ниже — формат как у референса: крупные заголовки + понятная структура цены и состава.
+    </p>
+
+    <div class="media-grid" style="grid-template-columns:1fr 1fr; align-items:start;">
+      <div class="media" style="min-height: 420px; padding: 18px; display:block;">
+        <div style="font-weight:1000; font-size:1.25rem; letter-spacing:-0.01em;">LB | Office Classic 🔥</div>
+        <p class="lead" style="font-size:1rem; margin-top:10px;">
+          Классический пакет для инхаус офисов и массовых трейдерских решений.
+        </p>
+        <div style="margin-top:14px; color:#efe6ff; line-height:1.7; font-weight:700;">
+          <div>Цена: <span style="color:var(--bright-violet); font-weight:950;">9500$</span></div>
+          <div style="margin-top:6px;">Тех. обслуживание и сервера: <span style="color:var(--blue-violet); font-weight:950;">500$</span>/мес</div>
+          <div style="margin-top:6px;">Срез: 0,4% (при обороте от 100к$ суточного — 0,2%)</div>
+          <div style="margin-top:6px;">Установка WL: до 3х дней</div>
+        </div>
+      </div>
+
+      <div class="media" style="min-height: 420px; padding: 18px; display:block;">
+        <div style="font-weight:1000; font-size:1.25rem; letter-spacing:-0.01em;">LB | Office Plus + 🔥</div>
+        <p class="lead" style="font-size:1rem; margin-top:10px;">
+          Продвинутая поддержка по направлению выплат и маркетингу.
+        </p>
+        <div style="margin-top:14px; color:#efe6ff; line-height:1.7; font-weight:700;">
+          <div>Цена: <span style="color:var(--bright-violet); font-weight:950;">14500$</span></div>
+          <div style="margin-top:6px;">Тех. обслуживание и сервера: <span style="color:var(--blue-violet); font-weight:950;">500$</span>/мес</div>
+          <div style="margin-top:6px;">Срез: 0,4% (при обороте от 100к$ суточного — 0,2%)</div>
+          <div style="margin-top:6px;">Установка WL: до 3х дней</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="media-grid" style="margin-top:14px;">
+      <div class="media" style="min-height: 420px; padding: 18px; display:block;">
+        <div style="font-weight:1000; font-size:1.25rem; letter-spacing:-0.01em;">LB | Shop Plus + 🔥</div>
+        <p class="lead" style="font-size:1rem; margin-top:10px;">
+          Готовое платежное решение для Telegram и продажи товаров.
+        </p>
+        <div style="margin-top:14px; color:#efe6ff; line-height:1.7; font-weight:700;">
+          <div>Цена: <span style="color:var(--bright-violet); font-weight:950;">9500$</span></div>
+          <div style="margin-top:6px;">Тех. обслуживание и сервера: <span style="color:var(--blue-violet); font-weight:950;">500$</span>/мес</div>
+          <div style="margin-top:6px;">Срез: 0,4% (при обороте от 100к$ суточного — 0,2%)</div>
+        </div>
+      </div>
+
+      <div class="media" style="min-height: 420px; padding: 18px; display:block;">
+        <div style="font-weight:1000; font-size:1.25rem; letter-spacing:-0.01em;">LB | Exchange 🔥</div>
+        <p class="lead" style="font-size:1rem; margin-top:10px;">
+          Техническое сопровождение Exchange бизнеса “под ключ”.
+        </p>
+        <div style="margin-top:14px; color:#efe6ff; line-height:1.7; font-weight:700;">
+          <div>Цена: <span style="color:var(--bright-violet); font-weight:950;">30000$</span></div>
+          <div style="margin-top:6px;">Тех. обслуживание и сервера: <span style="color:var(--blue-violet); font-weight:950;">500$</span>/мес</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container section-divider" style="border-top:none; padding-top: 36px;" id="cta">
+    <div class="cta">
+      <div class="box">
+        <h2 style="margin-bottom:8px;">Готовы обсудить запуск?</h2>
+        <p>
+          Оставьте заявку — подберём пакет под ваш формат бизнеса и закрепим план внедрения.
+          (Тут потом вставишь свой финальный CTA-оффер/ссылки.)
+        </p>
+        <div class="btns" style="margin-top:16px;">
+          <a class="btn btn-main" href="#">Оставить заявку</a>
+          <a class="btn btn-ghost" href="#">Telegram</a>
+        </div>
+      </div>
+
+      <div class="ring">
+        <img src="./pages/symbol_gradient.png" alt="Liberty glow" />
+      </div>
+    </div>
+  </section>
+
+  <footer class="container" style="padding: 24px 0 34px; color:#b9a8ce; border-top:1px solid rgba(255,255,255,0.06);">
+    <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+      <span>© 2019–2026 Liberty Payment Solutions</span>
+      <span>Premium landing concept</span>
+    </div>
+  </footer>
+
+  <!-- Spline viewer script -->
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.73/build/spline-viewer.js"></script>
+
+  <script>
+    // Легкий parallax для HERO (дорого выглядит, но без “каши”)
+    (function(){
+      const stage = document.querySelector('.device-stage');
+      const phone = document.querySelector('.phone');
+      const card = document.querySelector('.card');
+      if (!stage || !phone || !card) return;
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+
+      let raf = null;
+
+      stage.addEventListener('mousemove', (e) => {
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          const r = stage.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+
+          const rotY = x * 10;
+          const rotX = -y * 8;
+
+          phone.style.transform = `translateY(${y*-10}px) rotate(${6 + x*2}deg) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+          card.style.transform  = `translateY(${y*-14}px) rotate(${-12 + x*3}deg) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        });
+      });
+
+      stage.addEventListener('mouseleave', () => {
+        phone.style.transform = '';
+        card.style.transform = '';
+      });
+    })();
+  </script>
 </body>
 </html>

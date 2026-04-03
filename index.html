@@ -342,13 +342,46 @@
       background: rgba(255,255,255,.06);
     }
 
-    .btn-icon {
-      width: 58px;
-      padding: 0;
-      font-size: 1.2rem;
-      background: linear-gradient(90deg, var(--violet) 0%, var(--blue) 100%);
-      color: white;
-      box-shadow: 0 12px 34px rgba(108,123,255,.32);
+    /* CTA вместо иконки «самолётика»: заметно, но спокойно */
+    .btn-cta-telegram {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      padding: 0 24px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: .98rem;
+      text-decoration: none;
+      color: #f8f5ff;
+      border: 1px solid rgba(143, 157, 255, 0.55);
+      background: linear-gradient(
+        145deg,
+        rgba(108, 123, 255, 0.22) 0%,
+        rgba(219, 99, 219, 0.12) 100%
+      );
+      box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      transition: .2s ease;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-cta-telegram:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.35);
+      background: linear-gradient(
+        145deg,
+        rgba(108, 123, 255, 0.32) 0%,
+        rgba(219, 99, 219, 0.2) 100%
+      );
+    }
+
+    .btn-cta-telegram--compact {
+      min-height: 48px;
+      padding: 0 18px;
+      font-size: .9rem;
+      border-radius: 12px;
     }
 
     .hero-visual {
@@ -695,228 +728,19 @@
 
     .package-meta strong { color: #fff; }
 
-    .device-showcase {
-      position: relative;
-      min-height: 420px;
-      display: grid;
-      place-items: center;
-      margin: 36px 0 8px;
+    .laptop-only {
+      margin: 44px auto 0;
+      max-width: min(720px, 100%);
     }
 
-    .device-showcase::after {
-      content: "";
-      position: absolute;
-      width: min(520px, 92%);
-      height: 320px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(108,123,255,.2), transparent 65%);
-      filter: blur(28px);
-      z-index: 0;
-    }
-
-    .device-stage {
-      position: relative;
-      width: min(560px, 100%);
-      height: 400px;
-      z-index: 1;
-    }
-
-    .device-laptop {
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: 88%;
-      max-width: 480px;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 30px 60px rgba(0,0,0,.45);
-      display: block;
-    }
-
-    @keyframes laptop-glow {
-      from { filter: brightness(1) saturate(1.05); }
-      to { filter: brightness(1.08) saturate(1.12); }
-    }
-
-    .device-laptop-swap {
-      animation:
-        laptop-swap 4s steps(1, end) infinite,
-        laptop-glow 2.8s ease-in-out infinite alternate;
-    }
-
-    @keyframes laptop-swap {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
-    }
-
-    .device-laptop.device-b {
-      animation:
-        laptop-swap-b 4s steps(1, end) infinite,
-        laptop-glow 2.8s ease-in-out infinite alternate;
-    }
-
-    @keyframes laptop-swap-b {
-      0%, 49% { opacity: 0; }
-      50%, 100% { opacity: 1; }
-    }
-
-    .device-phone-wrap {
-      position: absolute;
-      right: 2%;
-      bottom: 18%;
-      width: min(140px, 28vw);
-      filter: drop-shadow(0 22px 34px rgba(0,0,0,.42));
-    }
-
-    .device-phone-wrap img {
+    .laptop-only img {
       width: 100%;
-      display: block;
-      border-radius: 18px;
-    }
-
-    .device-balance {
-      position: absolute;
-      left: 6%;
-      top: 20%;
-      width: min(120px, 26vw);
       height: auto;
-      opacity: 0.95;
-      filter: drop-shadow(0 16px 28px rgba(0,0,0,.35));
-    }
-
-    @media (max-width: 720px) {
-      .device-stage { height: 340px; }
-      .device-phone-wrap { right: 0; bottom: 22%; width: min(110px, 30vw); }
-      .device-balance { left: 0; top: 24%; width: min(100px, 28vw); }
-    }
-
-    .facts { padding-top: 30px; }
-
-    .facts-top {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 26px;
-      align-items: center;
-      margin-bottom: 34px;
-    }
-
-    .mesh-box {
-      position: relative;
-      min-height: 380px;
-      border-radius: 28px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.07);
-      background:
-        radial-gradient(closest-side, rgba(255,255,255,.07), transparent 72%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-    }
-
-    .mesh {
-      position: absolute;
-      inset: 0;
-      opacity: .9;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,.85) 1px, transparent 1.8px);
-      background-size: 14px 14px;
-      mask:
-        radial-gradient(48% 34% at 38% 36%, #000 55%, transparent 58%),
-        radial-gradient(42% 30% at 65% 56%, #000 55%, transparent 58%),
-        radial-gradient(36% 26% at 42% 68%, #000 55%, transparent 58%);
-      -webkit-mask:
-        radial-gradient(48% 34% at 38% 36%, #000 55%, transparent 58%),
-        radial-gradient(42% 30% at 65% 56%, #000 55%, transparent 58%),
-        radial-gradient(36% 26% at 42% 68%, #000 55%, transparent 58%);
-      filter: blur(.2px);
-    }
-
-    .graph-line {
-      position: absolute;
-      left: 14%;
-      right: 8%;
-      top: 46%;
-      height: 140px;
-      pointer-events: none;
-    }
-
-    .graph-line svg { width: 100%; height: 100%; }
-
-    .facts-right { display: grid; gap: 22px; }
-
-    .fact { display: flex; flex-direction: column; gap: 6px; }
-
-    .fact strong {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      line-height: .88;
-      font-weight: 900;
-      letter-spacing: -.05em;
-    }
-
-    .fact span {
-      color: #efe8fa;
-      font-size: 1.15rem;
-      font-weight: 800;
-    }
-
-    .fact small {
-      color: var(--muted);
-      font-size: .98rem;
-      line-height: 1.5;
-      max-width: 28ch;
-    }
-
-    .pay-title { margin: 10px 0 18px; }
-
-    .regions {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .region-card {
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      border-radius: 24px;
-      padding: 18px;
-      min-height: 210px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
-    }
-
-    .region-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 46px;
-      width: 100%;
-      border-radius: 999px;
-      background: rgba(255,255,255,.10);
-      color: #fff;
-      font-weight: 900;
-      margin-bottom: 18px;
-      text-align: center;
-      padding: 0 18px;
-    }
-
-    .logos {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .logo-chip {
-      min-width: 76px;
-      min-height: 34px;
-      padding: 0 12px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: .92rem;
-      font-weight: 800;
-      color: #f4eeff;
+      display: block;
+      border-radius: 16px;
+      box-shadow:
+        0 36px 70px rgba(0,0,0,.5),
+        0 0 0 1px rgba(255,255,255,.1);
     }
 
     .service-grid {
@@ -974,135 +798,6 @@
       bottom: 14px;
       font-size: 3rem;
       opacity: .9;
-    }
-
-    .world-tags {
-      display: flex;
-      gap: 10px;
-      overflow: auto;
-      padding-bottom: 6px;
-      margin-top: 28px;
-    }
-
-    .world-tags::-webkit-scrollbar { height: 6px; }
-    .world-tags::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,.14);
-      border-radius: 999px;
-    }
-
-    .flag-pill {
-      flex: 0 0 auto;
-      min-height: 44px;
-      padding: 0 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.06);
-      display: inline-flex;
-      align-items: center;
-      font-weight: 800;
-      color: #f6efff;
-      white-space: nowrap;
-    }
-
-    .who-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-      margin-top: 22px;
-      align-items: stretch;
-    }
-
-    .who-card {
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 26px;
-      background: rgba(255,255,255,.03);
-      padding: 22px;
-      min-height: 320px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .who-card h3 {
-      text-transform: uppercase;
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-      line-height: 1;
-      letter-spacing: -.03em;
-      font-weight: 900;
-    }
-
-    .who-card p,
-    .who-card li {
-      color: var(--muted);
-      line-height: 1.62;
-      font-weight: 600;
-    }
-
-    .who-card ul {
-      padding-left: 18px;
-      margin-top: 8px;
-      display: grid;
-      gap: 6px;
-    }
-
-    .gamepad {
-      position: absolute;
-      width: 210px;
-      height: 130px;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%) rotate(-12deg);
-      border-radius: 60px;
-      background: linear-gradient(180deg, #21232e, #0d0f16);
-      box-shadow: 0 24px 40px rgba(0,0,0,.45);
-    }
-
-    .gamepad::before,
-    .gamepad::after {
-      content: "";
-      position: absolute;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #3f4356, #11141d);
-      top: 44px;
-    }
-
-    .gamepad::before { left: 26px; }
-    .gamepad::after { right: 26px; }
-
-    .also-box {
-      grid-column: span 2;
-      border-radius: 26px;
-      padding: 22px;
-      background: linear-gradient(135deg, rgba(108,123,255,.92), rgba(219,99,219,.88));
-      border: 1px solid rgba(255,255,255,.14);
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 12px 22px;
-      margin-top: 16px;
-    }
-
-    .also-box h4 {
-      grid-column: 1 / -1;
-      font-size: 1.8rem;
-      text-transform: uppercase;
-      line-height: 1;
-      font-weight: 900;
-      letter-spacing: -.03em;
-      margin-bottom: 4px;
-    }
-
-    .also-box ul {
-      padding-left: 18px;
-      display: grid;
-      gap: 6px;
-    }
-
-    .also-box li {
-      line-height: 1.5;
-      color: #fff;
-      font-weight: 700;
     }
 
     .contact-grid {
@@ -1294,123 +989,6 @@
       box-shadow: 0 12px 28px rgba(255,255,255,.16);
     }
 
-    .tg-wrap {
-      margin-top: 30px;
-      display: block;
-    }
-
-    .slider-box {
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 28px;
-      background: rgba(255,255,255,.03);
-      padding: 22px;
-      display: grid;
-      grid-template-columns: 70px 260px 1fr;
-      gap: 18px;
-      align-items: center;
-      min-height: 300px;
-      box-shadow: var(--shadow);
-    }
-
-    .arrow {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(108,123,255,.18);
-      color: #fff;
-      display: grid;
-      place-items: center;
-      font-size: 1.4rem;
-      font-weight: 900;
-      margin: 0 auto;
-    }
-
-    .tg-phone {
-      width: 240px;
-      height: 470px;
-      border-radius: 32px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: linear-gradient(180deg, #12141d, #07080e);
-      box-shadow: 0 22px 48px rgba(0,0,0,.46);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .tg-phone::before {
-      content: "";
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90px;
-      height: 18px;
-      background: #000;
-      border-radius: 999px;
-    }
-
-    .tg-screen {
-      position: absolute;
-      inset: 32px 10px 10px;
-      border-radius: 24px;
-      background: #0e1016;
-      padding: 18px 14px;
-      color: #f6f1ff;
-      font-size: .92rem;
-      line-height: 1.48;
-      overflow: hidden;
-    }
-
-    .tg-screen .chat-head {
-      font-size: 1rem;
-      font-weight: 900;
-      margin-bottom: 18px;
-      text-align: center;
-    }
-
-    .tg-screen .offer {
-      display: grid;
-      gap: 8px;
-      color: #ece5fb;
-      font-weight: 700;
-    }
-
-    .tg-screen .offer b { color: white; }
-
-    .promo-box {
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 28px;
-      background:
-        radial-gradient(500px 240px at 10% 0%, rgba(108,123,255,.14), transparent 54%),
-        rgba(255,255,255,.03);
-      padding: 28px;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .promo-box h2 {
-      font-size: clamp(2rem, 4vw, 3.6rem);
-      max-width: 11ch;
-      margin-bottom: 12px;
-    }
-
-    .promo-box p {
-      color: var(--muted);
-      font-size: 1.04rem;
-      line-height: 1.58;
-      margin-bottom: 20px;
-      max-width: 42ch;
-      font-weight: 600;
-    }
-
-    .promo-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
     .site-footer { padding: 34px 0 44px; }
 
     .footer-box {
@@ -1426,7 +1004,12 @@
 
     .footer-brand .brand { font-size: 2rem; }
 
-    .socials { display: flex; gap: 10px; }
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
 
     .soc {
       width: 48px;
@@ -1521,29 +1104,12 @@
     @media (max-width: 1100px) {
       .hero-grid,
       .partner-grid,
-      .facts-top,
       .service-grid,
       .contact-grid,
       .footer-box,
       .package-grid {
         grid-template-columns: 1fr;
       }
-
-      .regions { grid-template-columns: 1fr 1fr; }
-
-      .who-grid { grid-template-columns: 1fr; }
-
-      .also-box {
-        grid-column: auto;
-        grid-template-columns: 1fr;
-      }
-
-      .slider-box {
-        grid-template-columns: 1fr;
-        justify-items: center;
-      }
-
-      .tg-phone { width: min(240px, 100%); }
 
       .feature-cards { grid-template-columns: 1fr; }
 
@@ -1557,17 +1123,11 @@
 
       .bank-stack { transform: scale(.88); }
 
-      .regions { grid-template-columns: 1fr; }
-
       .form-grid { grid-template-columns: 1fr; }
 
       .section-panel,
       .form-box,
       .phones-box,
-      .promo-box,
-      .slider-box,
-      .who-card,
-      .region-card,
       .feature {
         border-radius: 22px;
       }
@@ -1575,7 +1135,6 @@
       h1 { font-size: clamp(2.4rem, 12vw, 4.2rem); }
 
       h2.section-title,
-      .promo-box h2,
       .form-box h2 {
         font-size: clamp(1.8rem, 8vw, 3rem);
       }
@@ -1585,8 +1144,6 @@
 
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
-      .device-laptop.device-b { display: none !important; }
-      .device-laptop.device-laptop-swap { opacity: 1 !important; }
     }
   </style>
 </head>
@@ -1610,7 +1167,6 @@
             <a href="#about-product">О продукте</a>
             <a href="#packages">Пакеты</a>
             <a href="#benefits">Преимущества</a>
-            <a href="#clients">С кем работаем</a>
             <a href="#contact">Контакты</a>
           </div>
         </div>
@@ -1635,7 +1191,7 @@
             <div class="actions">
               <a href="#packages" class="btn btn-primary on-light">Смотреть пакеты</a>
               <a href="#about-product" class="btn btn-outline">О проекте Liberty</a>
-              <a href="https://t.me/liberty_oreon_manager" class="btn btn-icon" target="_blank" rel="noopener noreferrer" aria-label="Telegram">✈</a>
+              <a href="https://t.me/liberty_Che_LB" class="btn-cta-telegram" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
             </div>
           </div>
 
@@ -1820,16 +1376,9 @@
             </p>
           </div>
 
-          <div class="device-showcase" aria-hidden="true">
-            <div class="device-stage">
-              <img class="device-laptop device-laptop-swap" src="./pages/computer-mid-1.png" alt="" width="960" height="540" />
-              <img class="device-laptop device-b" src="./pages/computer-mid-2.png" alt="" width="960" height="540" />
-              <img class="device-balance" src="./pages/balance1.png" alt="" width="320" height="320" />
-              <div class="device-phone-wrap">
-                <img src="./pages/phone1.png" alt="" width="400" height="800" />
-              </div>
-            </div>
-          </div>
+          <figure class="laptop-only">
+            <img src="./pages/computer-mid-2.png" alt="Открытый ноутбук: рабочий интерфейс Liberty" width="960" height="540" decoding="async" />
+          </figure>
         </div>
       </div>
     </section>
@@ -1974,98 +1523,6 @@
             <div class="feature-icon">📱</div>
           </article>
         </div>
-
-        <div style="margin-top:34px;">
-          <h2 class="section-title">Мы объединяем мир</h2>
-          <p class="muted" style="max-width:680px;">
-            Делая онлайн-платежи простыми, гибкими и доступными независимо от того, где вы находитесь и под какой рынок строите продукт.
-          </p>
-
-          <div class="world-tags">
-            <span class="flag-pill">🇮🇩 Indonesia</span>
-            <span class="flag-pill">🇿🇲 Zambia</span>
-            <span class="flag-pill">🇺🇬 Uganda</span>
-            <span class="flag-pill">🇺🇸 USA</span>
-            <span class="flag-pill">🇨🇭 Switzerland</span>
-            <span class="flag-pill">🇫🇮 Finland</span>
-            <span class="flag-pill">🇵🇱 Poland</span>
-            <span class="flag-pill">🇮🇹 Italy</span>
-            <span class="flag-pill">🇨🇺 Cuba</span>
-            <span class="flag-pill">🇨🇴 Colombia</span>
-            <span class="flag-pill">🇹🇭 Thailand</span>
-            <span class="flag-pill">🇻🇳 Vietnam</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="clients">
-      <div class="container">
-        <div class="top-line"></div>
-
-        <div class="world-tags" style="margin-top:0;">
-          <span class="flag-pill">🇧🇴 Bolivia</span>
-          <span class="flag-pill">🇨🇲 Cameroon</span>
-          <span class="flag-pill">🇧🇫 Burkina Faso</span>
-          <span class="flag-pill">🇵🇪 Peru</span>
-          <span class="flag-pill">🇵🇭 Philippines</span>
-          <span class="flag-pill">🇨🇳 China</span>
-          <span class="flag-pill">🇹🇭 Thailand</span>
-          <span class="flag-pill">🇻🇳 Vietnam</span>
-          <span class="flag-pill">🇳🇬 Nigeria</span>
-          <span class="flag-pill">🇺🇿 Uzbekistan</span>
-        </div>
-
-        <h2 class="section-title" style="margin-top:30px;">С кем мы работаем</h2>
-
-        <div class="who-grid">
-          <article class="who-card">
-            <h3>Товары</h3>
-            <p>Удобство оплаты на сайте приобретённых программ, статей, баннеров, цифровых продуктов и любых других онлайн-товаров.</p>
-            <div class="gamepad" aria-hidden="true"></div>
-          </article>
-
-          <article class="who-card">
-            <h3>Дейтинг-сайты</h3>
-            <p>Покупка дополнительных привилегий, расширение возможностей знакомства и монетизация через удобную онлайн-оплату.</p>
-          </article>
-
-          <article class="who-card">
-            <h3>Инвестиционные проекты</h3>
-            <p>Для владельцев стартапов, коммерческих, экономических и финансовых проектов — отдельные сценарии по приёму платежей и выплатам.</p>
-          </article>
-
-          <div class="also-box">
-            <h4>А также</h4>
-
-            <ul>
-              <li>Заказ по почте / телефону</li>
-              <li>Онлайн-ритейл</li>
-              <li>Путешествия</li>
-              <li>Маркетинг</li>
-              <li>iGaming</li>
-              <li>High risk</li>
-            </ul>
-
-            <ul>
-              <li>Беттинг</li>
-              <li>Контент 18+</li>
-              <li>Форекс</li>
-              <li>Телекоммуникации</li>
-              <li>Онлайн-торговля</li>
-              <li>Интернет-аукционы</li>
-            </ul>
-
-            <ul>
-              <li>Гороскоп</li>
-              <li>Фриланс</li>
-              <li>Телемаркетинг</li>
-              <li>NUTRA</li>
-              <li>Загрузка ПО</li>
-              <li>И кастомные вертикали</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -2077,7 +1534,8 @@
           <div class="form-box">
             <h2>Есть вопросы? Оставьте заявку!</h2>
             <p class="subtext">
-              Заполните форму, и мы свяжемся с вами в течение 15 минут.
+              Заполните форму — или напишите напрямую в Telegram:
+              <a href="https://t.me/liberty_Che_LB" style="color:#c8d0ff;text-underline-offset:3px;">@liberty_Che_LB</a>
             </p>
 
             <div class="form-grid">
@@ -2088,7 +1546,7 @@
 
               <div class="field">
                 <label for="tg">Ник в Telegram</label>
-                <input id="tg" type="text" placeholder="@liberty" autocomplete="username" />
+                <input id="tg" type="text" placeholder="@liberty_Che_LB" autocomplete="username" />
               </div>
 
               <div class="field full">
@@ -2103,8 +1561,7 @@
             </div>
 
             <div class="actions" style="margin-top:4px;">
-              <a href="https://t.me/liberty_oreon_manager" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Свяжитесь с нами</a>
-              <a href="https://t.me/liberty_oreon_manager" class="btn btn-icon" target="_blank" rel="noopener noreferrer" aria-label="Telegram">✈</a>
+              <a href="https://t.me/liberty_Che_LB" class="btn-cta-telegram" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
             </div>
 
             <div class="privacy">
@@ -2133,50 +1590,20 @@
           </div>
         </div>
 
-        <div class="tg-wrap">
-          <div class="slider-box">
-            <div class="arrow" aria-hidden="true">‹</div>
-
-            <div class="tg-phone">
-              <div class="tg-screen">
-                <div class="chat-head">Liberty Offers</div>
-                <div class="offer">
-                  <div><b>UNITED ARAB EMIRATES</b></div>
-                  <div>Pay in: AED</div>
-                  <div>Pay out: USDT, Bybit, T+0</div>
-                  <div>Settlement: instant</div>
-                  <div>Payment method: Emirates NBD / IBAN</div>
-                  <div>Limits: 500 – 150 000 AED</div>
-                  <div>Support: 8:00–23:00 (UTC+4)</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="promo-box">
-              <h2>Переходите в наш закрытый TG-бот, где мы ежедневно публикуем офферы в 150+ гео</h2>
-              <p>Оставьте заявку на сайте и получите доступ к предложениям, рабочим связкам и операционным обновлениям.</p>
-              <div class="promo-actions">
-                <a href="#contact" class="btn btn-primary">Оставить заявку</a>
-                <a href="https://t.me/liberty_oreon_manager" class="btn btn-icon" target="_blank" rel="noopener noreferrer" aria-label="Telegram">✈</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <footer class="site-footer">
           <div class="footer-box">
             <div class="footer-brand">
               <a class="brand" href="#top">
                 <img src="./pages/symbol_dark.svg" alt="Liberty logo" />
                 <span class="brand-word">
-                  <strong>Lib<span>erty</span></strong>
+                  <strong>Liberty</strong>
                   <small>Простые решения сложных задач</small>
                 </span>
               </a>
 
               <div class="socials">
-                <a href="https://t.me/liberty_oreon_manager" class="soc" target="_blank" rel="noopener noreferrer" aria-label="Telegram">✈</a>
-                <a href="#contact" class="soc" aria-label="Контакты">@</a>
+                <a href="https://t.me/liberty_Che_LB" class="btn-cta-telegram btn-cta-telegram--compact" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
+                <a href="#contact" class="soc" aria-label="Форма заявки">@</a>
               </div>
 
               <div style="color:#d7ccea; font-weight:700;">TERMS & CONDITIONS</div>
@@ -2187,14 +1614,13 @@
               <a href="#about-product">О продукте</a>
               <a href="#packages">Пакеты</a>
               <a href="#benefits">Преимущества</a>
-              <a href="#clients">С кем работаем</a>
               <a href="#contact">Контакты</a>
               <a href="#top">Наверх</a>
             </nav>
 
             <div class="footer-right">
               <a class="mail" href="mailto:info@liberty.tech">info@liberty.tech</a>
-              <a class="btn btn-primary" style="min-height:48px; font-size:.95rem;" href="https://t.me/liberty_oreon_manager" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+              <a class="btn btn-primary" style="min-height:48px; font-size:.95rem;" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
             </div>
           </div>
 

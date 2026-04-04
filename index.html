@@ -469,23 +469,21 @@
       justify-content: center;
     }
 
-    .ring-wrap {
+    .hands-wrap {
       display: grid;
       place-items: center;
-      min-height: 220px;
+      align-content: center;
+      min-height: 200px;
+      margin: 0;
+      padding: 8px 0;
     }
-    .ring {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: conic-gradient(from 0deg, #6c7bff, #9a7dff, #db63db, #6c7bff);
-      mask: radial-gradient(circle at center, transparent 38%, #000 40%);
-      -webkit-mask: radial-gradient(circle at center, transparent 38%, #000 40%);
-      filter: drop-shadow(0 14px 30px rgba(108, 123, 255, 0.22));
-      animation: spin 12s linear infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    .hands-wrap img {
+      width: min(100%, 440px);
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 14px;
+      filter: drop-shadow(0 22px 48px rgba(0, 0, 0, 0.4));
     }
 
     .handshake-lines {
@@ -824,8 +822,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .card-single,
-      .ring {
+      .card-single {
         animation: none !important;
       }
       * { scroll-behavior: auto}
@@ -904,9 +901,16 @@
             Позвольте нам стать частью вашего финансового успеха и собрать для вас масштабируемую, красивую и коммерчески эффективную платёжную инфраструктуру.
           </p>
         </div>
-        <div class="ring-wrap">
-          <div class="ring" aria-hidden="true"></div>
-        </div>
+        <figure class="hands-wrap">
+          <img
+            src="./pages/hands.png"
+            alt="Рукопожатие: партнёрство и доверие в финансовых решениях"
+            width="1280"
+            height="853"
+            decoding="async"
+            loading="lazy"
+          />
+        </figure>
       </div>
     </section>
 

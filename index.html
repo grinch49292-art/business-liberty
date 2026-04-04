@@ -3,650 +3,1439 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Liberty Private — инфраструктура платежей премиум-класса</title>
-  <meta name="description" content="White-label процессинг, каскад и сопровождение для бизнеса, которому нужен уровень private banking." />
-  <link rel="icon" href="./assets/symbol_dark.svg" type="image/svg+xml" />
+  <title>Liberty Payment Solutions</title>
+  <meta name="description" content="Liberty Payment Solutions — B2B решения для процессинга платежей." />
+
+  <link rel="icon" type="image/svg+xml" href="./assets/symbol_dark.svg" />
+  <link rel="apple-touch-icon" href="./assets/symbol_dark.svg" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
   <style>
     :root {
-      --bg0: #060608;
-      --bg1: #0c0c10;
-      --fg: #f2efe8;
-      --fg-soft: rgba(242, 239, 232, 0.72);
-      --muted: rgba(242, 239, 232, 0.48);
-      --gold: #c9a962;
-      --gold-dim: rgba(201, 169, 98, 0.35);
-      --line: rgba(201, 169, 98, 0.18);
-      --accent: #8b9dc4;
-      --max: min(1240px, 92vw);
-      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --blue-violet: #6c7bff;
+      --bright-violet: #db63db;
+      --deep-purple: #13071e;
+
+      --text: #f5f1ff;
+      --muted: #cbbfda;
+
+      --line-soft: rgba(255, 255, 255, 0.12);
+      --container: min(1180px, 92vw);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: Outfit, system-ui, sans-serif;
-      font-weight: 400;
-      color: var(--fg);
-      background: var(--bg0);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
 
-    /* Кинематографичный фон + лёгкая «плёнка» */
-    .bg-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: -3;
-      pointer-events: none;
       background:
-        radial-gradient(ellipse 90% 70% at 10% -10%, rgba(139, 157, 196, 0.14), transparent 55%),
-        radial-gradient(ellipse 70% 50% at 95% 15%, rgba(201, 169, 98, 0.09), transparent 50%),
-        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(80, 60, 120, 0.12), transparent 45%),
-        linear-gradient(180deg, #08080b 0%, #060608 40%, #050507 100%);
+        radial-gradient(1200px 760px at 34% -8%, rgba(142, 164, 255, 0.60), transparent 62%),
+        radial-gradient(760px 520px at 102% 0%, rgba(219, 99, 219, 0.40), transparent 70%),
+        linear-gradient(180deg, #2f3796 0%, #211050 38%, #140726 70%, #0d0419 100%);
     }
-    .bg-canvas::after {
+
+    body::before {
       content: "";
-      position: absolute;
+      position: fixed;
       inset: 0;
-      opacity: 0.04;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      mix-blend-mode: overlay;
-    }
-
-    .grain-line {
-      position: fixed;
-      left: 0;
-      right: 0;
-      top: 0;
-      height: 1px;
-      z-index: 50;
-      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
-      opacity: 0.6;
+      z-index: -2;
       pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.075) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.075) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+      background-size: 46px 46px, 46px 46px, 11px 11px, 11px 11px;
+      opacity: 0.58;
+      mix-blend-mode: screen;
     }
 
-    .container { width: var(--max); margin-inline: auto; padding-inline: clamp(16px, 4vw, 28px); }
-
-    /* NAV */
-    .nav {
+    .bg-ghost {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 40;
-      padding: 18px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      background: rgba(6, 6, 8, 0.72);
-      backdrop-filter: blur(16px) saturate(1.2);
+      left: 50%;
+      top: 42%;
+      width: min(88vw, 920px);
+      transform: translate(-50%, -50%);
+      opacity: 0.055;
+      pointer-events: none;
+      z-index: -1;
+      filter: saturate(1.02);
     }
-    .nav__inner {
-      width: var(--max);
+
+    .violet-bottom {
+      position: fixed;
+      inset: auto 0 0 0;
+      height: 28vh;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        radial-gradient(120% 130% at 50% 120%, rgba(192, 22, 196, 0.33) 0%, rgba(145, 24, 176, 0.16) 35%, rgba(84, 18, 132, 0.08) 58%, transparent 80%),
+        linear-gradient(180deg, transparent 0%, rgba(105, 22, 134, 0.22) 65%, rgba(99, 18, 128, 0.34) 100%);
+    }
+
+    .container {
+      width: var(--container);
       margin-inline: auto;
-      padding-inline: clamp(16px, 4vw, 28px);
+    }
+
+    .nav-wrap {
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+      width: var(--container);
+      margin: 10px auto 14px;
+      backdrop-filter: blur(4px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 10px;
+    }
+
+    .nav {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 20px;
-    }
-    .brand {
-      display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+    }
+
+    .brand {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
       text-decoration: none;
-      color: var(--fg);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.55rem;
+      letter-spacing: -0.03em;
     }
-    .brand img {
-      width: 32px;
-      height: 32px;
-      opacity: 0.95;
-      filter: brightness(0) invert(1);
-    }
-    .brand span {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--fg-soft);
-    }
-    .nav__links {
+    .brand img { width: 30px; height: 30px; display: block; }
+
+    .menu {
       display: flex;
+      gap: 16px;
       flex-wrap: wrap;
-      gap: clamp(8px, 2vw, 28px);
       justify-content: flex-end;
     }
-    .nav__links a {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
+    .menu a {
       text-decoration: none;
-      transition: color 0.35s var(--ease);
+      color: #e8def7;
+      font-size: 0.88rem;
+      padding: 8px 2px;
+      border-bottom: 1px solid transparent;
+      transition: 0.2s ease;
     }
-    .nav__links a:hover { color: var(--gold); }
+    .menu a:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.45);
+    }
 
-    /* TYPE */
-    .serif {
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-weight: 500;
+    .section {
+      padding: clamp(28px, 4.5vw, 64px) 0;
+      position: relative;
     }
-    .eyebrow {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 14px;
+
+    .section + .section {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
-    h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; letter-spacing: -0.02em; }
-    h1 {
-      font-size: clamp(2.6rem, 7.5vw, 5.2rem);
-      line-height: 1.02;
-      font-weight: 500;
+
+    .section#hero {
+      padding-top: clamp(20px, 3vw, 40px);
+      padding-bottom: clamp(24px, 4vw, 48px);
     }
-    h2 {
-      font-size: clamp(2rem, 4.8vw, 3.4rem);
-      line-height: 1.08;
-      margin-bottom: 20px;
-    }
-    h3 {
-      font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+
+    .section-head {
       margin-bottom: 12px;
     }
-    .lead {
-      font-size: clamp(1rem, 1.35vw, 1.15rem);
-      line-height: 1.75;
-      color: var(--fg-soft);
-      font-weight: 300;
-      max-width: 52ch;
+    .kicker-line {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(108, 123, 255, 0.9) 26%, rgba(219, 99, 219, 0.8) 62%, rgba(255, 255, 255, 0) 100%);
+      opacity: 0.9;
+      margin-bottom: 14px;
     }
-    .p {
-      font-size: 0.98rem;
-      line-height: 1.8;
-      color: var(--fg-soft);
-      font-weight: 300;
-      max-width: 58ch;
-    }
-    .p + .p { margin-top: 1.1em; }
 
-    /* BUTTONS */
-    .btn-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+    h1 {
+      font-size: clamp(2rem, 5.9vw, 4.5rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      max-width: 18ch;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: clamp(1.45rem, 3.2vw, 2.6rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    h2.soft {
+      text-transform: none;
+      letter-spacing: -0.03em;
+      max-width: 32ch;
+      line-height: 1.1;
+    }
+
+    .hero-title-stack .hero-line1 {
+      display: block;
+      font-size: 0.52em;
+      font-weight: 800;
+      color: #c8d4ff;
+      text-transform: none;
+      letter-spacing: 0.02em;
+    }
+    .hero-title-stack .hero-line2 {
+      display: block;
+      font-size: 1em;
+      font-weight: 900;
+      background: linear-gradient(95deg, #ff5ec7, #c76bff 40%, var(--blue-violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-title-stack .hero-line3 {
+      display: block;
+      font-size: 0.46em;
+      font-weight: 900;
+      color: #fff;
+      text-transform: none;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-top: 0.12em;
+      max-width: 22ch;
+    }
+
+    .grad {
+      background: linear-gradient(95deg, var(--blue-violet), #9d8bff 46%, var(--bright-violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1.05rem;
+      max-width: 70ch;
+    }
+
+    .trust-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .trust-pill {
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.06);
+      color: #efe8ff;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .trust-pill--grad {
+      background: linear-gradient(135deg, rgba(108, 123, 255, 0.75), rgba(219, 99, 219, 0.65));
+      border-color: rgba(255, 255, 255, 0.22);
+      color: #fff;
+    }
+
+    .btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 16px 32px;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      gap: 10px;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-weight: 800;
       text-decoration: none;
-      border-radius: 0;
-      transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), background 0.35s;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      transition: 0.2s ease;
+      user-select: none;
+      white-space: nowrap;
     }
-    .btn--gold {
-      background: linear-gradient(135deg, #d4bc7a 0%, #c9a962 40%, #a88b4a 100%);
-      color: #0a0a0c;
-      box-shadow: 0 20px 50px rgba(201, 169, 98, 0.22);
+    .btn:hover { transform: translateY(-1px); }
+    .btn-main {
+      color: #140a23;
+      background: linear-gradient(100deg, #8ca1ff, #a57dff 55%, #d86be6);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 12px 34px rgba(140, 125, 255, 0.34);
     }
-    .btn--gold:hover { transform: translateY(-2px); box-shadow: 0 28px 60px rgba(201, 169, 98, 0.28); }
-    .btn--line {
-      border: 1px solid var(--line);
-      color: var(--fg-soft);
-      background: transparent;
-    }
-    .btn--line:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* SECTIONS */
-    section { padding: clamp(72px, 12vw, 140px) 0; position: relative; }
-    .section--tight { padding: clamp(48px, 8vw, 88px) 0; }
-    .rule {
-      width: 48px;
-      height: 1px;
-      background: var(--gold);
-      margin-bottom: 28px;
-      opacity: 0.85;
+    .btn-ghost {
+      color: #f2eaff;
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.22);
     }
 
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      min-height: 100dvh;
+    .btn-cta-telegram {
+      color: #f8f5ff;
+      background: linear-gradient(145deg, rgba(108, 123, 255, 0.22), rgba(219, 99, 219, 0.12));
+      border-color: rgba(143, 157, 255, 0.55);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-grid {
       display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
       align-items: center;
-      padding-top: 100px;
-      padding-bottom: 60px;
+      min-height: 0;
+      padding: clamp(8px, 2vw, 22px) 0 clamp(4px, 1vw, 16px);
     }
-    .hero__grid {
+
+    .hero-visual {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(32px, 6vw, 80px);
-      align-items: center;
-    }
-    .hero__visual {
+      place-items: center;
+      min-height: 0;
       position: relative;
+      overflow: visible;
+      padding: 12px 0;
     }
-    .hero__frame {
+
+    .card-single {
+      width: min(620px, 90%);
+      transform: rotate(-10deg);
+      animation: cardFloatSolo 5.6s ease-in-out infinite;
+      filter:
+        drop-shadow(0 34px 70px rgba(0, 0, 0, 0.38))
+        drop-shadow(0 10px 28px rgba(219, 99, 219, 0.18));
+      will-change: transform;
+    }
+
+    @keyframes cardFloatSolo {
+      0% { transform: rotate(-10deg) translateY(0px); }
+      50% { transform: rotate(-7deg) translateY(-16px); }
+      100% { transform: rotate(-10deg) translateY(0px); }
+    }
+
+    .bank-hero {
+      width: min(340px, 92%);
+      aspect-ratio: 1.586;
+      border-radius: 22px;
+      padding: 22px;
+      background: linear-gradient(135deg, #6c7bff 0%, #7a6dff 32%, #b565e8 62%, #db63db 100%);
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.48),
+        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
       position: relative;
-      border: 1px solid var(--line);
-      padding: clamp(12px, 2vw, 20px);
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), transparent);
+      overflow: hidden;
     }
-    .hero__frame::before {
+    .bank-hero::before {
       content: "";
       position: absolute;
-      inset: -1px;
-      border: 1px solid transparent;
-      background: linear-gradient(135deg, rgba(201, 169, 98, 0.25), transparent 40%, transparent 60%, rgba(139, 157, 196, 0.2)) border-box;
-      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(254, 243, 255, 0.22), transparent 26%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.09), transparent 48%);
       pointer-events: none;
     }
-    .hero__frame img {
+    .bank-hero-inner { position: relative; z-index: 1; }
+    .bank-logo-h { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; }
+    .chip-h {
+      width: 42px;
+      height: 30px;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #ffd573, #f2b44e);
+      margin-top: 18px;
+    }
+    .card-num-h {
+      position: absolute;
+      left: 22px;
+      bottom: 48px;
+      font-size: 1.35rem;
+      letter-spacing: 0.11em;
+      font-weight: 900;
+    }
+    .card-meta-h {
+      position: absolute;
+      left: 22px;
+      bottom: 18px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      opacity: 0.95;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .prose {
+      color: #dacde8;
+      line-height: 1.85;
+      font-size: 1.02rem;
+    }
+    .prose p { margin: 8px 0; }
+    .prose strong.em { color: #f2eaff; font-weight: 800; }
+    .prose ul:not(.star-list) {
+      margin: 12px 0 12px 1.2em;
+    }
+    .prose ol {
+      margin: 12px 0 12px 1.2em;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .prose-block h3 {
+      font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+      margin: 22px 0 10px;
+      color: #fff;
+      text-transform: none;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+    .note { font-style: italic; color: #b8a8d0; font-size: 0.98rem; }
+
+    .star-list {
+      list-style: none;
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+    .star-list li {
+      color: #efe6ff;
+      padding-left: 28px;
+      position: relative;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+    .star-list li::before {
+      content: "🌟";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    /* Правая колонка кризис-блока: компактные тезисы, как «факты в цифрах» на референсе */
+    .crisis-aside {
+      align-self: start;
+      position: sticky;
+      top: 88px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .fact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .fact-tile {
+      padding: 12px 0 16px;
+      border-radius: 0;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: transparent;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .fact-tile--wide {
+      grid-column: 1 / -1;
+    }
+    .fact-tile--accent {
+      background: transparent;
+    }
+    .fact-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #aeb8ff;
+    }
+    .fact-title {
+      font-size: 0.98rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .fact-lbl {
+      font-size: 0.84rem;
+      font-weight: 650;
+      color: #e4dcf5;
+      line-height: 1.45;
+    }
+    .crisis-cta {
+      margin-top: 2px;
+    }
+    .crisis-cta .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hands-wrap {
+      display: grid;
+      place-items: center;
+      align-content: center;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+    }
+    .hands-wrap img {
+      width: min(100%, 440px);
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 14px;
+      filter: drop-shadow(0 22px 48px rgba(0, 0, 0, 0.4));
+    }
+
+    .handshake-lines {
+      margin: 22px 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+    }
+    .handshake-lines p {
+      margin: 0 0 8px;
+      font-weight: 700;
+      color: #efe8fa;
+    }
+    .handshake-lines p:last-child { margin-bottom: 0; }
+
+    .laptop-only {
+      margin: 36px auto 0;
+      max-width: min(720px, 100%);
+      padding: 0;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+    }
+    .laptop-only img {
       width: 100%;
       height: auto;
       display: block;
-      filter: contrast(1.04) saturate(0.95);
-    }
-    .hero__caption {
-      margin-top: 14px;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
+      border-radius: 16px;
+      box-shadow: 0 36px 70px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
     }
 
-    /* PLACEHOLDER */
-    .ph {
-      position: relative;
-      min-height: clamp(220px, 38vw, 480px);
-      border: 1px dashed var(--gold-dim);
-      background: rgba(255, 255, 255, 0.02);
+    .packages-grid {
       display: grid;
-      place-items: center;
-      padding: 28px;
-      text-align: center;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(28px, 4vw, 40px) clamp(22px, 3vw, 32px);
+      margin-top: 8px;
+      position: relative;
+      z-index: 1;
     }
-    .ph__tag {
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold);
+
+    .pack {
+      padding: 8px 0 8px;
+      position: relative;
+      z-index: 0;
+      border-radius: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .pack .tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(219, 99, 219, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fde9ff;
+      margin-bottom: 8px;
+    }
+
+    .pack h3 {
+      font-size: 1.2rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      text-transform: none;
+    }
+
+    .pack p {
+      color: var(--muted);
+      line-height: 1.7;
       margin-bottom: 10px;
     }
-    .ph__note {
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-size: clamp(1.1rem, 2vw, 1.45rem);
-      font-style: italic;
-      color: var(--fg-soft);
-      max-width: 36ch;
-      line-height: 1.45;
-    }
 
-    /* SPLIT */
-    .split {
+    .pack ul {
+      list-style: none;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(28px, 5vw, 72px);
-      align-items: center;
-    }
-    .split--rev .split__text { order: 2; }
-    .split--rev .split__media { order: 1; }
-
-    /* BENTO */
-    .bento {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: var(--line);
-      border: 1px solid var(--line);
-    }
-    .bento__cell {
-      background: var(--bg0);
-      padding: clamp(28px, 4vw, 44px);
-      min-height: 200px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      transition: background 0.5s var(--ease);
-    }
-    .bento__cell:hover { background: rgba(201, 169, 98, 0.04); }
-    .bento__num {
-      font-family: "Cormorant Garamond", serif;
-      font-size: clamp(2.5rem, 5vw, 3.8rem);
-      color: var(--gold);
-      opacity: 0.55;
-      line-height: 1;
+      gap: 8px;
+      margin-top: 10px;
       margin-bottom: 12px;
     }
-    .bento__cell h3 { margin-bottom: 8px; font-size: 1.25rem; }
-    .bento__cell p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; font-weight: 300; max-width: 38ch; }
-
-    /* FULL BLEED */
-    .fullbleed {
+    .pack li {
+      padding-left: 22px;
       position: relative;
-      min-height: clamp(360px, 62vh, 620px);
-      display: grid;
-      align-items: end;
-      padding: clamp(32px, 6vw, 64px);
-      border: 1px solid var(--line);
-      overflow: hidden;
+      color: #f0e9ff;
+      line-height: 1.6;
+      font-weight: 650;
     }
-    .fullbleed__bg {
+    .pack li::before {
+      content: "🌟";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 0.85em;
+    }
+
+    .price {
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.22);
+      color: #efe6ff;
+      line-height: 1.7;
+      font-weight: 750;
+    }
+
+    .muted { color: var(--muted); }
+
+    .service-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 28px;
+      align-items: start;
+    }
+    .feat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .feat {
+      padding: 8px 0 16px;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+    }
+    .feat h4 {
+      font-size: 1rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+    .feat p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .feat.grad {
+      background: transparent;
+      padding-left: 14px;
+      border-left: 3px solid;
+      border-color: #8b7cff;
+    }
+    .feat.grad p { color: var(--muted); }
+    .feat.grad h4 {
+      background: linear-gradient(95deg, #d8e0ff, #f0c4ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .contact-wrap {
+      max-width: min(560px, 100%);
+      margin-inline: 0;
+      margin-top: 4px;
+    }
+
+    .contact-aside {
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .contact-aside-title {
+      font-size: clamp(1.12rem, 2.4vw, 1.42rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: none;
+      color: #fff;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .contact-aside-lead {
+      margin: 0;
+      font-size: 0.96rem;
+      font-weight: 650;
+      color: #dacde8;
+      line-height: 1.55;
+    }
+    .contact-checklist {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+    .contact-checklist li {
+      padding-left: 26px;
+      position: relative;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #efe8fa;
+      line-height: 1.45;
+    }
+    .contact-checklist li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #9dffb3;
+      font-weight: 900;
+      font-size: 0.95rem;
+    }
+    .contact-aside .btn-main {
+      margin-top: 4px;
+      width: auto;
+      align-self: flex-start;
+      justify-content: center;
+      min-width: min(280px, 100%);
+    }
+
+    .site-footer {
+      padding: 28px 0 40px;
+      margin-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .footer-box {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .footer-brand { display: grid; gap: 10px; }
+    .footer-brand .brand { font-size: 1.75rem; align-items: flex-start; }
+    .footer-brand .brand > span {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      line-height: 1.05;
+    }
+    .footer-brand small {
+      display: block;
+      color: #c4b8dc;
+      font-size: 0.76rem;
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn-cta-telegram--compact {
+      padding: 10px 16px;
+      font-size: 0.88rem;
+      border-radius: 11px;
+    }
+    .footer-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 18px;
+      padding-top: 8px;
+    }
+    .footer-links a {
+      color: #ece5f8;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+    .footer-links a:hover { color: #c8d4ff; }
+    .footer-right {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 8px;
+    }
+    .copyright {
+      display: flex;
+      justify-content: flex-start;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: #9d8fb8;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .scroll-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      text-decoration: none;
+      display: grid;
+      place-items: center;
+      z-index: 60;
+      backdrop-filter: blur(8px);
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .eyebrow {
+      color: #dce5ff;
+      font-size: 0.98rem;
+      margin-bottom: 10px;
+      font-weight: 750;
+    }
+
+    .nav-wrap.page-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 14px 0;
+      background: rgba(13, 6, 26, 0.78);
+      backdrop-filter: blur(16px) saturate(1.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+    }
+    .nav-wrap.page-nav .nav {
+      width: var(--container);
+      margin-inline: auto;
+      max-width: none;
+    }
+    main.container {
+      padding-top: 84px;
+    }
+    h2.soft,
+    .section-head h2,
+    .pack h3,
+    .contact-aside-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .hero-title-stack .hero-line2 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 700;
+    }
+    .hero-visual__grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: clamp(16px, 3vw, 28px);
+      align-items: center;
+      justify-items: center;
+      width: 100%;
+      max-width: 580px;
+      margin-inline: auto;
+    }
+    .hero-phone {
+      width: min(128px, 30vw);
+      height: auto;
+      border-radius: 24px;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+      filter: drop-shadow(0 8px 28px rgba(108, 123, 255, 0.28));
+    }
+    .atmospheric {
+      position: relative;
+      margin: clamp(8px, 2vw, 24px) 0 clamp(28px, 4vw, 48px);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      min-height: min(300px, 48vh);
+    }
+    .atmospheric__bg {
       position: absolute;
       inset: 0;
-      object-fit: cover;
       width: 100%;
       height: 100%;
-      opacity: 0.45;
-      filter: saturate(0.85) contrast(1.05);
+      object-fit: cover;
+      opacity: 0.38;
+      filter: saturate(1.06) contrast(1.03);
     }
-    .fullbleed::after {
+    .atmospheric::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 20%, rgba(6, 6, 8, 0.92) 100%);
+      background: linear-gradient(105deg, rgba(13, 4, 25, 0.94) 0%, rgba(13, 4, 25, 0.5) 58%, transparent 100%);
       pointer-events: none;
     }
-    .fullbleed__content { position: relative; z-index: 2; max-width: min(640px, 100%); }
-    .quote {
-      font-family: "Cormorant Garamond", serif;
-      font-size: clamp(1.5rem, 2.8vw, 2.15rem);
-      line-height: 1.35;
+    .atmospheric__inner {
+      position: relative;
+      z-index: 2;
+      padding: clamp(28px, 5vw, 52px);
+      max-width: 54ch;
+    }
+    .atmospheric__quote {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(1.3rem, 2.4vw, 1.8rem);
       font-style: italic;
-      color: var(--fg);
-      margin-bottom: 18px;
+      line-height: 1.42;
+      color: #f5f1ff;
     }
-    .quote-by { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
-
-    /* STATS */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-      padding: 48px 0;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-    .stat__val {
-      font-family: "Cormorant Garamond", serif;
-      font-size: clamp(2rem, 3.5vw, 2.75rem);
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
-    .stat__lbl {
+    .atmospheric__eyebrow {
       font-size: 0.72rem;
-      letter-spacing: 0.12em;
+      font-weight: 800;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--muted);
-      line-height: 1.5;
+      color: #c8d4ff;
+      margin-bottom: 14px;
     }
-
-    /* CTA */
-    .cta-block {
-      text-align: center;
-      padding: clamp(56px, 10vw, 100px) clamp(24px, 5vw, 48px);
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(201, 169, 98, 0.05), transparent);
-    }
-    .cta-block h2 { margin-bottom: 16px; }
-    .cta-block .lead { margin-inline: auto; }
-
-    /* FOOTER */
-    footer {
-      padding: 48px 0 36px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .foot__grid {
+    .laptop-duo {
       display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      gap: 32px;
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.7;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(16px, 3vw, 28px);
+      margin-top: 36px;
+      align-items: start;
     }
-    .foot__grid strong { color: var(--fg-soft); font-weight: 500; display: block; margin-bottom: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.65rem; }
-    .foot__grid a { color: var(--fg-soft); text-decoration: none; }
-    .foot__grid a:hover { color: var(--gold); }
-    .foot__bottom {
-      margin-top: 40px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 12px;
+    .laptop-duo figure {
+      margin: 0;
+    }
+    .laptop-duo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      box-shadow: 0 32px 64px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
     }
 
-    .device-frame {
-      border: 1px solid var(--line);
-      padding: 12px 12px 18px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent);
-      max-width: 280px;
-      margin-inline: auto;
+    @media (max-width: 980px) {
+      .hero-grid,
+      .content-grid,
+      .packages-grid,
+      .footer-box,
+      .service-row,
+      .feat-grid,
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-visual__grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-phone {
+        width: min(200px, 55vw);
+        order: -1;
+      }
+      .laptop-duo {
+        grid-template-columns: 1fr;
+      }
+      .crisis-aside { position: static; top: auto; }
+      .fact-grid { grid-template-columns: 1fr; }
+      .fact-tile--wide { grid-column: 1; }
+      .menu { gap: 10px; }
     }
-    .device-frame img { width: 100%; height: auto; display: block; border-radius: 22px; }
 
-    @media (max-width: 960px) {
-      .hero__grid, .split, .split--rev .split__text, .split--rev .split__media { grid-template-columns: 1fr; }
-      .split--rev .split__text, .split--rev .split__media { order: unset; }
-      .stats { grid-template-columns: repeat(2, 1fr); }
-      .foot__grid { grid-template-columns: 1fr; }
-      .nav__inner { flex-wrap: wrap; }
-      .nav__links { width: 100%; justify-content: flex-start; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); }
+    @media (prefers-reduced-motion: reduce) {
+      .card-single {
+        animation: none !important;
+      }
+      * { scroll-behavior: auto}
     }
   </style>
 </head>
-<body>
-  <div class="bg-canvas" aria-hidden="true"></div>
-  <div class="grain-line" aria-hidden="true"></div>
 
-  <header class="nav">
-    <div class="nav__inner">
+<body id="top">
+  <img class="bg-ghost" src="./assets/symbol_dark.svg" alt="" />
+  <div class="violet-bottom"></div>
+
+  <div class="nav-wrap page-nav">
+    <nav class="nav container">
       <a class="brand" href="#top">
-        <img src="./assets/symbol_dark.svg" alt="" width="32" height="32" />
-        <span>Liberty Private</span>
+        <img src="./assets/symbol_dark.svg" alt="Liberty logo" />
+        <span>Liberty</span>
       </a>
-      <nav class="nav__links" aria-label="Основное меню">
-        <a href="#signature">Сигнатура</a>
-        <a href="#architecture">Архитектура</a>
-        <a href="#presence">Присутствие</a>
-        <a href="#contact">Консьерж</a>
-      </nav>
-    </div>
-  </header>
+      <div class="menu">
+        <a href="#about">Кто мы</a>
+        <a href="#crisis">Контекст рынка</a>
+        <a href="#about-product">О продукте</a>
+        <a href="#packages">Пакеты</a>
+        <a href="#benefits">Преимущества</a>
+        <a href="#contact">Контакты</a>
+      </div>
+    </nav>
+  </div>
 
-  <main id="top">
-    <section class="hero container">
-      <div class="hero__grid">
+  <main class="container">
+    <section class="section" id="hero">
+      <div class="hero-grid">
         <div>
-          <p class="eyebrow">Платёжная инфраструктура</p>
-          <h1 class="serif">Тишина после кнопки «Оплатить»</h1>
-          <p class="lead" style="margin-top: 28px;">
-            Мы проектируем white-label процессинг так, будто за ним стоит отдел из десятка инженеров — только это мы, ваш бренд и предсказуемая экономика.
+          <div class="trust-strip" aria-label="Коротко о формате">
+            <span class="trust-pill trust-pill--grad">B2B White Label</span>
+            <span class="trust-pill">High-risk · СНГ</span>
+            <span class="trust-pill trust-pill--grad">Запуск 1–3 дня</span>
+          </div>
+          <h1 class="hero-title-stack">
+            <span class="hero-line1">Welcome to</span>
+            <span class="hero-line2">Liberty</span>
+            <span class="hero-line3">Liberty Your Freedom Is here</span>
+          </h1>
+          <p class="lead">
+            B2B-оператор платёжной инфраструктуры: вы масштабируете маркетинг и продукт — мы стабилизируем процессинг, выплаты и каскад без лишней «технарской» нагрузки на команду.
           </p>
-          <div class="btn-row">
-            <a class="btn btn--gold" href="#contact">Запросить бриф</a>
-            <a class="btn btn--line" href="#architecture">Как устроено</a>
+          <div class="btns">
+            <a class="btn btn-main" href="#packages">Смотреть пакеты</a>
+            <a class="btn btn-ghost" href="#about-product">О проекте Liberty</a>
+            <a class="btn btn-cta-telegram" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
           </div>
         </div>
-        <div class="hero__visual">
-          <div class="hero__frame">
-            <!-- УЖЕ ВСТАВЛЕНО: ноутбук. При желании замените на свой кадр 1600×900+, тёмная эстетика, интерфейс без чужих логотипов -->
-            <img src="./assets/computer-mid-1.png" alt="Рабочая среда Liberty: интерфейс на экране ноутбука" width="960" height="540" decoding="async" />
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-visual__grid">
+            <div class="card-single">
+              <div class="bank-hero">
+                <div class="bank-hero-inner">
+                  <div class="bank-logo-h">Liberty</div>
+                  <div class="chip-h"></div>
+                </div>
+                <div class="card-num-h">1234 5678 9012 3456</div>
+                <div class="card-meta-h">JOHN DOE · 01/30</div>
+              </div>
+            </div>
+            <img class="hero-phone" src="./assets/phone1.png" alt="" width="400" height="800" decoding="async" />
           </div>
-          <p class="hero__caption">Сейчас: ./assets/computer-mid-1.png — замените на свой hero-кадр при необходимости</p>
         </div>
       </div>
     </section>
 
-    <section class="section--tight container" id="signature">
-      <div class="rule"></div>
-      <p class="eyebrow">Сигнатура бренда</p>
-      <h2 class="serif">Не агрегатор. Не «ещё одна касса».</h2>
-      <p class="p">Private-слой для компаний, которым нужна готовая машина приёма, маршрутизации и сопровождения — без превращения команды в отдел платежей.</p>
+    <section class="section" id="about">
+      <div class="section-head">
+        <div class="kicker-line"></div>
+        <p class="eyebrow">Обеспечивая уверенность и безопасность на каждом этапе вашего финансового пути</p>
+        <h2 class="soft">Liberty является вашим надёжным партнёром в сфере финансовых решений</h2>
+      </div>
+      <div class="content-grid">
+        <div class="prose">
+          <p>
+            Мы предлагаем инновационные платёжные решения, которые открывают новые возможности для вашего бизнеса и личных финансов.
+            Команда экспертов заботится о защите ваших интересов и безопасности транзакций.
+          </p>
+          <p>
+            Позвольте нам стать частью вашего финансового успеха и собрать для вас масштабируемую, красивую и коммерчески эффективную платёжную инфраструктуру.
+          </p>
+        </div>
+        <figure class="hands-wrap">
+          <img
+            src="./assets/hands.png"
+            alt="Рукопожатие: партнёрство и доверие в финансовых решениях"
+            width="1280"
+            height="853"
+            decoding="async"
+            loading="lazy"
+          />
+        </figure>
+      </div>
     </section>
 
-    <section class="container">
-      <div class="split">
-        <div class="split__text">
-          <p class="eyebrow">Доверие</p>
-          <h3 class="serif">Партнёрство, которое видно до строки в договоре</h3>
-          <p class="p">Кадр для эмоционального якоря: рукопожатие, подписание, закрытая встреча — что угодно, кроме стоковых «смайликов в офисе».</p>
+    <div class="container">
+      <div class="atmospheric">
+        <img class="atmospheric__bg" src="./assets/balance1.png" alt="" width="800" height="800" decoding="async" />
+        <div class="atmospheric__inner">
+          <p class="atmospheric__eyebrow">Liberty Payment Solutions</p>
+          <p class="atmospheric__quote">
+            Масштабируемая инфраструктура приёма и выплат — чтобы вы удерживали фокус на продукте, маркетинге и LTV, а не на «почему опять отвалился метод».
+          </p>
         </div>
-        <div class="split__media">
-          <div class="hero__frame">
-            <img src="./assets/hands.png" alt="Рукопожатие: символ партнёрства" width="1280" height="853" decoding="async" />
+      </div>
+    </div>
+
+    <section class="section" id="crisis">
+      <div class="section-head">
+        <div class="kicker-line"></div>
+        <h2 class="soft">Процессинг сегодня: почему закрываются офисы и проекты</h2>
+        <p class="lead">Инфраструктура, ликвидность и предсказуемость — то, чего не хватает большинству игроков рынка.</p>
+      </div>
+
+      <div class="content-grid">
+        <div class="prose prose-block">
+          <p>В текущих реалиях сфера процессинговой обработки переживает всё более и более кризисные времена.</p>
+          <p>
+            Закрываются не только старейшие офисы обработки платежей, но и молодые и средние гембл‑проекты,
+            а также множество обменников.
+          </p>
+          <p><strong class="em">В чем же настоящие причины происходящего?</strong></p>
+          <p>
+            На самом деле причины достаточно просты, решаемы и понятны — это не «закончилась ёмкость рынка»,
+            не «все гайки пережаты», не «рынок перегрет» и так далее. Причина в том, что каждому бизнесу,
+            прямо или косвенно связанному с процессингом платежей, не хватает ни на старте работы,
+            ни даже через год и более таких вещей как:
+          </p>
+          <ul class="star-list">
+            <li>Стабильность</li>
+            <li>Прогнозируемость</li>
+            <li>Надёжный фундамент</li>
+          </ul>
+          <p><strong class="em">Давайте разберём на примере</strong></p>
+          <p>
+            <strong class="em">Трейдерский офис / инхаус и партнёрские офисы РФ и СНГ.</strong><br />
+            Подразумевается, что бизнес понимает, какие условия ему нужны для большой обработки и хорошей маржи.
+          </p>
+          <p>Что нужно такому бизнесу, чтобы показывать отличный финансовый результат?</p>
+          <ul class="star-list">
+            <li>Наличие выплат в любом объёме</li>
+            <li>Хороший объём понятного трафика без сюрпризов</li>
+            <li>Работа с прямыми мерчантами для поддержания высоких ставок</li>
+            <li>Полное, максимально гибкое управление всеми техническими и организационными аспектами</li>
+            <li>Проверенное, боевое, надёжное техническое решение</li>
+            <li>Оперативное решение всех возникающих нюансов без лишних затрат времени и ресурсов</li>
+            <li>Уложить всё перечисленное в понятный бюджет и быстро реализовать</li>
+          </ul>
+          <p>
+            Для «олдов» всё перечисленное выглядит как базовая необходимость выстраивания плодотворной работы.
+            Но хоть критерии просты — весь этот пласт того, что <em>надо</em> для качественной работы, остаётся тяжёлым.
+          </p>
+          <p>
+            Посмотрите, сколько проектов <strong class="em">реально</strong> работают с прямыми мерчантами?
+            У скольких кассовые разрывы из‑за некачественного кода?
+            А про количество проектов, у которых на борту есть столь необходимые сегодня выплаты в любом объёме,
+            — чуть ли не единицы.
+          </p>
+          <p>
+            На решение этих задач у проектов уходит не один год. Команда
+            <strong class="em">Liberty Payment Solutions</strong> 🆙 после большого объёма работы готова представить
+            B2B‑решение как минимум для пяти видов бизнеса, основанных на процессинге платежей — чтобы закрыть потребности,
+            которые не относятся к вашей основной специализации.
+          </p>
+          <div class="handshake-lines">
+            <p>Офисы не должны искать трафик и выплаты 🤝</p>
+            <p>Казино и обменники не должны искать обработку 🤝</p>
+            <p>Остальные сервисы не должны заниматься тем, что не относится к прямому бизнес‑направлению 🤝</p>
           </div>
-          <p class="hero__caption">Сейчас: ./assets/hands.png — при желании обменяйте на съёмку вашей команды / клиента (согласование прав)</p>
+          <p class="muted" style="margin-bottom: 0;">
+            Ниже — White Label пакеты с прозрачной экономикой и понятными сроками внедрения.
+          </p>
         </div>
-      </div>
-    </section>
 
-    <section class="container" id="architecture">
-      <div class="rule"></div>
-      <p class="eyebrow">Архитектура</p>
-      <h2 class="serif" style="max-width: 16ch;">Четыре опоры, на которых держится спокойствие CFO</h2>
-      <div style="height: 40px;"></div>
-      <div class="bento">
-        <div class="bento__cell">
-          <span class="bento__num">I</span>
-          <h3 class="serif">Каскад без «магии»</h3>
-          <p>Понятные правила маршрутизации, прозрачные сценарии отказов и ручного вмешательства.</p>
-        </div>
-        <div class="bento__cell">
-          <span class="bento__num">II</span>
-          <h3 class="serif">Бренд на виду</h3>
-          <p>White-label так, чтобы игрок и партнёр видели вашу экосистему — не чужую витрину.</p>
-        </div>
-        <div class="bento__cell">
-          <span class="bento__num">III</span>
-          <h3 class="serif">Сопровождение</h3>
-          <p>Канал, где отвечают люди, которые знают ваш стек — не первый доступный оператор.</p>
-        </div>
-        <div class="bento__cell">
-          <span class="bento__num">IV</span>
-          <h3 class="serif">Экономика</h3>
-          <p>Модель, которую можно объяснить инвестору за одну таблицу — без сюрпризов в мелком шрифте.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="container">
-      <div class="ph" aria-label="Место под фото">
-        <div>
-          <div class="ph__tag">Место под фото</div>
-          <p class="ph__note">Вставьте сюда широкий кадр: дата-центр, абстрактная 3D-схема потоков, ночной город с неоном или тёмный open-space с мониторами. Формат 21:9 или 16:9, от 2000px по длинной стороне.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="container">
-      <div class="fullbleed">
-        <!-- PLACEHOLDER: фон секции — замените src на ваш atmospheric still -->
-        <img class="fullbleed__bg" src="./assets/balance1.png" alt="" width="800" height="800" decoding="async" style="object-position: center;" />
-        <div class="fullbleed__content">
-          <p class="quote">«Дорого выглядит не золото в CSS, а когда продукт не заставляет клиента думать о платеже дважды.»</p>
-          <p class="quote-by">Liberty Private — манифест</p>
-        </div>
-      </div>
-      <p class="hero__caption" style="margin-top: 12px;">Сейчас как временный фон: ./assets/balance1.png (из вашего набора). Замените на атмосферный still: текстуры металла, макро чипа, размытый интерфейс — без читаемых ПДн.</p>
-    </section>
-
-    <section class="container" id="presence">
-      <div class="split split--rev">
-        <div class="split__text">
-          <p class="eyebrow">Мобильное присутствие</p>
-          <h3 class="serif">Телефон как витрина доверия</h3>
-          <p class="p">Сюда логично вставить мокап приложения или бота в Telegram — крупный план, тёмный фон, один экран героя.</p>
-        </div>
-        <div class="split__media">
-          <div class="device-frame">
-            <img src="./assets/phone1.png" alt="Мобильный интерфейс Liberty" width="400" height="800" decoding="async" />
+        <aside class="crisis-aside" aria-label="Ключевые тезисы по рынку процессинга">
+          <div class="fact-grid">
+            <div class="fact-tile fact-tile--accent">
+              <span class="fact-tag">Сначала база</span>
+              <span class="fact-title">Три опоры: стабильность, прогноз, фундамент</span>
+              <span class="fact-lbl">Без этого офисы и проекты «сыпятся» первыми — не «рынок перегрет», а дырявый фундамент.</span>
+            </div>
+            <div class="fact-tile">
+              <span class="fact-tag">Не собирать годами</span>
+              <span class="fact-title">White Label и каскад под РФ и СНГ</span>
+              <span class="fact-lbl">Готовая связка приёма и маршрутизации вместо бесконечной внутренней разработки.</span>
+            </div>
+            <div class="fact-tile">
+              <span class="fact-tag">Рядом с вами</span>
+              <span class="fact-title">Поддержка и сопровождение 24/7</span>
+              <span class="fact-lbl">Закрываем нюансы по технике и процессам, пока вы фокусируетесь на маркетинге и продукте.</span>
+            </div>
+            <div class="fact-tile fact-tile--wide">
+              <span class="fact-tag">Роль Liberty</span>
+              <span class="fact-title">Забираем непрофиль: выплаты, маршруты, методы</span>
+              <span class="fact-lbl">Команда не превращается в «платёжный технарник» — инфраструктура на нашей стороне.</span>
+            </div>
           </div>
-          <p class="hero__caption" style="text-align: center;">Сейчас: ./assets/phone1.png — замените на свой UI-скрин в рамке устройства</p>
+          <div class="crisis-cta">
+            <a class="btn btn-main" href="#packages">Пакеты и цены</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="about-product">
+      <div class="section-head">
+        <div class="kicker-line"></div>
+        <h2 class="soft">О нас и о нашем продукте</h2>
+      </div>
+
+      <div class="prose prose-block">
+        <p>
+          <strong class="em">Мы — Liberty Payment Solutions.</strong>
+          B2B‑оператор, который забирает на себя всю платёжную инфраструктуру, чтобы вы занимались своим бизнесом, а не процессингом.
+        </p>
+
+        <h3>Проблема, которую вы уже не замечаете</h3>
+        <p class="note">Или: проблема, которую вы уже не замечаете — месяцы и годы на то, чтобы:</p>
+        <ul>
+          <li>настроить стабильный каскад платежей;</li>
+          <li>решить вопросы с ликвидностью;</li>
+          <li>удержать конверсию при блокировках.</li>
+        </ul>
+        <p>
+          Вы ищете трафик и игроков — но вынуждены вручную управлять несколькими сторонними платёжками и агрегаторами,
+          каждая из которых забирает свой процент. В сумме можно терять до 15–20% с оборота на комиссиях, связках и потерянной ликвидности.
+        </p>
+        <p><strong class="em">Обработка платежей не должна быть вашей основной специализацией.</strong></p>
+        <p><strong class="em">Казино — маркетинговый бизнес, а не платёжный технопарк.</strong></p>
+
+        <h3>Что даёт наше готовое B2B‑решение?</h3>
+        <p>Мы закрываем непрофильные задачи, связанные с процессингом, и помогаем повысить маржинальность.</p>
+
+        <h3>Кому подходит</h3>
+        <ul>
+          <li>Казино — не ищут обработку, а получают её под ключ.</li>
+          <li>Обменники — не думают о трафике и выплатах.</li>
+          <li>Любой high‑risk сервис — перестаёт заниматься задачами вне специализации.</li>
+        </ul>
+
+        <h3>Ваша выгода</h3>
+        <p>
+          Экономия не только процентов с комиссии, но и получение автономного, оптимизированного инструмента.
+          Вы сосредотачиваетесь на маркетинге, удержании и LTV — мы делаем так, чтобы платёж проходил стабильно,
+          с лучшей конверсией и без сюрпризов.
+        </p>
+
+        <h3>Главное — вы не платите за «кота в мешке»</h3>
+        <p>Мы не просим денег вперёд за непонятный продукт. Вы не подписываете договор и не переводите предоплату.</p>
+        <p><strong class="em">Вот как мы работаем:</strong></p>
+        <ol>
+          <li>Вы даёте нам зелёный свет.</li>
+          <li>Мы в короткие сроки (от 1 до 3 дней) подключаем решение к вашему трафику.</li>
+          <li>Вы бесплатно тестируете продукт в реальном времени — например, 7 дней.</li>
+          <li>Наши платежи работают параллельно с текущими агрегаторами: вы сами видите разницу в конверсии, скорости и комиссии.</li>
+        </ol>
+        <p><strong class="em">Вы не заплатили ни копейки — а уже получили и заработали.</strong></p>
+
+        <h3>Что теряете вы?</h3>
+        <p>
+          Главное — головную боль. Вы либо убеждаетесь, что наше решение лучше (и начинаете экономить и зарабатывать больше),
+          либо, если разницы нет, мы всё отключаем — без штрафов и скрытых условий.
+        </p>
+        <p style="margin-bottom: 0;">
+          <strong class="em">Результат скажет сам за себя. Ваша прибыль — наше портфолио.</strong>
+        </p>
+      </div>
+
+      <div class="laptop-duo">
+        <figure class="laptop-only" style="margin: 0;">
+          <img src="./assets/computer-mid-1.png" alt="Рабочий интерфейс Liberty на ноутбуке" width="960" height="540" decoding="async" />
+        </figure>
+        <figure class="laptop-only" style="margin: 0;">
+          <img src="./assets/computer-mid-2.png" alt="Дополнительный ракурс рабочей среды Liberty" width="960" height="540" decoding="async" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="packages">
+      <div class="section-head">
+        <div class="kicker-line"></div>
+        <h2 class="soft">Пакеты White Label</h2>
+        <p class="lead">
+          Четыре опорных сценария внедрения: от классического офиса до обменника. Цены и обслуживание — прозрачно, без «сюрпризов» в мелком шрифте.
+        </p>
+      </div>
+
+      <div class="packages-grid">
+        <article class="pack">
+          <span class="tag">LB | Office Classic 🔥</span>
+          <h3>Классический пакет для инхаус‑офисов и трейдерских решений</h3>
+          <ul>
+            <li>Тир 1 техническое решение</li>
+            <li>Полное обеспечение любым РФ и СНГ трафиком</li>
+            <li>Создание бренда клиента и позиционирование</li>
+            <li>Круглосуточная техническая поддержка</li>
+            <li>Функционал маркета внутри площадки</li>
+            <li>Каскадное решение</li>
+            <li>Гибкое дробление типов трафика</li>
+            <li>Все существующие методы с гибкими настройками (QR НСПК, КА, БТ, неттинг, мультитрансфер, quasi ecom и т.д.)</li>
+          </ul>
+          <div class="price">
+            <div><strong>Цена White Label:</strong> 9 500 USD</div>
+            <div><strong>Ежемесячно:</strong> техобслуживание и сервера 500 USD</div>
+            <div><strong>Срез:</strong> 0,4%; при обороте от 100k$ суточного — 0,2%</div>
+            <div><strong>Срок установки WL:</strong> до 3 дней с момента оплаты</div>
+          </div>
+        </article>
+
+        <article class="pack">
+          <span class="tag">LB | Office Plus + 🔥</span>
+          <h3>Продвинутая поддержка: выплаты РФ и маркетинг</h3>
+          <ul>
+            <li>Полный состав пакета Office Classic</li>
+            <li>Консультация и сопровождение, гарантированное открытие легальной фирмы для обеспечения любого объёма выплат (решение в работе более 6 мес.)</li>
+            <li>Надёжные маркетинговые инструменты и стратегии привлечения трейдеров и агентов</li>
+          </ul>
+          <div class="price">
+            <div><strong>Цена White Label:</strong> 14 500 USD</div>
+            <div><strong>Ежемесячно:</strong> техобслуживание и сервера 500 USD</div>
+            <div><strong>Срез:</strong> 0,4%; при обороте от 100k$ суточного — 0,2%</div>
+            <div><strong>Срок установки WL:</strong> до 3 дней с момента оплаты</div>
+          </div>
+        </article>
+
+        <article class="pack">
+          <span class="tag">LB | Shop Plus + 🔥</span>
+          <h3>Готовое платёжное решение для продаж в Telegram и не только</h3>
+          <ul>
+            <li>Гарантированная обработка СНГ и трансграничных платежей</li>
+            <li>Установка и настройка клиентского бота в Telegram</li>
+            <li>Интегрированная оплата криптой и фиатом</li>
+            <li>Внедрение методов приёма в зависимости от ЦА и средних чеков</li>
+            <li>Помощь в развитии и размещении на спецресурсах</li>
+            <li>Полный доступ к техническому функционалу; обслуживание и мониторинг включены</li>
+          </ul>
+          <div class="price">
+            <div><strong>Цена White Label:</strong> 9 500 USD</div>
+            <div><strong>Ежемесячно:</strong> техобслуживание и сервера 500 USD</div>
+            <div><strong>Срез:</strong> 0,4%; при обороте от 100k$ суточного — 0,2%</div>
+            <div><strong>Срок установки WL:</strong> до 3 дней с момента оплаты</div>
+          </div>
+        </article>
+
+        <article class="pack">
+          <span class="tag">LB | Exchange 🔥</span>
+          <h3>Полное сопровождение exchange‑бизнеса</h3>
+          <ul>
+            <li>Онлайн‑обменник под ключ: функционал и оформление</li>
+            <li>Гарантия обработки СНГ и трансграничных платежей</li>
+            <li>Технический функционал на базе Liberty Payments</li>
+            <li>Помощь в легальном оформлении юрлица для стабильных расчётов с клиентами и приёма платежей</li>
+          </ul>
+          <div class="price">
+            <div><strong>Цена White Label:</strong> 30 000 USD</div>
+            <div><strong>Ежемесячно:</strong> техобслуживание и сервера 500 USD</div>
+          </div>
+        </article>
+      </div>
+
+      <div class="service-row">
+        <div>
+          <div class="kicker-line" style="margin-bottom: 10px;"></div>
+          <h2 class="soft" style="margin-bottom: 8px;">Liberty — универсальный платёжный сервис</h2>
+          <p class="lead" style="margin: 0;">
+            Надёжное решение под ключевые потребности онлайн‑бизнеса: маршрутизация, приём, выплаты, white‑label,
+            сценарии под high‑risk и адаптация под вашу модель — без лишней операционной нагрузки на вашу команду.
+          </p>
+        </div>
+        <div class="feat-grid">
+          <article class="feat grad">
+            <h4>На острие технологий</h4>
+            <p>Современный стек, гибкая архитектура и быстрое внедрение новых сценариев оплаты.</p>
+          </article>
+          <article class="feat">
+            <h4>Международная география</h4>
+            <p>Широкий спектр методов и партнёров под разные регионы и вертикали.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="container">
-      <div class="stats">
-        <div>
-          <div class="stat__val serif">24/7</div>
-          <div class="stat__lbl">Контур сопровождения</div>
-        </div>
-        <div>
-          <div class="stat__val serif">WL</div>
-          <div class="stat__lbl">Ваш бренд на проде</div>
-        </div>
-        <div>
-          <div class="stat__val serif">1–3</div>
-          <div class="stat__lbl">Дня до пилота<br />(ориентир)</div>
-        </div>
-        <div>
-          <div class="stat__val serif">B2B</div>
-          <div class="stat__lbl">Только юридические лица<br />и осознанная модель</div>
-        </div>
+    <section class="section" id="benefits">
+      <div class="section-head">
+        <div class="kicker-line"></div>
+        <h2>Преимущества</h2>
+        <p class="lead">То, на что можно опереться при масштабировании платежей.</p>
+      </div>
+
+      <div class="benefits-grid">
+        <article class="feat grad">
+          <h4>Стандарты безопасности</h4>
+          <p>Продуманная архитектура, контроль доступа, стабильность интеграций и высокий уровень операционной надёжности.</p>
+        </article>
+        <article class="feat">
+          <h4>24/7 поддержка</h4>
+          <p>Liberty — ваш надёжный партнёр круглосуточно. Мы рядом, когда нужна оперативная помощь.</p>
+        </article>
+        <article class="feat">
+          <h4>Сильная команда</h4>
+          <p>Специалисты из разных стран, современный стек и внимание к клиентскому сервису.</p>
+        </article>
+        <article class="feat">
+          <h4>Независимость</h4>
+          <p>Международная команда под high‑risk платежи, персональный подход и быстрая интеграция.</p>
+        </article>
+        <article class="feat grad" style="grid-column: 1 / -1;">
+          <h4>Инфополе и рост</h4>
+          <p>Telegram, контент, брендинг и инструменты роста для проектов клиентов.</p>
+        </article>
       </div>
     </section>
 
-    <section class="container" id="contact">
-      <div class="cta-block">
-        <p class="eyebrow">Консьерж</p>
-        <h2 class="serif">Один разговор — дальше мы ведём</h2>
-        <p class="lead">Опишите продукт, гео и желаемый сценарий. Вернёмся с вариантом архитектуры и понятным следующим шагом — без рассылочных шаблонов.</p>
-        <div class="btn-row" style="justify-content: center;">
-          <a class="btn btn--gold" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Telegram</a>
-          <a class="btn btn--line" href="mailto:info@liberty.tech">info@liberty.tech</a>
-        </div>
+    <section class="section" id="contact">
+      <h2 class="visually-hidden">Контакты</h2>
+      <div class="contact-wrap">
+        <aside class="contact-aside" aria-label="Связь в Telegram">
+          <h3 class="contact-aside-title">Напрямую, как на рабочих B2B‑лендингах</h3>
+          <p class="contact-aside-lead">
+            Напишите в Telegram — коротко опишите продукт и гео, предложим пакет и следующий шаг.
+          </p>
+          <ul class="contact-checklist">
+            <li>Без предоплаты за «кота в мешке» — логика из блока «О продукте»</li>
+            <li>Подбор Office / Shop / Exchange WL под ваш сценарий</li>
+            <li>Оперативный диалог по сути — без лишней бюрократики</li>
+          </ul>
+          <a class="btn btn-main" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+        </aside>
       </div>
     </section>
 
-    <section class="container">
-      <div class="ph" style="min-height: 200px;">
-        <div>
-          <div class="ph__tag">Опционально</div>
-          <p class="ph__note">Логотипы прессы, партнёров или сертификаций — только при наличии прав. Иначе оставьте блок пустым: дорогой сайт не требует «лживых» логотипов.</p>
+    <footer class="site-footer">
+      <div class="footer-box">
+        <div class="footer-brand">
+          <a class="brand" href="#top">
+            <img src="./assets/symbol_dark.svg" alt="Liberty logo" />
+            <span>
+              Liberty
+              <small>Простые решения сложных задач</small>
+            </span>
+          </a>
+          <div class="socials">
+            <a class="btn btn-cta-telegram btn-cta-telegram--compact" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
+          </div>
+        </div>
+
+        <nav class="footer-links" aria-label="Навигация в подвале">
+          <a href="#about">Кто мы</a>
+          <a href="#about-product">О продукте</a>
+          <a href="#packages">Пакеты</a>
+          <a href="#benefits">Преимущества</a>
+          <a href="#contact">Контакты</a>
+          <a href="#top">Наверх</a>
+        </nav>
+
+        <div class="footer-right">
+          <a class="btn btn-main" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
         </div>
       </div>
-    </section>
+
+      <div class="copyright">
+        <span>© Liberty. Все права защищены.</span>
+      </div>
+    </footer>
   </main>
 
-  <footer>
-    <div class="container foot__grid">
-      <div>
-        <strong>Liberty Private</strong>
-        Инфраструктура платежей и white-label для компаний, которые выросли из «подключить эквайринг в два клика».
-      </div>
-      <div>
-        <strong>Навигация</strong>
-        <a href="#signature">Сигнатура</a><br />
-        <a href="#architecture">Архитектура</a><br />
-        <a href="#presence">Присутствие</a><br />
-        <a href="#contact">Консьерж</a>
-      </div>
-      <div>
-        <strong>Связь</strong>
-        <a href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Telegram</a><br />
-        <a href="mailto:info@liberty.tech">Почта</a>
-      </div>
-    </div>
-    <div class="container foot__bottom">
-      <span>© Liberty Private</span>
-      <span>Концепт премиум-лендинга — правьте копирайт под юрлицо</span>
-    </div>
-  </footer>
+  <a class="scroll-top" href="#top" aria-label="Наверх">↑</a>
 </body>
 </html>
-

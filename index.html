@@ -223,6 +223,73 @@
       max-width: 70ch;
     }
 
+    /* Единый «продающий» блок как у пакетов / преимуществ — для верхней части страницы */
+    .surface-panel {
+      padding: clamp(20px, 3.2vw, 30px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      background: linear-gradient(165deg, rgba(12, 6, 26, 0.82), rgba(8, 4, 18, 0.94));
+      box-shadow:
+        0 24px 50px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    }
+    .surface-panel--media {
+      padding: clamp(14px, 2vw, 20px);
+      display: grid;
+      place-items: center;
+      align-content: center;
+    }
+    .surface-panel .prose,
+    .prose.surface-panel {
+      color: #e4dcf8;
+      font-weight: 550;
+    }
+    .surface-panel .prose p,
+    .prose.surface-panel p { color: #e4dcf8; }
+    .surface-panel .prose ul,
+    .surface-panel .prose ol,
+    .prose.surface-panel ul,
+    .prose.surface-panel ol { color: #d5c8ea; font-weight: 600; }
+    .surface-panel .note,
+    .prose.surface-panel .note { color: #c4b5dc; }
+    .surface-panel .prose-block h3,
+    .prose.surface-panel.prose-block h3 { color: #fff; }
+    .surface-panel .star-list li { color: #f0e9ff; }
+
+    .trust-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .trust-pill {
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.06);
+      color: #efe8ff;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .trust-pill--grad {
+      background: linear-gradient(135deg, rgba(108, 123, 255, 0.75), rgba(219, 99, 219, 0.65));
+      border-color: rgba(255, 255, 255, 0.22);
+      color: #fff;
+    }
+
+    #hero .lead {
+      color: #e2daf2;
+      font-weight: 650;
+      font-size: 1.06rem;
+      max-width: 56ch;
+    }
+    #crisis .section-head .lead {
+      color: #ddd5ec;
+      font-weight: 650;
+    }
+
     .btns {
       display: flex;
       gap: 10px;
@@ -405,11 +472,6 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      padding: 18px 18px 20px;
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: linear-gradient(165deg, rgba(12, 6, 26, 0.72), rgba(8, 4, 18, 0.88));
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32);
     }
     .fact-grid {
       display: grid;
@@ -473,9 +535,9 @@
       display: grid;
       place-items: center;
       align-content: center;
-      min-height: 200px;
+      min-height: 0;
       margin: 0;
-      padding: 8px 0;
+      padding: 0;
     }
     .hands-wrap img {
       width: min(100%, 440px);
@@ -501,15 +563,20 @@
     .handshake-lines p:last-child { margin-bottom: 0; }
 
     .laptop-only {
-      margin: 36px auto 0;
+      margin: 28px auto 0;
       max-width: min(720px, 100%);
+      padding: clamp(14px, 2vw, 22px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      background: linear-gradient(165deg, rgba(12, 6, 26, 0.72), rgba(8, 4, 18, 0.9));
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
     }
     .laptop-only img {
       width: 100%;
       height: auto;
       display: block;
-      border-radius: 16px;
-      box-shadow: 0 36px 70px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
     }
 
     .packages-grid {
@@ -799,10 +866,10 @@
     }
 
     .eyebrow {
-      color: #ece4fa;
+      color: #dce5ff;
       font-size: 0.98rem;
       margin-bottom: 10px;
-      font-weight: 700;
+      font-weight: 750;
     }
 
     @media (max-width: 980px) {
@@ -854,7 +921,12 @@
   <main class="container">
     <section class="section" id="hero">
       <div class="hero-grid">
-        <div>
+        <div class="surface-panel">
+          <div class="trust-strip" aria-label="Коротко о формате">
+            <span class="trust-pill trust-pill--grad">B2B White Label</span>
+            <span class="trust-pill">High-risk · СНГ</span>
+            <span class="trust-pill trust-pill--grad">Запуск 1–3 дня</span>
+          </div>
           <h1 class="hero-title-stack">
             <span class="hero-line1">Welcome to</span>
             <span class="hero-line2">Liberty</span>
@@ -870,7 +942,7 @@
           </div>
         </div>
 
-        <div class="hero-visual" aria-hidden="true">
+        <div class="hero-visual surface-panel surface-panel--media" aria-hidden="true">
           <div class="card-single">
             <div class="bank-hero">
               <div class="bank-hero-inner">
@@ -892,7 +964,7 @@
         <h2 class="soft">Liberty является вашим надёжным партнёром в сфере финансовых решений</h2>
       </div>
       <div class="content-grid">
-        <div class="prose">
+        <div class="prose surface-panel">
           <p>
             Мы предлагаем инновационные платёжные решения, которые открывают новые возможности для вашего бизнеса и личных финансов.
             Команда экспертов заботится о защите ваших интересов и безопасности транзакций.
@@ -901,7 +973,7 @@
             Позвольте нам стать частью вашего финансового успеха и собрать для вас масштабируемую, красивую и коммерчески эффективную платёжную инфраструктуру.
           </p>
         </div>
-        <figure class="hands-wrap">
+        <figure class="hands-wrap surface-panel surface-panel--media">
           <img
             src="./pages/hands.png"
             alt="Рукопожатие: партнёрство и доверие в финансовых решениях"
@@ -922,7 +994,7 @@
       </div>
 
       <div class="content-grid">
-        <div class="prose prose-block">
+        <div class="prose prose-block surface-panel">
           <p>В текущих реалиях сфера процессинговой обработки переживает всё более и более кризисные времена.</p>
           <p>
             Закрываются не только старейшие офисы обработки платежей, но и молодые и средние гембл‑проекты,
@@ -981,7 +1053,7 @@
           </p>
         </div>
 
-        <aside class="crisis-aside" aria-label="Ключевые тезисы по рынку процессинга">
+        <aside class="crisis-aside surface-panel" aria-label="Ключевые тезисы по рынку процессинга">
           <div class="fact-grid">
             <div class="fact-tile fact-tile--accent">
               <span class="fact-tag">Сначала база</span>
@@ -1017,7 +1089,7 @@
         <h2 class="soft">О нас и о нашем продукте</h2>
       </div>
 
-      <div class="prose prose-block">
+      <div class="prose prose-block surface-panel">
         <p>
           <strong class="em">Мы — Liberty Payment Solutions.</strong>
           B2B‑оператор, который забирает на себя всю платёжную инфраструктуру, чтобы вы занимались своим бизнесом, а не процессингом.

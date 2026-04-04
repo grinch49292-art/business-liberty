@@ -1,1441 +1,2077 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Liberty Payment Solutions</title>
-  <meta name="description" content="Liberty Payment Solutions — B2B решения для процессинга платежей." />
-
-  <link rel="icon" type="image/svg+xml" href="./assets/symbol_dark.svg" />
-  <link rel="apple-touch-icon" href="./assets/symbol_dark.svg" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <title>Liberty — Payment Infrastructure</title>
+  <meta
+    name="description"
+    content="Liberty — white-label payment infrastructure for high-volume businesses. Stable processing, high uptime, flexible routing, fast launch."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
     :root {
-      --blue-violet: #6c7bff;
-      --bright-violet: #db63db;
-      --deep-purple: #13071e;
-
-      --text: #f5f1ff;
-      --muted: #cbbfda;
-
-      --line-soft: rgba(255, 255, 255, 0.12);
-      --container: min(1180px, 92vw);
+      --bg: #06070b;
+      --bg-soft: #0b0d14;
+      --card: rgba(255,255,255,0.06);
+      --card-2: rgba(255,255,255,0.08);
+      --stroke: rgba(255,255,255,0.10);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.72);
+      --muted-2: rgba(255,255,255,0.55);
+      --pink: #ff4fd8;
+      --pink-2: #ff85e6;
+      --violet: #9a6cff;
+      --blue: #63a2ff;
+      --green: #4dffbc;
+      --shadow-pink: 0 0 40px rgba(255,79,216,.28);
+      --shadow-blue: 0 0 40px rgba(99,162,255,.18);
+      --radius: 22px;
+      --radius-lg: 30px;
+      --max: 1240px;
+      --transition: 220ms ease;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
       background:
-        radial-gradient(1200px 760px at 34% -8%, rgba(142, 164, 255, 0.60), transparent 62%),
-        radial-gradient(760px 520px at 102% 0%, rgba(219, 99, 219, 0.40), transparent 70%),
-        linear-gradient(180deg, #2f3796 0%, #211050 38%, #140726 70%, #0d0419 100%);
+        radial-gradient(circle at 15% 20%, rgba(255,79,216,0.18), transparent 28%),
+        radial-gradient(circle at 85% 18%, rgba(99,162,255,0.16), transparent 25%),
+        radial-gradient(circle at 50% 85%, rgba(154,108,255,0.12), transparent 30%),
+        linear-gradient(180deg, #05060a 0%, #070911 48%, #05060a 100%);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.4;
     }
 
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      z-index: -2;
       pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.075) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.075) 1px, transparent 1px),
-        linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
-      background-size: 46px 46px, 46px 46px, 11px 11px, 11px 11px;
-      opacity: 0.58;
-      mix-blend-mode: screen;
-    }
-
-    .bg-ghost {
-      position: fixed;
-      left: 50%;
-      top: 42%;
-      width: min(88vw, 920px);
-      transform: translate(-50%, -50%);
-      opacity: 0.055;
-      pointer-events: none;
-      z-index: -1;
-      filter: saturate(1.02);
-    }
-
-    .violet-bottom {
-      position: fixed;
-      inset: auto 0 0 0;
-      height: 28vh;
-      pointer-events: none;
-      z-index: -1;
       background:
-        radial-gradient(120% 130% at 50% 120%, rgba(192, 22, 196, 0.33) 0%, rgba(145, 24, 176, 0.16) 35%, rgba(84, 18, 132, 0.08) 58%, transparent 80%),
-        linear-gradient(180deg, transparent 0%, rgba(105, 22, 134, 0.22) 65%, rgba(99, 18, 128, 0.34) 100%);
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+      opacity: .32;
+      z-index: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
     }
 
     .container {
-      width: var(--container);
-      margin-inline: auto;
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
     }
 
-    .nav-wrap {
-      position: sticky;
-      top: 10px;
-      z-index: 20;
-      width: var(--container);
-      margin: 10px auto 14px;
-      backdrop-filter: blur(4px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      padding-bottom: 10px;
+    .section {
+      padding: 110px 0;
+      position: relative;
     }
 
-    .nav {
-      display: flex;
-      justify-content: space-between;
+    .eyebrow {
+      display: inline-flex;
       align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      backdrop-filter: blur(16px);
+    }
+
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--blue));
+      box-shadow: 0 0 16px rgba(255,79,216,.65);
+    }
+
+    .section-head {
+      max-width: 780px;
+      margin-bottom: 48px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      margin-top: 18px;
+    }
+
+    .section-head p {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: clamp(16px, 1.7vw, 19px);
+      line-height: 1.65;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #fff 0%, #ffc2f3 36%, #ffa2eb 62%, #b6cbff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
       gap: 14px;
+    }
+
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+min-height: 56px;
+      padding: 0 24px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform var(--transition), border-color var(--transition), background var(--transition), opacity var(--transition), box-shadow var(--transition);
+      cursor: pointer;
+      border: 1px solid transparent;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink) 0%, #ff77e2 35%, var(--violet) 100%);
+      color: #fff;
+      box-shadow: 0 12px 40px rgba(255,79,216,.28);
+    }
+
+    .btn-primary::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.18), transparent 45%, transparent 55%, rgba(255,255,255,.10));
+      z-index: -1;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.10);
+      color: #fff;
+      backdrop-filter: blur(18px);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding-top: 18px;
+    }
+
+    .nav-shell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 18px;
+      background: rgba(10,12,18,.58);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 40px rgba(0,0,0,.18);
     }
 
     .brand {
       display: inline-flex;
-      gap: 10px;
       align-items: center;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 700;
-      font-size: 1.55rem;
-      letter-spacing: -0.03em;
+      gap: 14px;
+      min-width: 0;
     }
-    .brand img { width: 30px; height: 30px; display: block; }
 
-    .menu {
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 40%),
+        linear-gradient(135deg, rgba(255,79,216,.28), rgba(99,162,255,.22));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow-pink), var(--shadow-blue);
+      flex-shrink: 0;
+    }
+
+    .brand-mark svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .brand-text {
       display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .menu a {
-      text-decoration: none;
-      color: #e8def7;
-      font-size: 0.88rem;
-      padding: 8px 2px;
-      border-bottom: 1px solid transparent;
-      transition: 0.2s ease;
-    }
-    .menu a:hover {
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.45);
+      flex-direction: column;
+      min-width: 0;
     }
 
-    .section {
-      padding: clamp(28px, 4.5vw, 64px) 0;
-      position: relative;
-    }
-
-    .section + .section {
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .section#hero {
-      padding-top: clamp(20px, 3vw, 40px);
-      padding-bottom: clamp(24px, 4vw, 48px);
-    }
-
-    .section-head {
-      margin-bottom: 12px;
-    }
-    .kicker-line {
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(108, 123, 255, 0.9) 26%, rgba(219, 99, 219, 0.8) 62%, rgba(255, 255, 255, 0) 100%);
-      opacity: 0.9;
-      margin-bottom: 14px;
-    }
-
-    h1 {
-      font-size: clamp(2rem, 5.9vw, 4.5rem);
-      line-height: 0.98;
-      letter-spacing: -0.03em;
-      text-transform: uppercase;
-      max-width: 18ch;
-      margin-bottom: 10px;
-    }
-    h2 {
-      font-size: clamp(1.45rem, 3.2vw, 2.6rem);
-      line-height: 1.08;
+    .brand-text strong {
+      font-size: 17px;
       letter-spacing: -0.02em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    h2.soft {
-      text-transform: none;
-      letter-spacing: -0.03em;
-      max-width: 32ch;
-      line-height: 1.1;
     }
 
-    .hero-title-stack .hero-line1 {
-      display: block;
-      font-size: 0.52em;
-      font-weight: 800;
-      color: #c8d4ff;
-      text-transform: none;
-      letter-spacing: 0.02em;
-    }
-    .hero-title-stack .hero-line2 {
-      display: block;
-      font-size: 1em;
-      font-weight: 900;
-      background: linear-gradient(95deg, #ff5ec7, #c76bff 40%, var(--blue-violet));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .hero-title-stack .hero-line3 {
-      display: block;
-      font-size: 0.46em;
-      font-weight: 900;
-      color: #fff;
-      text-transform: none;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      margin-top: 0.12em;
-      max-width: 22ch;
-    }
-
-    .grad {
-      background: linear-gradient(95deg, var(--blue-violet), #9d8bff 46%, var(--bright-violet));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .lead {
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 1.05rem;
-      max-width: 70ch;
-    }
-
-    .trust-strip {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    .trust-pill {
-      font-size: 0.76rem;
-      font-weight: 800;
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(255, 255, 255, 0.06);
-      color: #efe8ff;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-    }
-    .trust-pill--grad {
-      background: linear-gradient(135deg, rgba(108, 123, 255, 0.75), rgba(219, 99, 219, 0.65));
-      border-color: rgba(255, 255, 255, 0.22);
-      color: #fff;
-    }
-
-    .btns {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border-radius: 12px;
-      padding: 12px 18px;
-      font-weight: 800;
-      text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      transition: 0.2s ease;
-      user-select: none;
+    .brand-text span {
+      color: var(--muted-2);
+      font-size: 12px;
       white-space: nowrap;
     }
-    .btn:hover { transform: translateY(-1px); }
-    .btn-main {
-      color: #140a23;
-      background: linear-gradient(100deg, #8ca1ff, #a57dff 55%, #d86be6);
-      border-color: rgba(255, 255, 255, 0.12);
-      box-shadow: 0 12px 34px rgba(140, 125, 255, 0.34);
-    }
-    .btn-ghost {
-      color: #f2eaff;
-      background: rgba(255, 255, 255, 0.03);
-      border-color: rgba(255, 255, 255, 0.22);
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
     }
 
-    .btn-cta-telegram {
-      color: #f8f5ff;
-      background: linear-gradient(145deg, rgba(108, 123, 255, 0.22), rgba(219, 99, 219, 0.12));
-      border-color: rgba(143, 157, 255, 0.55);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    .nav a {
+      transition: color var(--transition);
+    }
+
+    .nav a:hover {
+      color: #fff;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero {
+      padding: 42px 0 60px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 18px;
-      align-items: center;
-      min-height: 0;
-      padding: clamp(8px, 2vw, 22px) 0 clamp(4px, 1vw, 16px);
+      grid-template-columns: 1.05fr .95fr;
+      gap: 34px;
+      align-items: stretch;
+      min-height: 760px;
     }
 
-    .hero-visual {
+    .hero-left,
+    .hero-right {
+      position: relative;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 22px 0;
+    }
+
+    .hero-title {
+      font-size: clamp(42px, 7vw, 92px);
+      line-height: .96;
+      letter-spacing: -0.06em;
+      margin-top: 24px;
+      max-width: 760px;
+    }
+
+    .hero-desc {
+      margin-top: 24px;
+      max-width: 650px;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      margin-top: 32px;
+    }
+
+    .hero-meta {
+      margin-top: 38px;
       display: grid;
-      place-items: center;
-      min-height: 0;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 760px;
+    }
+
+    .hero-chip {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-chip small {
+      display: block;
+font-size: 12px;
+      color: var(--muted-2);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .hero-chip strong {
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .dashboard {
       position: relative;
-      overflow: visible;
-      padding: 12px 0;
-    }
-
-    .card-single {
-      width: min(620px, 90%);
-      transform: rotate(-10deg);
-      animation: cardFloatSolo 5.6s ease-in-out infinite;
-      filter:
-        drop-shadow(0 34px 70px rgba(0, 0, 0, 0.38))
-        drop-shadow(0 10px 28px rgba(219, 99, 219, 0.18));
-      will-change: transform;
-    }
-
-    @keyframes cardFloatSolo {
-      0% { transform: rotate(-10deg) translateY(0px); }
-      50% { transform: rotate(-7deg) translateY(-16px); }
-      100% { transform: rotate(-10deg) translateY(0px); }
-    }
-
-    .bank-hero {
-      width: min(340px, 92%);
-      aspect-ratio: 1.586;
-      border-radius: 22px;
-      padding: 22px;
-      background: linear-gradient(135deg, #6c7bff 0%, #7a6dff 32%, #b565e8 62%, #db63db 100%);
-      box-shadow:
-        0 24px 60px rgba(0, 0, 0, 0.48),
-        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
-      position: relative;
-      overflow: hidden;
-    }
-    .bank-hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
+      width: 100%;
+      min-height: 690px;
+      border-radius: 34px;
       background:
-        radial-gradient(circle at 20% 20%, rgba(254, 243, 255, 0.22), transparent 26%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.09), transparent 48%);
-      pointer-events: none;
-    }
-    .bank-hero-inner { position: relative; z-index: 1; }
-    .bank-logo-h { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; }
-    .chip-h {
-      width: 42px;
-      height: 30px;
-      border-radius: 8px;
-      background: linear-gradient(180deg, #ffd573, #f2b44e);
-      margin-top: 18px;
-    }
-    .card-num-h {
-      position: absolute;
-      left: 22px;
-      bottom: 48px;
-      font-size: 1.35rem;
-      letter-spacing: 0.11em;
-      font-weight: 900;
-    }
-    .card-meta-h {
-      position: absolute;
-      left: 22px;
-      bottom: 18px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      opacity: 0.95;
-    }
-
-    .content-grid {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 22px;
-      align-items: start;
-    }
-
-    .prose {
-      color: #dacde8;
-      line-height: 1.85;
-      font-size: 1.02rem;
-    }
-    .prose p { margin: 8px 0; }
-    .prose strong.em { color: #f2eaff; font-weight: 800; }
-    .prose ul:not(.star-list) {
-      margin: 12px 0 12px 1.2em;
-    }
-    .prose ol {
-      margin: 12px 0 12px 1.2em;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .prose-block h3 {
-      font-size: clamp(1.2rem, 2.4vw, 1.65rem);
-      margin: 22px 0 10px;
-      color: #fff;
-      text-transform: none;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-    }
-    .note { font-style: italic; color: #b8a8d0; font-size: 0.98rem; }
-
-    .star-list {
-      list-style: none;
-      margin-top: 14px;
-      display: grid;
-      gap: 10px;
-    }
-    .star-list li {
-      color: #efe6ff;
-      padding-left: 28px;
-      position: relative;
-      line-height: 1.7;
-      font-weight: 700;
-    }
-    .star-list li::before {
-      content: "🌟";
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-
-    /* Правая колонка кризис-блока: компактные тезисы, как «факты в цифрах» на референсе */
-    .crisis-aside {
-      align-self: start;
-      position: sticky;
-      top: 88px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .fact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .fact-tile {
-      padding: 12px 0 16px;
-      border-radius: 0;
-      border: none;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      background: transparent;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .fact-tile--wide {
-      grid-column: 1 / -1;
-    }
-    .fact-tile--accent {
-      background: transparent;
-    }
-    .fact-tag {
-      font-size: 0.68rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #aeb8ff;
-    }
-    .fact-title {
-      font-size: 0.98rem;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      color: #fff;
-      line-height: 1.2;
-    }
-    .fact-lbl {
-      font-size: 0.84rem;
-      font-weight: 650;
-      color: #e4dcf5;
-      line-height: 1.45;
-    }
-    .crisis-cta {
-      margin-top: 2px;
-    }
-    .crisis-cta .btn {
-      width: 100%;
-      justify-content: center;
-    }
-
-    .hands-wrap {
-      display: grid;
-      place-items: center;
-      align-content: center;
-      min-height: 0;
-      margin: 0;
-      padding: 0;
-    }
-    .hands-wrap img {
-      width: min(100%, 440px);
-      max-width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 14px;
-      filter: drop-shadow(0 22px 48px rgba(0, 0, 0, 0.4));
-    }
-
-    .handshake-lines {
-      margin: 22px 0;
-      padding: 0;
-      border: none;
-      background: transparent;
-    }
-    .handshake-lines p {
-      margin: 0 0 8px;
-      font-weight: 700;
-      color: #efe8fa;
-    }
-    .handshake-lines p:last-child { margin-bottom: 0; }
-
-    .laptop-only {
-      margin: 36px auto 0;
-      max-width: min(720px, 100%);
-      padding: 0;
-      border: none;
-      background: transparent;
-      box-shadow: none;
-    }
-    .laptop-only img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 16px;
-      box-shadow: 0 36px 70px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
-
-    .packages-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: clamp(28px, 4vw, 40px) clamp(22px, 3vw, 32px);
-      margin-top: 8px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .pack {
-      padding: 8px 0 8px;
-      position: relative;
-      z-index: 0;
-      border-radius: 0;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-    }
-
-    .pack .tag {
-      display: inline-block;
-      font-size: 0.78rem;
-      font-weight: 800;
-      padding: 5px 11px;
-      border-radius: 999px;
-      background: rgba(219, 99, 219, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #fde9ff;
-      margin-bottom: 8px;
-    }
-
-    .pack h3 {
-      font-size: 1.2rem;
-      letter-spacing: -0.01em;
-      margin-bottom: 8px;
-      text-transform: none;
-    }
-
-    .pack p {
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 10px;
-    }
-
-    .pack ul {
-      list-style: none;
-      display: grid;
-      gap: 8px;
-      margin-top: 10px;
-      margin-bottom: 12px;
-    }
-    .pack li {
-      padding-left: 22px;
-      position: relative;
-      color: #f0e9ff;
-      line-height: 1.6;
-      font-weight: 650;
-    }
-    .pack li::before {
-      content: "🌟";
-      position: absolute;
-      left: 0;
-      top: 0;
-      font-size: 0.85em;
-    }
-
-    .price {
-      margin-top: 10px;
-      padding-top: 12px;
-      border-top: 1px dashed rgba(255, 255, 255, 0.22);
-      color: #efe6ff;
-      line-height: 1.7;
-      font-weight: 750;
-    }
-
-    .muted { color: var(--muted); }
-
-    .service-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-top: 28px;
-      align-items: start;
-    }
-    .feat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .feat {
-      padding: 8px 0 16px;
-      border-radius: 0;
-      border: none;
-      background: transparent;
-    }
-    .feat h4 {
-      font-size: 1rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
-      line-height: 1.1;
-    }
-    .feat p {
-      font-size: 0.95rem;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-    .feat.grad {
-      background: transparent;
-      padding-left: 14px;
-      border-left: 3px solid;
-      border-color: #8b7cff;
-    }
-    .feat.grad p { color: var(--muted); }
-    .feat.grad h4 {
-      background: linear-gradient(95deg, #d8e0ff, #f0c4ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 8px;
-    }
-
-    .contact-wrap {
-      max-width: min(560px, 100%);
-      margin-inline: 0;
-      margin-top: 4px;
-    }
-
-    .contact-aside {
-      padding: 0;
-      border: none;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .contact-aside-title {
-      font-size: clamp(1.12rem, 2.4vw, 1.42rem);
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      text-transform: none;
-      color: #fff;
-      margin: 0;
-      line-height: 1.2;
-    }
-    .contact-aside-lead {
-      margin: 0;
-      font-size: 0.96rem;
-      font-weight: 650;
-      color: #dacde8;
-      line-height: 1.55;
-    }
-    .contact-checklist {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 10px;
-    }
-    .contact-checklist li {
-      padding-left: 26px;
-      position: relative;
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: #efe8fa;
-      line-height: 1.45;
-    }
-    .contact-checklist li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: #9dffb3;
-      font-weight: 900;
-      font-size: 0.95rem;
-    }
-    .contact-aside .btn-main {
-      margin-top: 4px;
-      width: auto;
-      align-self: flex-start;
-      justify-content: center;
-      min-width: min(280px, 100%);
-    }
-
-    .site-footer {
-      padding: 28px 0 40px;
-      margin-top: 8px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .footer-box {
-      display: grid;
-      grid-template-columns: 1.2fr 0.9fr 1fr;
-      gap: 20px;
-      align-items: start;
-    }
-    .footer-brand { display: grid; gap: 10px; }
-    .footer-brand .brand { font-size: 1.75rem; align-items: flex-start; }
-    .footer-brand .brand > span {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      line-height: 1.05;
-    }
-    .footer-brand small {
-      display: block;
-      color: #c4b8dc;
-      font-size: 0.76rem;
-      font-weight: 600;
-      text-transform: none;
-      letter-spacing: 0;
-    }
-    .socials {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-    .btn-cta-telegram--compact {
-      padding: 10px 16px;
-      font-size: 0.88rem;
-      border-radius: 11px;
-    }
-    .footer-links {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px 18px;
-      padding-top: 8px;
-    }
-    .footer-links a {
-      color: #ece5f8;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.92rem;
-    }
-    .footer-links a:hover { color: #c8d4ff; }
-    .footer-right {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding-top: 8px;
-    }
-    .copyright {
-      display: flex;
-      justify-content: flex-start;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 22px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      color: #9d8fb8;
-      font-size: 0.92rem;
-      font-weight: 600;
-    }
-
-    .scroll-top {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.08);
-      color: white;
-      text-decoration: none;
-      display: grid;
-      place-items: center;
-      z-index: 60;
-      backdrop-filter: blur(8px);
-    }
-
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
+        linear-gradient(180deg, rgba(10,12,18,.94), rgba(10,12,18,.88));
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow:
+        0 30px 80px rgba(0,0,0,.34),
+        inset 0 1px 0 rgba(255,255,255,.06);
       overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+      backdrop-filter: blur(24px);
     }
 
-    .eyebrow {
-      color: #dce5ff;
-      font-size: 0.98rem;
-      margin-bottom: 10px;
-      font-weight: 750;
-    }
-
-    .nav-wrap.page-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      max-width: none;
-      margin: 0;
-      padding: 14px 0;
-      background: rgba(13, 6, 26, 0.78);
-      backdrop-filter: blur(16px) saturate(1.2);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
-    }
-    .nav-wrap.page-nav .nav {
-      width: var(--container);
-      margin-inline: auto;
-      max-width: none;
-    }
-    main.container {
-      padding-top: 84px;
-    }
-    h2.soft,
-    .section-head h2,
-    .pack h3,
-    .contact-aside-title {
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-    .hero-title-stack .hero-line2 {
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-weight: 700;
-    }
-    .hero-visual__grid {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: clamp(16px, 3vw, 28px);
-      align-items: center;
-      justify-items: center;
-      width: 100%;
-      max-width: 580px;
-      margin-inline: auto;
-    }
-    .hero-phone {
-      width: min(128px, 30vw);
-      height: auto;
-      border-radius: 24px;
-      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
-      filter: drop-shadow(0 8px 28px rgba(108, 123, 255, 0.28));
-    }
-    .atmospheric {
-      position: relative;
-      margin: clamp(8px, 2vw, 24px) 0 clamp(28px, 4vw, 48px);
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      min-height: min(300px, 48vh);
-    }
-    .atmospheric__bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.38;
-      filter: saturate(1.06) contrast(1.03);
-    }
-    .atmospheric::after {
+    .dashboard::before {
       content: "";
       position: absolute;
-      inset: 0;
-      background: linear-gradient(105deg, rgba(13, 4, 25, 0.94) 0%, rgba(13, 4, 25, 0.5) 58%, transparent 100%);
-      pointer-events: none;
+      width: 360px;
+      height: 360px;
+      right: -80px;
+      top: -110px;
+      background: radial-gradient(circle, rgba(255,79,216,.32), transparent 65%);
+      filter: blur(40px);
     }
-    .atmospheric__inner {
+
+    .dashboard::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      left: -90px;
+      bottom: -120px;
+      background: radial-gradient(circle, rgba(99,162,255,.26), transparent 65%);
+      filter: blur(45px);
+    }
+
+    .dash-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .dash-top-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .window-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.25);
+    }
+
+    .window-dot:nth-child(1) { background: #ff5f57; }
+    .window-dot:nth-child(2) { background: #febc2e; }
+    .window-dot:nth-child(3) { background: #28c840; }
+
+    .dash-badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .dash-body {
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
       position: relative;
       z-index: 2;
-      padding: clamp(28px, 5vw, 52px);
-      max-width: 54ch;
     }
-    .atmospheric__quote {
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-size: clamp(1.3rem, 2.4vw, 1.8rem);
-      font-style: italic;
-      line-height: 1.42;
-      color: #f5f1ff;
+
+    .panel {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 18px;
+      backdrop-filter: blur(14px);
     }
-    .atmospheric__eyebrow {
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.2em;
+
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .panel-title strong {
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .panel-title span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted-2);
+      font-size: 13px;
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 280px;
+      border-radius: 18px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.03));
+      background-size: 100% 20%, 12.5% 100%, auto;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .chart-wrap svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .chart-glow {
+      filter: drop-shadow(0 0 12px rgba(255,79,216,.34));
+    }
+
+    .mini-stats {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .mini-box {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .mini-box small {
+      color: var(--muted-2);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .mini-box strong {
+      font-size: 20px;
+letter-spacing: -0.03em;
+    }
+
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .kpi-card {
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.035));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .kpi-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .kpi-top span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .kpi-value {
+      margin-top: 16px;
+      font-size: 40px;
+      line-height: .95;
+      letter-spacing: -0.06em;
+    }
+
+    .kpi-note {
+      margin-top: 10px;
+      color: var(--muted-2);
+      font-size: 13px;
+    }
+
+    .activity-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .activity-item strong {
+      font-size: 14px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .activity-item span {
+      font-size: 12px;
+      color: var(--muted-2);
+    }
+
+    .activity-item b {
+      font-size: 14px;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .partners {
+      padding-top: 16px;
+    }
+
+    .partner-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .partner {
+      height: 74px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,.74);
+      font-weight: 700;
+      letter-spacing: .08em;
       text-transform: uppercase;
-      color: #c8d4ff;
-      margin-bottom: 14px;
+      font-size: 13px;
+      backdrop-filter: blur(14px);
     }
-    .laptop-duo {
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .stat-card {
+      padding: 26px 22px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.035));
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -20% -45% auto;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(255,79,216,.14), transparent 65%);
+    }
+
+    .stat-card h3 {
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .stat-card p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 240px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      padding: 24px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      min-height: 230px;
+      transition: transform var(--transition), border-color var(--transition), background var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.16);
+      box-shadow: 0 20px 44px rgba(0,0,0,.18);
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      right: -30px;
+      top: -30px;
+      background: radial-gradient(circle, rgba(255,79,216,.16), transparent 65%);
+      filter: blur(10px);
+    }
+
+    .icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 20px;
+    }
+
+    .icon svg {
+width: 24px;
+      height: 24px;
+    }
+
+    .feature-card h3 {
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .feature-card p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 16px;
+      counter-reset: step;
+    }
+
+    .step-card {
+      padding: 24px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-card::before {
+      counter-increment: step;
+      content: counter(step, decimal-leading-zero);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,79,216,.20), rgba(99,162,255,.16));
+      border: 1px solid rgba(255,255,255,.10);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .step-card h3 {
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+
+    .step-card p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .audience-card {
+      padding: 24px 20px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .audience-card .icon {
+      margin-bottom: 0;
+    }
+
+    .audience-card h3 {
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+
+    .audience-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .offer-wrap {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: clamp(16px, 3vw, 28px);
-      margin-top: 36px;
-      align-items: start;
-    }
-    .laptop-duo figure {
-      margin: 0;
-    }
-    .laptop-duo img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 16px;
-      box-shadow: 0 32px 64px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      gap: 20px;
     }
 
-    @media (max-width: 980px) {
+    .offer-card,
+    .why-card,
+    .review-card,
+    .cta-box,
+    .footer-card {
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+
+    .offer-card {
+      padding: 28px;
+      min-height: 360px;
+      position: relative;
+    }
+
+    .offer-card.featured {
+      background:
+        radial-gradient(circle at 100% 0%, rgba(255,79,216,.18), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.035));
+      box-shadow: 0 20px 50px rgba(255,79,216,.08);
+    }
+
+    .offer-label {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .offer-card h3 {
+      margin-top: 18px;
+      font-size: 30px;
+      letter-spacing: -0.04em;
+    }
+
+    .offer-price {
+      margin-top: 18px;
+      font-size: 58px;
+      letter-spacing: -0.08em;
+      line-height: .95;
+    }
+
+    .offer-price span {
+      font-size: 18px;
+      color: var(--muted);
+      letter-spacing: 0;
+    }
+
+    .offer-sub {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 460px;
+    }
+
+    .offer-list {
+      list-style: none;
+      margin-top: 22px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .offer-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .offer-list li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      margin-top: 8px;
+      border-radius: 50%;
+background: linear-gradient(135deg, var(--pink), var(--blue));
+      box-shadow: 0 0 14px rgba(255,79,216,.6);
+      flex-shrink: 0;
+    }
+
+    .offer-card .btn-row {
+      margin-top: 26px;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .why-card {
+      padding: 24px;
+      min-height: 210px;
+    }
+
+    .why-card h3 {
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .why-card p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .dashboard-section-grid {
+      display: grid;
+      grid-template-columns: 1fr .9fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .dashboard-preview {
+      border-radius: 30px;
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.08);
+      overflow: hidden;
+      min-height: 540px;
+    }
+
+    .dashboard-preview .chart-wrap {
+      height: 320px;
+      margin-top: 18px;
+    }
+
+    .preview-stats {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .preview-card {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .preview-card small {
+      display: block;
+      color: var(--muted-2);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .preview-card strong {
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .review-card {
+      padding: 24px;
+      min-height: 260px;
+      position: relative;
+    }
+
+    .review-stars {
+      color: #fff;
+      opacity: .92;
+      letter-spacing: .15em;
+      font-size: 14px;
+    }
+
+    .review-card p {
+      margin-top: 18px;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .review-author {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .review-author strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .review-author span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted-2);
+      font-size: 13px;
+    }
+
+    .cta-box {
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,79,216,.14), transparent 32%),
+        radial-gradient(circle at 100% 100%, rgba(99,162,255,.12), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
+
+    .cta-box h2 {
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: .98;
+      letter-spacing: -0.05em;
+      max-width: 780px;
+    }
+
+    .cta-box p {
+      margin-top: 18px;
+      max-width: 700px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .cta-box .btn-row {
+      margin-top: 26px;
+    }
+
+    .footer {
+      padding: 24px 0 34px;
+    }
+
+    .footer-card {
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(16px);
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-copy {
+      color: var(--muted-2);
+      font-size: 13px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-toggle {
+      display: none;
+      width: 46px;
+      height: 46px;
+border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1180px) {
       .hero-grid,
-      .content-grid,
-      .packages-grid,
-      .footer-box,
-      .service-row,
-      .feat-grid,
-      .benefits-grid {
+      .dashboard-section-grid,
+      .offer-wrap {
         grid-template-columns: 1fr;
       }
-      .hero-visual__grid {
-        grid-template-columns: 1fr;
+
+      .hero {
+        padding-top: 30px;
       }
-      .hero-phone {
-        width: min(200px, 55vw);
+
+      .hero-grid {
+        min-height: auto;
+      }
+
+      .hero-right {
         order: -1;
       }
-      .laptop-duo {
-        grid-template-columns: 1fr;
+
+      .dashboard {
+        min-height: 620px;
       }
-      .crisis-aside { position: static; top: auto; }
-      .fact-grid { grid-template-columns: 1fr; }
-      .fact-tile--wide { grid-column: 1; }
-      .menu { gap: 10px; }
+
+      .partner-strip {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .audience-grid {
+        grid-template-columns: repeat(3, minmax(0,1fr));
+      }
+
+      .stats-grid,
+      .steps,
+      .review-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .card-single {
-        animation: none !important;
+    @media (max-width: 860px) {
+      .topbar {
+        padding-top: 12px;
       }
-      * { scroll-behavior: auto}
+
+      .nav {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 18px;
+        background: rgba(10,12,18,.92);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 22px;
+        backdrop-filter: blur(20px);
+      }
+
+      .nav.active {
+        display: flex;
+      }
+
+      .mobile-toggle {
+        display: inline-flex;
+      }
+
+      .nav-cta .btn-secondary {
+        display: none;
+      }
+
+      .hero-meta,
+      .mini-stats,
+      .preview-stats,
+      .why-grid,
+      .stats-grid,
+      .feature-grid,
+      .steps,
+      .review-grid,
+      .audience-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dash-body {
+        grid-template-columns: 1fr;
+      }
+
+      .partner-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-title {
+        max-width: 100%;
+      }
+
+      .dashboard {
+        min-height: auto;
+      }
+
+      .dashboard-preview {
+        min-height: auto;
+      }
+
+      .section {
+        padding: 84px 0;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: min(calc(100% - 20px), var(--max));
+      }
+
+      .nav-shell {
+        padding: 12px 12px;
+        border-radius: 18px;
+      }
+
+      .brand-text span {
+        display: none;
+      }
+
+      .hero {
+        padding-bottom: 30px;
+      }
+
+      .hero-desc {
+        font-size: 16px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .btn-row {
+        width: 100%;
+      }
+
+      .hero-chip strong {
+        font-size: 16px;
+      }
+
+      .panel,
+      .offer-card,
+      .review-card,
+      .why-card,
+      .dashboard-preview,
+      .cta-box {
+        padding: 20px;
+      }
+
+      .offer-price {
+        font-size: 46px;
+      }
+
+      .partner {
+        height: 66px;
+      }
+
+      .dash-top {
+        padding: 14px;
+      }
+
+      .dash-body {
+        padding: 14px;
+      }
     }
   </style>
 </head>
+<body>
 
-<body id="top">
-  <img class="bg-ghost" src="./assets/symbol_dark.svg" alt="" />
-  <div class="violet-bottom"></div>
-
-  <div class="nav-wrap page-nav">
-    <nav class="nav container">
-      <a class="brand" href="#top">
-        <img src="./assets/symbol_dark.svg" alt="Liberty logo" />
-        <span>Liberty</span>
-      </a>
-      <div class="menu">
-        <a href="#about">Кто мы</a>
-        <a href="#crisis">Контекст рынка</a>
-        <a href="#about-product">О продукте</a>
-        <a href="#packages">Пакеты</a>
-        <a href="#benefits">Преимущества</a>
-        <a href="#contact">Контакты</a>
-      </div>
-    </nav>
-  </div>
-
-  <main class="container">
-    <section class="section" id="hero">
-      <div class="hero-grid">
-        <div>
-          <div class="trust-strip" aria-label="Коротко о формате">
-            <span class="trust-pill trust-pill--grad">B2B White Label</span>
-            <span class="trust-pill">High-risk · СНГ</span>
-            <span class="trust-pill trust-pill--grad">Запуск 1–3 дня</span>
-          </div>
-          <h1 class="hero-title-stack">
-            <span class="hero-line1">Welcome to</span>
-            <span class="hero-line2">Liberty</span>
-            <span class="hero-line3">Liberty Your Freedom Is here</span>
-          </h1>
-          <p class="lead">
-            B2B-оператор платёжной инфраструктуры: вы масштабируете маркетинг и продукт — мы стабилизируем процессинг, выплаты и каскад без лишней «технарской» нагрузки на команду.
-          </p>
-          <div class="btns">
-            <a class="btn btn-main" href="#packages">Смотреть пакеты</a>
-            <a class="btn btn-ghost" href="#about-product">О проекте Liberty</a>
-            <a class="btn btn-cta-telegram" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
-          </div>
-        </div>
-
-        <div class="hero-visual" aria-hidden="true">
-          <div class="hero-visual__grid">
-            <div class="card-single">
-              <div class="bank-hero">
-                <div class="bank-hero-inner">
-                  <div class="bank-logo-h">Liberty</div>
-                  <div class="chip-h"></div>
-                </div>
-                <div class="card-num-h">1234 5678 9012 3456</div>
-                <div class="card-meta-h">JOHN DOE · 01/30</div>
-              </div>
-            </div>
-            <img class="hero-phone" src="./assets/phone1.png" alt="" width="400" height="800" decoding="async" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="about">
-      <div class="section-head">
-        <div class="kicker-line"></div>
-        <p class="eyebrow">Обеспечивая уверенность и безопасность на каждом этапе вашего финансового пути</p>
-        <h2 class="soft">Liberty является вашим надёжным партнёром в сфере финансовых решений</h2>
-      </div>
-      <div class="content-grid">
-        <div class="prose">
-          <p>
-            Мы предлагаем инновационные платёжные решения, которые открывают новые возможности для вашего бизнеса и личных финансов.
-            Команда экспертов заботится о защите ваших интересов и безопасности транзакций.
-          </p>
-          <p>
-            Позвольте нам стать частью вашего финансового успеха и собрать для вас масштабируемую, красивую и коммерчески эффективную платёжную инфраструктуру.
-          </p>
-        </div>
-        <figure class="hands-wrap">
-          <img
-            src="./assets/hands.png"
-            alt="Рукопожатие: партнёрство и доверие в финансовых решениях"
-            width="1280"
-            height="853"
-            decoding="async"
-            loading="lazy"
-          />
-        </figure>
-      </div>
-    </section>
-
+  <div class="topbar">
     <div class="container">
-      <div class="atmospheric">
-        <img class="atmospheric__bg" src="./assets/balance1.png" alt="" width="800" height="800" decoding="async" />
-        <div class="atmospheric__inner">
-          <p class="atmospheric__eyebrow">Liberty Payment Solutions</p>
-          <p class="atmospheric__quote">
-            Масштабируемая инфраструктура приёма и выплат — чтобы вы удерживали фокус на продукте, маркетинге и LTV, а не на «почему опять отвалился метод».
-          </p>
+      <div class="nav-shell">
+        <a href="#" class="brand">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3c-4.971 0-9 3.63-9 8.108 0 2.3 1.066 4.377 2.777 5.847V21l3.204-1.821A10.22 10.22 0 0 0 12 19.217c4.971 0 9-3.63 9-8.109C21 6.63 16.971 3 12 3Z" stroke="white" stroke-width="1.5"/>
+              <circle cx="9.2" cy="10.7" r="1" fill="white"/>
+              <circle cx="14.8" cy="10.7" r="1" fill="white"/>
+              <path d="M8.4 13.9c.84.86 2.15 1.4 3.6 1.4s2.76-.54 3.6-1.4" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <strong>Liberty</strong>
+            <span>Payment infrastructure for high-volume business</span>
+          </div>
+</a>
+
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Открыть меню">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <nav class="nav" id="nav">
+          <a href="#solutions">Решения</a>
+          <a href="#process">Как это работает</a>
+          <a href="#audience">Для кого</a>
+          <a href="#offer">Условия</a>
+          <a href="#dashboard">Платформа</a>
+          <a href="#contact">Контакты</a>
+        </nav>
+
+        <div class="nav-cta">
+          <a href="#offer" class="btn btn-secondary">Смотреть условия</a>
+          <a href="#contact" class="btn btn-primary">Подключиться</a>
         </div>
       </div>
     </div>
+  </div>
 
-    <section class="section" id="crisis">
-      <div class="section-head">
-        <div class="kicker-line"></div>
-        <h2 class="soft">Процессинг сегодня: почему закрываются офисы и проекты</h2>
-        <p class="lead">Инфраструктура, ликвидность и предсказуемость — то, чего не хватает большинству игроков рынка.</p>
-      </div>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-left reveal">
+            <div class="eyebrow">
+              <span class="dot"></span>
+              White-label payment infrastructure
+            </div>
 
-      <div class="content-grid">
-        <div class="prose prose-block">
-          <p>В текущих реалиях сфера процессинговой обработки переживает всё более и более кризисные времена.</p>
-          <p>
-            Закрываются не только старейшие офисы обработки платежей, но и молодые и средние гембл‑проекты,
-            а также множество обменников.
-          </p>
-          <p><strong class="em">В чем же настоящие причины происходящего?</strong></p>
-          <p>
-            На самом деле причины достаточно просты, решаемы и понятны — это не «закончилась ёмкость рынка»,
-            не «все гайки пережаты», не «рынок перегрет» и так далее. Причина в том, что каждому бизнесу,
-            прямо или косвенно связанному с процессингом платежей, не хватает ни на старте работы,
-            ни даже через год и более таких вещей как:
-          </p>
-          <ul class="star-list">
-            <li>Стабильность</li>
-            <li>Прогнозируемость</li>
-            <li>Надёжный фундамент</li>
-          </ul>
-          <p><strong class="em">Давайте разберём на примере</strong></p>
-          <p>
-            <strong class="em">Трейдерский офис / инхаус и партнёрские офисы РФ и СНГ.</strong><br />
-            Подразумевается, что бизнес понимает, какие условия ему нужны для большой обработки и хорошей маржи.
-          </p>
-          <p>Что нужно такому бизнесу, чтобы показывать отличный финансовый результат?</p>
-          <ul class="star-list">
-            <li>Наличие выплат в любом объёме</li>
-            <li>Хороший объём понятного трафика без сюрпризов</li>
-            <li>Работа с прямыми мерчантами для поддержания высоких ставок</li>
-            <li>Полное, максимально гибкое управление всеми техническими и организационными аспектами</li>
-            <li>Проверенное, боевое, надёжное техническое решение</li>
-            <li>Оперативное решение всех возникающих нюансов без лишних затрат времени и ресурсов</li>
-            <li>Уложить всё перечисленное в понятный бюджет и быстро реализовать</li>
-          </ul>
-          <p>
-            Для «олдов» всё перечисленное выглядит как базовая необходимость выстраивания плодотворной работы.
-            Но хоть критерии просты — весь этот пласт того, что <em>надо</em> для качественной работы, остаётся тяжёлым.
-          </p>
-          <p>
-            Посмотрите, сколько проектов <strong class="em">реально</strong> работают с прямыми мерчантами?
-            У скольких кассовые разрывы из‑за некачественного кода?
-            А про количество проектов, у которых на борту есть столь необходимые сегодня выплаты в любом объёме,
-            — чуть ли не единицы.
-          </p>
-          <p>
-            На решение этих задач у проектов уходит не один год. Команда
-            <strong class="em">Liberty Payment Solutions</strong> 🆙 после большого объёма работы готова представить
-            B2B‑решение как минимум для пяти видов бизнеса, основанных на процессинге платежей — чтобы закрыть потребности,
-            которые не относятся к вашей основной специализации.
-          </p>
-          <div class="handshake-lines">
-            <p>Офисы не должны искать трафик и выплаты 🤝</p>
-            <p>Казино и обменники не должны искать обработку 🤝</p>
-            <p>Остальные сервисы не должны заниматься тем, что не относится к прямому бизнес‑направлению 🤝</p>
+            <h1 class="hero-title">
+              Платёжная <span class="gradient-text">инфраструктура</span><br />
+              для высоких оборотов
+            </h1>
+
+            <p class="hero-desc">
+              Liberty помогает запускать и масштабировать платёжные решения для high-volume
+              проектов. Стабильный процессинг, гибкая маршрутизация, контроль трафика,
+              высокая отказоустойчивость и быстрая интеграция под ваш бизнес.
+            </p>
+
+            <div class="hero-actions btn-row">
+              <a href="#contact" class="btn btn-primary">Подключиться</a>
+              <a href="#dashboard" class="btn btn-secondary">Посмотреть платформу</a>
+            </div>
+
+            <div class="hero-meta">
+              <div class="hero-chip">
+                <small>Фокус</small>
+                <strong>High-volume бизнес</strong>
+              </div>
+              <div class="hero-chip">
+                <small>Запуск</small>
+                <strong>Быстрая интеграция</strong>
+              </div>
+              <div class="hero-chip">
+                <small>Подход</small>
+                <strong>White-label + контроль</strong>
+              </div>
+            </div>
           </div>
-          <p class="muted" style="margin-bottom: 0;">
-            Ниже — White Label пакеты с прозрачной экономикой и понятными сроками внедрения.
-          </p>
+
+          <div class="hero-right reveal">
+            <div class="dashboard">
+              <div class="dash-top">
+                <div class="dash-top-left">
+                  <span class="window-dot"></span>
+                  <span class="window-dot"></span>
+                  <span class="window-dot"></span>
+                </div>
+                <div class="dash-badge">Liberty Control Panel</div>
+              </div>
+
+              <div class="dash-body">
+                <div class="panel">
+                  <div class="panel-title">
+                    <div>
+                      <strong>Поток транзакций</strong>
+                      <span>Мониторинг, маршрутизация, аптайм</span>
+                    </div>
+                    <div class="dash-badge">Live</div>
+                  </div>
+
+                  <div class="chart-wrap">
+                    <svg viewBox="0 0 600 280" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stop-color="#ff4fd8"/>
+                          <stop offset="100%" stop-color="#63a2ff"/>
+                        </linearGradient>
+                        <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="rgba(255,79,216,.45)"/>
+                          <stop offset="100%" stop-color="rgba(255,79,216,0)"/>
+                        </linearGradient>
+                      </defs>
+                      <path
+d="M0 225 C35 220, 60 180, 95 185 C130 190, 155 215, 190 195 C225 175, 255 80, 290 92 C325 104, 345 160, 380 146 C415 132, 445 90, 475 84 C505 78, 535 95, 565 58 C580 38, 592 25, 600 20 L600 280 L0 280 Z"
+                        fill="url(#areaGradient)"
+                        opacity=".8"
+                      />
+                      <path
+                        class="chart-glow"
+                        d="M0 225 C35 220, 60 180, 95 185 C130 190, 155 215, 190 195 C225 175, 255 80, 290 92 C325 104, 345 160, 380 146 C415 132, 445 90, 475 84 C505 78, 535 95, 565 58 C580 38, 592 25, 600 20"
+                        stroke="url(#lineGradient)"
+                        stroke-width="4"
+                        fill="none"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </div>
+
+                  <div class="mini-stats">
+                    <div class="mini-box">
+                      <small>Approval flow</small>
+                      <strong>98.4%</strong>
+                    </div>
+                    <div class="mini-box">
+                      <small>Routing nodes</small>
+                      <strong>12+</strong>
+                    </div>
+                    <div class="mini-box">
+                      <small>Latency</small>
+                      <strong>Low</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="stack">
+                  <div class="kpi-card">
+                    <div class="kpi-top">
+                      <span>Сегодняшний объём</span>
+                      <div class="dash-badge">+24.8%</div>
+                    </div>
+                    <div class="kpi-value">$2.8M</div>
+                    <div class="kpi-note">Стабильная обработка потока и гибкое управление направлениями.</div>
+                  </div>
+
+                  <div class="panel">
+                    <div class="panel-title">
+                      <div>
+                        <strong>Последняя активность</strong>
+                        <span>Маршруты и статусы</span>
+                      </div>
+                    </div>
+                    <div class="activity-list">
+                      <div class="activity-item">
+                        <div>
+                          <strong>QR / Card Route</strong>
+                          <span>Updated 12 sec ago</span>
+                        </div>
+                        <b>Active</b>
+                      </div>
+                      <div class="activity-item">
+                        <div>
+                          <strong>Crypto settlement</strong>
+                          <span>Updated 1 min ago</span>
+                        </div>
+                        <b>Stable</b>
+                      </div>
+                      <div class="activity-item">
+                        <div>
+                          <strong>P2P fallback</strong>
+                          <span>Updated 3 min ago</span>
+                        </div>
+                        <b>Ready</b>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="kpi-card">
+                    <div class="kpi-top">
+                      <span>Uptime</span>
+                      <div class="dash-badge">24/7</div>
+                    </div>
+                    <div class="kpi-value">99.98%</div>
+                    <div class="kpi-note">Архитектура под стабильную работу и масштабирование оборотов.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <aside class="crisis-aside" aria-label="Ключевые тезисы по рынку процессинга">
-          <div class="fact-grid">
-            <div class="fact-tile fact-tile--accent">
-              <span class="fact-tag">Сначала база</span>
-              <span class="fact-title">Три опоры: стабильность, прогноз, фундамент</span>
-              <span class="fact-lbl">Без этого офисы и проекты «сыпятся» первыми — не «рынок перегрет», а дырявый фундамент.</span>
-            </div>
-            <div class="fact-tile">
-              <span class="fact-tag">Не собирать годами</span>
-              <span class="fact-title">White Label и каскад под РФ и СНГ</span>
-              <span class="fact-lbl">Готовая связка приёма и маршрутизации вместо бесконечной внутренней разработки.</span>
-            </div>
-            <div class="fact-tile">
-              <span class="fact-tag">Рядом с вами</span>
-              <span class="fact-title">Поддержка и сопровождение 24/7</span>
-              <span class="fact-lbl">Закрываем нюансы по технике и процессам, пока вы фокусируетесь на маркетинге и продукте.</span>
-            </div>
-            <div class="fact-tile fact-tile--wide">
-              <span class="fact-tag">Роль Liberty</span>
-              <span class="fact-title">Забираем непрофиль: выплаты, маршруты, методы</span>
-              <span class="fact-lbl">Команда не превращается в «платёжный технарник» — инфраструктура на нашей стороне.</span>
-            </div>
+        <div class="partners reveal">
+          <div class="partner-strip">
+            <div class="partner">Traffic</div>
+            <div class="partner">Crypto</div>
+            <div class="partner">Cards</div>
+            <div class="partner">High-Risk</div>
+            <div class="partner">White-Label</div>
           </div>
-          <div class="crisis-cta">
-            <a class="btn btn-main" href="#packages">Пакеты и цены</a>
-          </div>
-        </aside>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="about-product">
-      <div class="section-head">
-        <div class="kicker-line"></div>
-        <h2 class="soft">О нас и о нашем продукте</h2>
-      </div>
+    <section class="section" id="solutions">
+<div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Core metrics
+          </div>
+          <h2>Инфраструктура, созданная <span class="gradient-text">для стабильного роста</span></h2>
+          <p>
+            Не просто приём платежей, а управляемая система для бизнеса, которому нужны контроль,
+            масштабирование, гибкость и надёжность.
+          </p>
+        </div>
 
-      <div class="prose prose-block">
-        <p>
-          <strong class="em">Мы — Liberty Payment Solutions.</strong>
-          B2B‑оператор, который забирает на себя всю платёжную инфраструктуру, чтобы вы занимались своим бизнесом, а не процессингом.
-        </p>
-
-        <h3>Проблема, которую вы уже не замечаете</h3>
-        <p class="note">Или: проблема, которую вы уже не замечаете — месяцы и годы на то, чтобы:</p>
-        <ul>
-          <li>настроить стабильный каскад платежей;</li>
-          <li>решить вопросы с ликвидностью;</li>
-          <li>удержать конверсию при блокировках.</li>
-        </ul>
-        <p>
-          Вы ищете трафик и игроков — но вынуждены вручную управлять несколькими сторонними платёжками и агрегаторами,
-          каждая из которых забирает свой процент. В сумме можно терять до 15–20% с оборота на комиссиях, связках и потерянной ликвидности.
-        </p>
-        <p><strong class="em">Обработка платежей не должна быть вашей основной специализацией.</strong></p>
-        <p><strong class="em">Казино — маркетинговый бизнес, а не платёжный технопарк.</strong></p>
-
-        <h3>Что даёт наше готовое B2B‑решение?</h3>
-        <p>Мы закрываем непрофильные задачи, связанные с процессингом, и помогаем повысить маржинальность.</p>
-
-        <h3>Кому подходит</h3>
-        <ul>
-          <li>Казино — не ищут обработку, а получают её под ключ.</li>
-          <li>Обменники — не думают о трафике и выплатах.</li>
-          <li>Любой high‑risk сервис — перестаёт заниматься задачами вне специализации.</li>
-        </ul>
-
-        <h3>Ваша выгода</h3>
-        <p>
-          Экономия не только процентов с комиссии, но и получение автономного, оптимизированного инструмента.
-          Вы сосредотачиваетесь на маркетинге, удержании и LTV — мы делаем так, чтобы платёж проходил стабильно,
-          с лучшей конверсией и без сюрпризов.
-        </p>
-
-        <h3>Главное — вы не платите за «кота в мешке»</h3>
-        <p>Мы не просим денег вперёд за непонятный продукт. Вы не подписываете договор и не переводите предоплату.</p>
-        <p><strong class="em">Вот как мы работаем:</strong></p>
-        <ol>
-          <li>Вы даёте нам зелёный свет.</li>
-          <li>Мы в короткие сроки (от 1 до 3 дней) подключаем решение к вашему трафику.</li>
-          <li>Вы бесплатно тестируете продукт в реальном времени — например, 7 дней.</li>
-          <li>Наши платежи работают параллельно с текущими агрегаторами: вы сами видите разницу в конверсии, скорости и комиссии.</li>
-        </ol>
-        <p><strong class="em">Вы не заплатили ни копейки — а уже получили и заработали.</strong></p>
-
-        <h3>Что теряете вы?</h3>
-        <p>
-          Главное — головную боль. Вы либо убеждаетесь, что наше решение лучше (и начинаете экономить и зарабатывать больше),
-          либо, если разницы нет, мы всё отключаем — без штрафов и скрытых условий.
-        </p>
-        <p style="margin-bottom: 0;">
-          <strong class="em">Результат скажет сам за себя. Ваша прибыль — наше портфолио.</strong>
-        </p>
-      </div>
-
-      <div class="laptop-duo">
-        <figure class="laptop-only" style="margin: 0;">
-          <img src="./assets/computer-mid-1.png" alt="Рабочий интерфейс Liberty на ноутбуке" width="960" height="540" decoding="async" />
-        </figure>
-        <figure class="laptop-only" style="margin: 0;">
-          <img src="./assets/computer-mid-2.png" alt="Дополнительный ракурс рабочей среды Liberty" width="960" height="540" decoding="async" />
-        </figure>
+        <div class="stats-grid">
+          <div class="stat-card reveal">
+            <h3>$50M+</h3>
+            <p>Потенциал оборота решений, где критичны стабильность маршрутов и предсказуемость процесса.</p>
+          </div>
+          <div class="stat-card reveal">
+            <h3>99.98%</h3>
+            <p>Фокус на аптайме, устойчивости каналов и минимизации критичных простоев.</p>
+          </div>
+          <div class="stat-card reveal">
+            <h3>24/7</h3>
+            <p>Постоянная коммуникация и сопровождение по рабочим направлениям и запуску.</p>
+          </div>
+          <div class="stat-card reveal">
+            <h3>Fast</h3>
+            <p>Быстрое подключение и адаптация под конкретный формат проекта и платёжную модель.</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="packages">
-      <div class="section-head">
-        <div class="kicker-line"></div>
-        <h2 class="soft">Пакеты White Label</h2>
-        <p class="lead">
-          Четыре опорных сценария внедрения: от классического офиса до обменника. Цены и обслуживание — прозрачно, без «сюрпризов» в мелком шрифте.
-        </p>
-      </div>
-
-      <div class="packages-grid">
-        <article class="pack">
-          <span class="tag">LB | Office Classic 🔥</span>
-          <h3>Классический пакет для инхаус‑офисов и трейдерских решений</h3>
-          <ul>
-            <li>Тир 1 техническое решение</li>
-            <li>Полное обеспечение любым РФ и СНГ трафиком</li>
-            <li>Создание бренда клиента и позиционирование</li>
-            <li>Круглосуточная техническая поддержка</li>
-            <li>Функционал маркета внутри площадки</li>
-            <li>Каскадное решение</li>
-            <li>Гибкое дробление типов трафика</li>
-            <li>Все существующие методы с гибкими настройками (QR НСПК, КА, БТ, неттинг, мультитрансфер, quasi ecom и т.д.)</li>
-          </ul>
-          <div class="price">
-            <div><strong>Цена White Label:</strong> 9 500 USD</div>
-            <div><strong>Ежемесячно:</strong> техобслуживание и сервера 500 USD</div>
-            <div><strong>Срез:</strong> 0,4%; при обороте от 100k$ суточного — 0,2%</div>
-            <div><strong>Срок установки WL:</strong> до 3 дней с момента оплаты</div>
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Solutions
           </div>
-        </article>
-
-        <article class="pack">
-          <span class="tag">LB | Office Plus + 🔥</span>
-          <h3>Продвинутая поддержка: выплаты РФ и маркетинг</h3>
-          <ul>
-            <li>Полный состав пакета Office Classic</li>
-            <li>Консультация и сопровождение, гарантированное открытие легальной фирмы для обеспечения любого объёма выплат (решение в работе более 6 мес.)</li>
-            <li>Надёжные маркетинговые инструменты и стратегии привлечения трейдеров и агентов</li>
-          </ul>
-          <div class="price">
-            <div><strong>Цена White Label:</strong> 14 500 USD</div>
-            <div><strong>Ежемесячно:</strong> техобслуживание и сервера 500 USD</div>
-            <div><strong>Срез:</strong> 0,4%; при обороте от 100k$ суточного — 0,2%</div>
-            <div><strong>Срок установки WL:</strong> до 3 дней с момента оплаты</div>
-          </div>
-        </article>
-
-        <article class="pack">
-          <span class="tag">LB | Shop Plus + 🔥</span>
-          <h3>Готовое платёжное решение для продаж в Telegram и не только</h3>
-          <ul>
-            <li>Гарантированная обработка СНГ и трансграничных платежей</li>
-            <li>Установка и настройка клиентского бота в Telegram</li>
-            <li>Интегрированная оплата криптой и фиатом</li>
-            <li>Внедрение методов приёма в зависимости от ЦА и средних чеков</li>
-            <li>Помощь в развитии и размещении на спецресурсах</li>
-            <li>Полный доступ к техническому функционалу; обслуживание и мониторинг включены</li>
-          </ul>
-          <div class="price">
-            <div><strong>Цена White Label:</strong> 9 500 USD</div>
-            <div><strong>Ежемесячно:</strong> техобслуживание и сервера 500 USD</div>
-            <div><strong>Срез:</strong> 0,4%; при обороте от 100k$ суточного — 0,2%</div>
-            <div><strong>Срок установки WL:</strong> до 3 дней с момента оплаты</div>
-          </div>
-        </article>
-
-        <article class="pack">
-          <span class="tag">LB | Exchange 🔥</span>
-          <h3>Полное сопровождение exchange‑бизнеса</h3>
-          <ul>
-            <li>Онлайн‑обменник под ключ: функционал и оформление</li>
-            <li>Гарантия обработки СНГ и трансграничных платежей</li>
-            <li>Технический функционал на базе Liberty Payments</li>
-            <li>Помощь в легальном оформлении юрлица для стабильных расчётов с клиентами и приёма платежей</li>
-          </ul>
-          <div class="price">
-            <div><strong>Цена White Label:</strong> 30 000 USD</div>
-            <div><strong>Ежемесячно:</strong> техобслуживание и сервера 500 USD</div>
-          </div>
-        </article>
-      </div>
-
-      <div class="service-row">
-        <div>
-          <div class="kicker-line" style="margin-bottom: 10px;"></div>
-          <h2 class="soft" style="margin-bottom: 8px;">Liberty — универсальный платёжный сервис</h2>
-          <p class="lead" style="margin: 0;">
-            Надёжное решение под ключевые потребности онлайн‑бизнеса: маршрутизация, приём, выплаты, white‑label,
-            сценарии под high‑risk и адаптация под вашу модель — без лишней операционной нагрузки на вашу команду.
+          <h2>Что вы получаете с <span class="gradient-text">Liberty</span></h2>
+          <p>
+            Сильный лендинг продаёт обещания. Сильная инфраструктура держит оборот. Мы строим второе,
+            а первое упаковываем на уровне premium B2B.
           </p>
         </div>
-        <div class="feat-grid">
-          <article class="feat grad">
-            <h4>На острие технологий</h4>
-            <p>Современный стек, гибкая архитектура и быстрое внедрение новых сценариев оплаты.</p>
+
+        <div class="feature-grid">
+          <article class="feature-card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M13 3L5 14h6l-1 7 8-11h-6l1-7Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Стабильный процессинг</h3>
+            <p>
+              Основа под большие объёмы, где важны непрерывность, предсказуемость и отсутствие
+              неожиданных провалов в критический момент.
+            </p>
           </article>
-          <article class="feat">
-            <h4>Международная география</h4>
-            <p>Широкий спектр методов и партнёров под разные регионы и вертикали.</p>
+
+          <article class="feature-card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 7h16M4 12h10M4 17h7" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+                <circle cx="18" cy="12" r="2.5" stroke="white" stroke-width="1.6"/>
+                <circle cx="14" cy="17" r="2.5" stroke="white" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <h3>Гибкая маршрутизация</h3>
+            <p>
+              Возможность распределять поток, управлять каналами и выстраивать логику,
+              которая лучше подходит именно вашей модели трафика.
+            </p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 19V5m0 14h16M8 15l3-3 3 2 5-6" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Контроль трафика</h3>
+            <p>
+              Визуальная аналитика, динамика потока, наблюдение за рабочими направлениями
+              и понимание, что происходит в системе прямо сейчас.
+            </p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 3l7 4v5c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V7l7-4Z" stroke="white" stroke-width="1.6"/>
+                <path d="M9.5 12.3l1.7 1.7 3.3-3.6" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Надёжность и защита</h3>
+<p>
+              Подход, в котором важны устойчивость, аккуратная логика работы и уменьшение
+              количества операционных сюрпризов.
+            </p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 12h16M12 4v16" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="8" stroke="white" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <h3>Масштабируемость</h3>
+            <p>
+              Решение должно выдерживать рост. Поэтому архитектура и бизнес-подача строятся
+              с запасом под расширение и увеличение оборотов.
+            </p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 6h16v9H7l-3 3V6Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M8 10h8M8 13h5" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Живая поддержка</h3>
+            <p>
+              Быстрая коммуникация без лишней бюрократии. В high-risk и volume-driven сегментах
+              это не бонус, а базовая необходимость.
+            </p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="benefits">
-      <div class="section-head">
-        <div class="kicker-line"></div>
-        <h2>Преимущества</h2>
-        <p class="lead">То, на что можно опереться при масштабировании платежей.</p>
-      </div>
+    <section class="section" id="process">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Process
+          </div>
+          <h2>Как выглядит <span class="gradient-text">запуск</span></h2>
+          <p>
+            Мы убрали лишнее и оставили последовательность, которая понятна клиенту, хорошо продаёт
+            на лендинге и при этом выглядит серьёзно.
+          </p>
+        </div>
 
-      <div class="benefits-grid">
-        <article class="feat grad">
-          <h4>Стандарты безопасности</h4>
-          <p>Продуманная архитектура, контроль доступа, стабильность интеграций и высокий уровень операционной надёжности.</p>
-        </article>
-        <article class="feat">
-          <h4>24/7 поддержка</h4>
-          <p>Liberty — ваш надёжный партнёр круглосуточно. Мы рядом, когда нужна оперативная помощь.</p>
-        </article>
-        <article class="feat">
-          <h4>Сильная команда</h4>
-          <p>Специалисты из разных стран, современный стек и внимание к клиентскому сервису.</p>
-        </article>
-        <article class="feat">
-          <h4>Независимость</h4>
-          <p>Международная команда под high‑risk платежи, персональный подход и быстрая интеграция.</p>
-        </article>
-        <article class="feat grad" style="grid-column: 1 / -1;">
-          <h4>Инфополе и рост</h4>
-          <p>Telegram, контент, брендинг и инструменты роста для проектов клиентов.</p>
-        </article>
+        <div class="steps">
+          <div class="step-card reveal">
+            <h3>Заявка и вводные</h3>
+            <p>Вы описываете модель бизнеса, объём, требования к инфраструктуре и желаемый формат работы.</p>
+          </div>
+          <div class="step-card reveal">
+            <h3>Условия и конфигурация</h3>
+            <p>Подбираются оптимальные параметры, структура решения и формат интеграции под ваш кейс.</p>
+          </div>
+          <div class="step-card reveal">
+            <h3>Интеграция и запуск</h3>
+            <p>Настраивается подключение, тестируется логика и готовится рабочая система к старту потока.</p>
+          </div>
+          <div class="step-card reveal">
+            <h3>Рост и сопровождение</h3>
+            <p>После запуска решение масштабируется, дополняется и оптимизируется под рост оборотов.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="audience">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Audience
+          </div>
+          <h2>Кому подходит <span class="gradient-text">Liberty</span></h2>
+          <p>
+            Сайт должен сразу отсеивать нерелевантных и одновременно давать правильный сигнал нужной аудитории.
+          </p>
+        </div>
+
+        <div class="audience-grid">
+          <div class="audience-card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 3l7 4-7 4-7-4 7-4Zm7 8-7 4-7-4m14 6-7 4-7-4" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Crypto проекты</h3>
+            <p>Команды, которым важны гибкость, скорость запуска и операционный контроль.</p>
+          </div>
+
+          <div class="audience-card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M4 16l4-4 4 3 8-8" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16 7h4v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Арбитраж</h3>
+            <p>Проекты, где трафик и скорость решений напрямую влияют на результат.</p>
+          </div>
+
+          <div class="audience-card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="6" width="16" height="12" rx="2.5" stroke="white" stroke-width="1.6"/>
+                <path d="M4 10h16" stroke="white" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <h3>Payment offices</h3>
+            <p>Команды, которые хотят white-label решение и больше контроля над процессом.</p>
+          </div>
+
+          <div class="audience-card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6 5h12v14H6z" stroke="white" stroke-width="1.6"/>
+                <path d="M9 9h6M9 13h6" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Digital товары</h3>
+            <p>Бизнесы с быстрым циклом продаж, где важна устойчивая платёжная логика.</p>
+          </div>
+
+          <div class="audience-card reveal">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 12a7 7 0 1 1 14 0c0 4-3.134 6.57-7 8-3.866-1.43-7-4-7-8Z" stroke="white" stroke-width="1.6"/>
+                <path d="M12 8v4l2.5 1.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>High-risk сегмент</h3>
+            <p>Ниши, где обычные решения часто не подходят по требованиям или модели работы.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="offer">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Offer
+          </div>
+          <h2>Условия, которые выглядят <span class="gradient-text">сильно и дорого</span></h2>
+          <p>
+            Вместо дешёвого оффера в лоб — премиальная подача. Достаточно конкретики, чтобы заинтересовать,
+            и достаточно воздуха, чтобы не удешевить продукт.
+          </p>
+        </div>
+
+        <div class="offer-wrap">
+          <div class="offer-card featured reveal">
+            <div class="offer-label">Liberty WL Infrastructure</div>
+            <h3>Подключение под ваш формат</h3>
+            <div class="offer-price">от 0.4% <span>/ условия индивидуально</span></div>
+            <p class="offer-sub">
+              White-label инфраструктура с фокусом на стабильность, контроль и запуск решения
+              под вашу модель оборота.
+            </p>
+            <ul class="offer-list">
+              <li>Быстрый старт после согласования параметров</li>
+              <li>Гибкая конфигурация маршрутов и логики работы</li>
+              <li>Визуальный контроль потока и ключевых показателей</li>
+              <li>Подход под high-volume и high-risk сценарии</li>
+              <li>Сопровождение и развитие после запуска</li>
+            </ul>
+            <div class="btn-row">
+              <a href="#contact" class="btn btn-primary">Получить условия</a>
+              <a href="#dashboard" class="btn btn-secondary">Изучить платформу</a>
+            </div>
+          </div>
+
+          <div class="offer-card reveal">
+            <div class="offer-label">Why it works</div>
+            <h3>Почему это конвертит лучше</h3>
+            <p class="offer-sub">
+              Такой блок не выглядит как массовая дешёвая платёжка. Он подаёт Liberty как серьёзный
+              инфраструктурный продукт с более высоким perceived value.
+            </p>
+            <ul class="offer-list">
+              <li>Не “просто процессинг”, а управляемая система</li>
+              <li>Фокус на B2B, а не на случайный трафик</li>
+<li>Премиальная визуальная упаковка увеличивает доверие</li>
+              <li>Правильный tone of voice для дорогого клиента</li>
+              <li>Лендинг продаёт масштаб и контроль, а не только комиссию</li>
+            </ul>
+            <div class="btn-row">
+              <a href="#contact" class="btn btn-secondary">Обсудить подключение</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Advantage
+          </div>
+          <h2>Почему выбирают <span class="gradient-text">такой формат</span></h2>
+          <p>
+            Тут ты показываешь не только дизайн, а смысл: Liberty — это решение для тех, кому нужен
+            фундамент под обороты, а не просто “кнопка оплаты”.
+          </p>
+        </div>
+
+        <div class="why-grid">
+          <div class="why-card reveal">
+            <h3>Собственная подача продукта</h3>
+            <p>
+              Liberty воспринимается как отдельная платформа и бренд, а не как очередной безликий сервис
+              из одной ниши.
+            </p>
+          </div>
+
+          <div class="why-card reveal">
+            <h3>Фокус на контроле и стабильности</h3>
+            <p>
+              Клиент покупает не только подключение, но и уверенность в том, что система выдержит рост.
+            </p>
+          </div>
+
+          <div class="why-card reveal">
+            <h3>Сигнал для нужной аудитории</h3>
+            <p>
+              Правильный стиль привлекает серьёзных клиентов и сразу создаёт ощущение более высокого класса продукта.
+            </p>
+          </div>
+
+          <div class="why-card reveal">
+            <h3>Масштабируемая упаковка</h3>
+            <p>
+              Такой лендинг легко развивать: добавлять кейсы, новые блоки, кабинеты, документы и платформенные страницы.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="dashboard">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Platform
+          </div>
+          <h2>Интерфейс, который усиливает <span class="gradient-text">доверие</span></h2>
+          <p>
+            Даже если это лендинг, блок с панелью управления делает продукт визуально настоящим и значительно
+            повышает ощущение “серьёзной инфраструктуры”.
+          </p>
+        </div>
+
+        <div class="dashboard-section-grid">
+          <div class="dashboard-preview reveal">
+            <div class="panel-title">
+              <div>
+                <strong>Liberty Analytics</strong>
+                <span>Realtime dashboard preview</span>
+              </div>
+              <div class="dash-badge">Premium UI</div>
+            </div>
+
+            <div class="chart-wrap">
+              <svg viewBox="0 0 600 320" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="lineGradient2" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#63a2ff"/>
+                    <stop offset="50%" stop-color="#ff4fd8"/>
+                    <stop offset="100%" stop-color="#9a6cff"/>
+                  </linearGradient>
+                  <linearGradient id="areaGradient2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(99,162,255,.35)"/>
+                    <stop offset="100%" stop-color="rgba(99,162,255,0)"/>
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M0 260 C40 248, 72 230, 106 238 C140 246, 174 280, 210 250 C246 220, 278 106, 318 112 C358 118, 388 170, 426 154 C464 138, 496 74, 528 82 C560 90, 584 60, 600 26 L600 320 L0 320 Z"
+                  fill="url(#areaGradient2)"
+                />
+                <path
+d="M0 260 C40 248, 72 230, 106 238 C140 246, 174 280, 210 250 C246 220, 278 106, 318 112 C358 118, 388 170, 426 154 C464 138, 496 74, 528 82 C560 90, 584 60, 600 26"
+                  stroke="url(#lineGradient2)"
+                  stroke-width="4"
+                  fill="none"
+                  stroke-linecap="round"
+                  class="chart-glow"
+                />
+              </svg>
+            </div>
+
+            <div class="preview-stats">
+              <div class="preview-card">
+                <small>Volume</small>
+                <strong>$8.4M</strong>
+              </div>
+              <div class="preview-card">
+                <small>Uptime</small>
+                <strong>99.98%</strong>
+              </div>
+              <div class="preview-card">
+                <small>Flow health</small>
+                <strong>Stable</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="why-card reveal">
+              <h3>Визуал уровня premium SaaS</h3>
+              <p>
+                Такой блок делает сайт визуально намного сильнее типовых “процессинг-лендингов”.
+                Появляется ощущение продукта, а не просто оффера.
+              </p>
+            </div>
+
+            <div class="why-card reveal">
+              <h3>Лучше продаёт white-label</h3>
+              <p>
+                Когда клиент видит интерфейс, графики и системный подход, white-label решение воспринимается дороже.
+              </p>
+            </div>
+
+            <div class="why-card reveal">
+              <h3>Проще масштабировать сайт</h3>
+              <p>
+                Дальше можно вынести из этого отдельные страницы: dashboard, docs, integrations, API, cases.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Proof
+          </div>
+          <h2>Отзывы и кейсовая <span class="gradient-text">подача</span></h2>
+          <p>
+            Даже если на старте кейсов немного, этот блок нужен. Он повышает доверие и завершает воронку до CTA.
+          </p>
+        </div>
+
+        <div class="review-grid">
+          <div class="review-card reveal">
+            <div class="review-stars">★★★★★</div>
+            <p>
+              Подключение прошло быстро, а сам продукт ощущается как инфраструктурное решение, а не как стандартный
+              агрегатор. Именно такого позиционирования нам и не хватало.
+            </p>
+            <div class="review-author">
+              <strong>Crypto team lead</strong>
+              <span>Volume-driven project</span>
+            </div>
+          </div>
+
+          <div class="review-card reveal">
+            <div class="review-stars">★★★★★</div>
+            <p>
+              Сильнее всего сработала комбинация: white-label подача, понятная логика запуска и ощущение, что
+              система действительно рассчитана на рост оборота.
+            </p>
+            <div class="review-author">
+              <strong>Operations manager</strong>
+              <span>Payment office</span>
+            </div>
+          </div>
+
+          <div class="review-card reveal">
+            <div class="review-stars">★★★★★</div>
+            <p>
+              Liberty выглядит дорого и уверенно. Это важно, потому что мы продаём не только техническую
+              интеграцию, но и впечатление от бренда для B2B-клиентов.
+            </p>
+            <div class="review-author">
+              <strong>Founder</strong>
+              <span>High-risk digital business</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="section" id="contact">
-      <h2 class="visually-hidden">Контакты</h2>
-      <div class="contact-wrap">
-        <aside class="contact-aside" aria-label="Связь в Telegram">
-          <h3 class="contact-aside-title">Напрямую, как на рабочих B2B‑лендингах</h3>
-          <p class="contact-aside-lead">
-            Напишите в Telegram — коротко опишите продукт и гео, предложим пакет и следующий шаг.
+      <div class="container">
+        <div class="cta-box reveal">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Start with Liberty
+          </div>
+<h2>Запустите платёжную инфраструктуру, которая выглядит и работает <span class="gradient-text">на уровень выше рынка</span></h2>
+          <p>
+            Используй этот лендинг как базу. Дальше можно добавить Telegram-кнопку, формы, кейсы,
+            FAQ, API-блоки, отдельные продуктовые страницы и полноценную экосистему Liberty.
           </p>
-          <ul class="contact-checklist">
-            <li>Без предоплаты за «кота в мешке» — логика из блока «О продукте»</li>
-            <li>Подбор Office / Shop / Exchange WL под ваш сценарий</li>
-            <li>Оперативный диалог по сути — без лишней бюрократики</li>
-          </ul>
-          <a class="btn btn-main" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
-        </aside>
+          <div class="btn-row">
+            <a href="https://t.me/" class="btn btn-primary">Написать в Telegram</a>
+            <a href="mailto:hello@liberty.top" class="btn btn-secondary">hello@liberty.top</a>
+          </div>
+        </div>
       </div>
     </section>
+  </main>
 
-    <footer class="site-footer">
-      <div class="footer-box">
-        <div class="footer-brand">
-          <a class="brand" href="#top">
-            <img src="./assets/symbol_dark.svg" alt="Liberty logo" />
-            <span>
-              Liberty
-              <small>Простые решения сложных задач</small>
-            </span>
-          </a>
-          <div class="socials">
-            <a class="btn btn-cta-telegram btn-cta-telegram--compact" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-card">
+        <div class="footer-left">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3c-4.971 0-9 3.63-9 8.108 0 2.3 1.066 4.377 2.777 5.847V21l3.204-1.821A10.22 10.22 0 0 0 12 19.217c4.971 0 9-3.63 9-8.109C21 6.63 16.971 3 12 3Z" stroke="white" stroke-width="1.5"/>
+              <circle cx="9.2" cy="10.7" r="1" fill="white"/>
+              <circle cx="14.8" cy="10.7" r="1" fill="white"/>
+              <path d="M8.4 13.9c.84.86 2.15 1.4 3.6 1.4s2.76-.54 3.6-1.4" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Liberty</strong>
+            <div class="footer-copy">Premium white-label payment infrastructure</div>
           </div>
         </div>
 
-        <nav class="footer-links" aria-label="Навигация в подвале">
-          <a href="#about">Кто мы</a>
-          <a href="#about-product">О продукте</a>
-          <a href="#packages">Пакеты</a>
-          <a href="#benefits">Преимущества</a>
+        <div class="footer-links">
+          <a href="#solutions">Решения</a>
+          <a href="#offer">Условия</a>
+          <a href="#dashboard">Платформа</a>
           <a href="#contact">Контакты</a>
-          <a href="#top">Наверх</a>
-        </nav>
-
-        <div class="footer-right">
-          <a class="btn btn-main" href="https://t.me/liberty_Che_LB" target="_blank" rel="noopener noreferrer">Связаться с нами</a>
         </div>
       </div>
+    </div>
+  </footer>
 
-      <div class="copyright">
-        <span>© Liberty. Все права защищены.</span>
-      </div>
-    </footer>
-  </main>
+  <script>
+    const mobileToggle = document.getElementById('mobileToggle');
+    const nav = document.getElementById('nav');
 
-  <a class="scroll-top" href="#top" aria-label="Наверх">↑</a>
+    mobileToggle?.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+
+    nav?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => nav.classList.remove('active'));
+    });
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+  </script>
 </body>
 </html>
